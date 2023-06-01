@@ -7,6 +7,16 @@ module.exports = {
   ],
   theme: {
     extend: {
+      height: {
+        '1/2-screen': '50vh',
+      },
+      colors: {
+        background: {
+          light: '#f6e05e', // light yellow
+          DEFAULT: '#ed8936', // DEFAULT yellow (required by Tailwind CSS)
+          dark: '#b7791f', // dark yellow
+        },
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
