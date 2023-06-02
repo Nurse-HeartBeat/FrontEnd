@@ -15,11 +15,11 @@ export default function Home() {
           <h1 className="text-5xl font-bold">Welcome to The HeartBeat</h1>
           <p className="text-2xl font-bold mt-20">The ultimate web platform connecting nurses with employers, offering real-time chat, mapping functionality, and seamless authentication experiences.</p>
         </div>
-        <div className="w-1/3 text-lg mt-10 ml-10 mb-10 flex flex-row items-center justify-start">
-          <button className="bg-white hover:bg-background text-black font-bold py-2 px-10 rounded-full ml-20">
+        <div className="w-2/3 text-lg mt-10  mb-10 flex flex-col md:flex-row items-center justify-start">
+          <button className="bg-white hover:bg-background text-black font-bold py-2 px-10 w-40 rounded-full ml-20 my-5">
             Log in
           </button>
-          <button className="bg-white hover:bg-background text-black font-bold py-2 px-10 rounded-full ml-20">
+          <button className="bg-white hover:bg-background text-black font-bold py-2 px-10 w-40 rounded-full ml-20 my-5">
             Sign up
           </button>
         </div>

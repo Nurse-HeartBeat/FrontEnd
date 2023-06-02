@@ -2,7 +2,7 @@ import { FaTwitter, FaFacebook, FaInstagram, FaEnvelope } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-200 py-10">
+    <footer className="bg-gray-200 py-5">
       <div className="flex justify-center">
         <div className="flex space-x-4">
           <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
