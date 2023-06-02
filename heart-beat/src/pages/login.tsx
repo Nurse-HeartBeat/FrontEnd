@@ -42,9 +42,9 @@ export default function Login() {
     <div className="flex flex-col min-h-screen bg-white">
       <Nav />
       Login Placeholder
-      <div className="flex flex-row flex-grow">
+      <div className="flex flex-row flex-grow items-center">
         <div className="flex w-1/2">
-          <form onSubmit={handleSubmit} className="mx-auto mt-20" style={{ marginLeft: "30%", width: "300px" }}>
+          <form onSubmit={handleSubmit} className="mx-auto" style={{ marginLeft: "30%", width: "300px" }}>
             <div className="mb-4">
               <label htmlFor="email" className="block text-gray-700">Email:</label>
               <input
