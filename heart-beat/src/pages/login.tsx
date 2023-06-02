@@ -2,14 +2,14 @@ import Nav from '../components/nav';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../redux/user';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import Auth from '../auth/firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import Footer from '../components/footer';
 import Image from 'next/image';
 import linkedinCartoon from '../../public/linkedinCartoon.png';
 
-export default function Login () {
+export default function Login() {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
@@ -32,19 +32,19 @@ export default function Login () {
     e.preventDefault();
     // Handle form submission logic here
     signInWithEmailAndPassword(Auth, email, password)
-      .then(({user}) => {
+      .then(({ user }) => {
         // dispatch(setUser({ email, password })); //to check whether the redux is working
         console.log(user.uid) //obtaining the id
       })
       .catch((err: any) => console.log(err));
   };
   return (
-    <div className="bg-white h-screen">
+    <div className="flex flex-col min-h-screen bg-white">
       <Nav />
       Login Placeholder
-      <div className="flex justify-center flex-row h-3/4" style={{ height: "75vh" }}>
+      <div className="flex flex-row flex-grow">
         <div className="flex w-1/2">
-          <form onSubmit={handleSubmit} className="mx-auto" style={{ marginTop: "20%", marginLeft:"30%", width:"300px"}}>
+          <form onSubmit={handleSubmit} className="mx-auto mt-20" style={{ marginLeft: "30%", width: "300px" }}>
             <div className="mb-4">
               <label htmlFor="email" className="block text-gray-700">Email:</label>
               <input
@@ -70,9 +70,9 @@ export default function Login () {
             </button>
           </form>
         </div>
-        <Image src={linkedinCartoon} alt={''} className='flex' style={{ width: "600px", marginRight: "10%", height:"500px"}}/>
+        <Image src={linkedinCartoon} alt={''} className='flex' style={{ width: "600px", marginRight: "10%", height: "500px" }} />
       </div>
-      <Footer/>
+      <Footer />
     </div>
   )
 }

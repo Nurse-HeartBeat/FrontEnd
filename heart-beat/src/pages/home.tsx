@@ -63,12 +63,7 @@ export default function Home() {
       </div>
 
       <Slideshow />
-<Footer />
-
-
-
-
-
+      <Footer />
     </div>
   )
 }
