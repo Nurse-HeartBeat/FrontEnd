@@ -3,9 +3,22 @@ import bgImage from '../../public/bgImage.png';
 import { FaCalendarAlt, FaComments, FaMapMarkerAlt } from 'react-icons/fa';
 import Slideshow from '../components/slideShow';
 import Footer from '../components/footer';
+import { Router, useRouter } from 'next/router';
 
 
 export default function Home() {
+  let router = useRouter();
+  let login = () => {
+    const redirectRoute = '/login';
+    router.push(redirectRoute);
+  }
+
+  let signup = () => {
+    const redirectRoute = '/signup';
+    router.push(redirectRoute);
+  }
+
+
   return (
     <div>
       <Nav />
@@ -16,17 +29,17 @@ export default function Home() {
           <p className="text-2xl font-bold mt-20">The ultimate web platform connecting nurses with employers, offering real-time chat, mapping functionality, and seamless authentication experiences.</p>
         </div>
         <div className="w-2/3 text-lg mt-10  mb-10 flex flex-col md:flex-row items-center justify-start">
-          <button className="bg-white hover:bg-background text-black font-bold py-2 px-10 w-40 rounded-full ml-20 my-5">
+          <button className="bg-white hover:bg-background text-black font-bold py-2 px-10 w-40 rounded-full ml-20 my-5" onClick={login}>
             Log in
           </button>
-          <button className="bg-white hover:bg-background text-black font-bold py-2 px-10 w-40 rounded-full ml-20 my-5">
+          <button className="bg-white hover:bg-background text-black font-bold py-2 px-10 w-40 rounded-full ml-20 my-5" onClick={signup}>
             Sign up
           </button>
         </div>
       </div>
 
 
-      <div className="bg-white grid grid-cols-1 md:grid-cols-3 gap-8 py-10 px-20">
+      <div className="bg-white grid grid-cols-1 md:grid-cols-3 gap-8 py-10 px-20 text-black">
         <div className="bg-white rounded-lg p-8 shadow-md mx-10">
           <div className="flex items-center justify-center mb-4">
             <FaCalendarAlt className="w-6 h-6 mr-2" />
