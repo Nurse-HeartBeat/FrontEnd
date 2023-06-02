@@ -3,17 +3,19 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../redux/user';
 import {useEffect} from 'react';
+import Auth from '../auth/firebase';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login () {
-  const dispatch = useDispatch();
-  const user = useSelector((state:any) => state.user);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
   //to check whether redux is working
-  useEffect(() => {
-    console.log(user, 'from redux')
-  }, [user])
+  // const dispatch = useDispatch();
+  // const user = useSelector((state:any) => state.user);
+  // useEffect(() => {
+  //   console.log(user, 'from redux')
+  // }, [user])
 
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -26,7 +28,12 @@ export default function Login () {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     // Handle form submission logic here
-    dispatch(setUser({email, password})) //have to integrate with firebase
+    signInWithEmailAndPassword(Auth, email, password)
+      .then(({user}) => {
+        // dispatch(setUser({ email, password })); //to check whether the redux is working
+        console.log(user.uid) //obtaining the id
+      })
+      .catch((err: any) => console.log(err));
   };
   return (
     <div>
