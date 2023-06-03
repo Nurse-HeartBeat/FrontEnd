@@ -7,7 +7,7 @@ import Auth from '../auth/firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import Footer from '../components/footer';
 import Image from 'next/image';
-import linkedinCartoon from '../../public/linkedinCartoon.png';
+import loginCartoon from '../../public/loginCartoon.png';
 
 export default function Login() {
   const [password, setPassword] = useState('');
@@ -65,12 +65,12 @@ export default function Login() {
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
               />
             </div>
-            <button type="submit" className="px-4 py-2 text-white bg-primary rounded-md hover:bg-primary-light focus:outline-none focus:ring focus:ring-blue-500">
+            <button type="submit" className="px-4 py-2 text-white bg-accent rounded-md hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500">
               Submit
             </button>
           </form>
         </div>
-        <Image src={linkedinCartoon} alt={''} className='flex' style={{ width: "600px", marginRight: "10%", height: "500px" }} />
+        <Image src={loginCartoon} alt={''} className='flex' style={{ width: "600px", marginRight: "10%", height: "500px" }} />
       </div>
       <Footer />
     </div>
