@@ -65,7 +65,7 @@ export default function Login() {
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
               />
             </div>
-            <button type="submit" className="px-4 py-2 text-white bg-background rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500">
+            <button type="submit" className="px-4 py-2 text-white bg-primary rounded-md hover:bg-primary-light focus:outline-none focus:ring focus:ring-blue-500">
               Submit
             </button>
           </form>

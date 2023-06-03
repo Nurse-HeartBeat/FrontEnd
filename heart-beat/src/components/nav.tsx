@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Nav() {
   return (
-    <header className="p-5 bg-background">
+    <header className="p-5 bg-primary">
       <nav className="flex justify-between">
         <div>
           <Link href="/home" className="text-white text-lg font-bold">
