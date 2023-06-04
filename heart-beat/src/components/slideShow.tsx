@@ -52,16 +52,16 @@ const Slideshow = () => {
               <div className="flex items-center justify-center">
                 <Image src={image} width={200} height={200} alt={name} className="person-img" />
               </div>
-              <h4 className="text-lg">{name}</h4>
-              <p className="title text-lg">{title}</p>
-              <p className="text text-lg">“{quote}”</p>
+              <h4 className="text-lg text-text font-bold">{name}</h4>
+              <p className="title text-lg text-text">{title}</p>
+              <p className="text text-lg text-text">“{quote}”</p>
             </article>
           );
         })}
-        <button className="prev" onClick={() => setIndex(index - 1)}>
+        <button className="prev bg-primary hover:bg-accent" onClick={() => setIndex(index - 1)}>
           <FaAngleLeft />
         </button>
-        <button className="next" onClick={() => setIndex(index + 1)}>
+        <button className="next bg-primary hover:bg-accent" onClick={() => setIndex(index + 1)}>
           <FaAngleRight />
         </button>
       </div>

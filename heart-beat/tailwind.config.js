@@ -11,11 +11,19 @@ module.exports = {
         '1/2-screen': '50vh',
       },
       colors: {
-        background: {
-          light: '#f6e05e', // light yellow
-          DEFAULT: '#ed8936', // DEFAULT yellow (required by Tailwind CSS)
-          dark: '#b7791f', // dark yellow
+        primary: {
+          DEFAULT: '#808080', // Coral
+          light: '#333333', //Light Salmon
         },
+        background: {
+          DEFAULT: '#F5F5F5', // Vanilla
+        },
+        accent:{
+          DEFAULT: '#0077B5', // Deep Saffron
+        },
+        text:{
+          DEFAULT: '#4A4A4A', // Dim Gray
+        }
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

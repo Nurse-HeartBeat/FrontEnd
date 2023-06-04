@@ -29,10 +29,17 @@ export default function Home() {
           <p className="text-2xl font-bold mt-20">The ultimate web platform connecting nurses with employers, offering real-time chat, mapping functionality, and seamless authentication experiences.</p>
         </div>
         <div className="w-2/3 text-lg mt-10  mb-10 flex flex-col md:flex-row items-center justify-start">
+<<<<<<< HEAD
           <button className="bg-white hover:bg-background text-black font-bold py-2 px-10 w-40 rounded-full ml-20 my-5" onClick={login}>
             Log in
           </button>
           <button className="bg-white hover:bg-background text-black font-bold py-2 px-10 w-40 rounded-full ml-20 my-5" onClick={signup}>
+=======
+          <button className="bg-white hover:bg-accent hover:text-white text-black font-bold py-2 px-10 w-40 rounded-full ml-20 my-5">
+            Log in
+          </button>
+          <button className="bg-white hover:bg-accent hover:text-white text-black font-bold py-2 px-10 w-40 rounded-full ml-20 my-5">
+>>>>>>> 318f85f18d160b775883007db7d7e9ca3ab82364
             Sign up
           </button>
         </div>
