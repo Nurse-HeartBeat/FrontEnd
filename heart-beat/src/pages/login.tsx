@@ -8,10 +8,14 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "fire
 import Footer from '../components/footer';
 import Image from 'next/image';
 import loginCartoon from '../../public/loginCartoon.png';
+import RadioBut from '../components/radioBut';
 
 export default function Login() {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [employer, setEmployer] = useState(false);
+
+
 
   //to check whether redux is working
   // const dispatch = useDispatch();
@@ -27,6 +31,10 @@ export default function Login() {
   const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
+
+  const employerHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmployer(!employer)
+  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -65,7 +73,10 @@ export default function Login() {
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
               />
             </div>
-            <button type="submit" className="px-4 py-2 text-white bg-accent rounded-md hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500">
+            <h1 className="flex text-text flex-row">Are you an employer?
+              <RadioBut checked={employer} onChange={employerHandler} label={''}/>
+            </h1>
+            <button type="submit" className="flex px-4 py-2 text-white bg-accent rounded-md hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5">
               Submit
             </button>
           </form>
