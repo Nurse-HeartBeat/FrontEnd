@@ -108,8 +108,9 @@ export default function SignUp() {
     postal, setPostal,
     phone, setPhone,
     handleSubmit,
+    setFacilityType,
     continueBut, setContinueBut,
-    facilityType, setFacilityType
+    facilityType
   }
 
   return (
