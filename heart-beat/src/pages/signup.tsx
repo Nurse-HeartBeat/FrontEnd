@@ -10,10 +10,13 @@ import Image from 'next/image';
 import loginCartoon from '../../public/loginCartoon.png';
 import RadioBut from '../components/radioBut';
 import ConNurse from '../components/continueNurse';
+import ConEmployer from '../components/continueEmployer';
 
 export default function SignUp() {
   const [continueBut, setContinueBut] = useState(false);
   const [password, setPassword] = useState('');
+  const [passStatus, setPassStatus] = useState(false);
+  const [emailStatus, setEmailStatus] = useState(false);
   const [repass, setRepass] = useState('');
   const [email, setEmail] = useState('');
   const [employer, setEmployer] = useState(false);
@@ -21,14 +24,15 @@ export default function SignUp() {
   const [nurseLast, setNurseLast] = useState('');
   const [license, setLicense] = useState('');
   const [yoe, setyoe] = useState(0);
-  const [expire, setExpire] = useState(null);
-  const [phone, setPhone] = useState(null);
+  const [expire, setExpire] = useState(new Date());
+  const [phone, setPhone] = useState('');
   const [address1, setAddress1] = useState('');
   const [address2, setAddress2] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState ('');
-  const [postal, setPostal] = useState(null);
+  const [postal, setPostal] = useState('');
   const [gender, setGender] = useState('');
+  const [facilityType, setFacilityType] = useState('');
 
   //to check whether redux is working
   // const dispatch = useDispatch();
@@ -42,10 +46,14 @@ export default function SignUp() {
   };
   const handleChangeRePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setRepass(e.target.value);
+    if (e.target.value === password) {
+      setPassStatus(false)
+    }
   };
 
   const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+    setEmailStatus(false);
   };
 
   const employerHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +66,20 @@ export default function SignUp() {
   };
   const handleContinue = (e:FormEvent) => {
     e.preventDefault();
-    setContinueBut(!continueBut)
+    if (email === '') {
+      setEmailStatus(true)
+    }
+    if (password === '') {
+      setPassStatus(true)
+    } else {
+      if (email!== '' && (password === repass)) {
+        setContinueBut(!continueBut)
+        setPassStatus(false)
+      }
+    }
+    if (password !== repass) {
+      setPassStatus(true)
+    }
   };
 
   let nurseObj = {
@@ -78,13 +99,26 @@ export default function SignUp() {
     city, setCity
   }
 
+  let employerObj = {
+    employer, setEmployer,
+    address1, setAddress1,
+    address2, setAddress2,
+    city, setCity,
+    state, setState,
+    postal, setPostal,
+    phone, setPhone,
+    handleSubmit,
+    continueBut, setContinueBut,
+    facilityType, setFacilityType
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Nav />
       Login Placeholder
       <div className="flex flex-row flex-grow items-center">
         <div className="flex w-1/2">
-          <form onSubmit={handleSubmit} className="mx-auto" style={{ marginLeft: "30%", width: "300px" }}>
+          <form onSubmit={handleContinue} className="mx-auto" style={{ marginLeft: "30%", width: "300px" }}>
             {!continueBut && (
             <><div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700">Email:</label>
@@ -115,12 +149,23 @@ export default function SignUp() {
               </div>
                 <h1 className="flex text-text flex-row">Are you an employer?
                   <RadioBut checked={employer} onChange={employerHandler} label={''} />
-                </h1><button type="button" className="flex px-4 py-2 text-white bg-accent rounded-md hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5" onClick={handleContinue}>
+                </h1>
+                {passStatus && (
+                  <li className='flex' style={{color:'red'}}>*The password and re-enter password is not the same</li>
+                )}
+                {emailStatus && (
+                  <li className='flex' style={{color:'red'}}>*Please input the email</li>
+                )}
+                <button type="submit" className="flex px-4 py-2 text-white bg-accent rounded-md hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5">
                   Continue
-                </button></>
+                </button>
+                </>
             )}
             {(continueBut && !employer) && (
               <ConNurse obj={nurseObj} />
+            )}
+            {(continueBut && employer) && (
+              <ConEmployer obj={nurseObj} />
             )}
           </form>
         </div>

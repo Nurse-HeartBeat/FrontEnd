@@ -1,17 +1,9 @@
 import React, { FormEvent, MouseEventHandler } from 'react';
 
 interface ObjProps {
-  nurseFirst: string;
-  setNurseFirst: (value: string) => void;
-  nurseLast: string;
-  setNurseLast: (value: string) => void;
-  license: string;
-  setLicense: (value: string) => void;
-  yoe: number;
-  setyoe: (value: number) => void;
-  expire?: Date;
-  setExpire: (value: Date) => void;
-  phone?: string;
+  employer: string;
+  setEmployer: (value: string) => void;
+  phone: string;
   setPhone: (value: string) => void;
   address1: string;
   setAddress1: (value: string) => void;
@@ -19,8 +11,6 @@ interface ObjProps {
   setAddress2: (value: string) => void;
   postal?: string;
   setPostal: (value: string) => void;
-  gender?: string;
-  setGender: (value: string) => void;
   handleSubmit: MouseEventHandler<HTMLButtonElement>;
   continueBut: boolean;
   setContinueBut: (value: boolean) => void;
@@ -28,30 +18,45 @@ interface ObjProps {
   setCity: (value: string) => void;
   state: string;
   setState: (value: string) => void;
+  facilityType: string;
+  setFacilityType: (value: string) => void;
 }
-const continueNurse: React.FC<{obj: ObjProps}> = ({obj}) => {
+const continueEmployer: React.FC<{obj: ObjProps}> = ({obj}) => {
+  const healthcareFacilities = [
+    "Hospital",
+    "Ambulatory Care Center",
+    "Nursing Home",
+    "Home Healthcare",
+    "Urgent Care Center",
+    "Rehabilitation Center",
+    "Primary Care Clinic",
+    "Specialty Clinic",
+    "Community Health Center",
+    "Schools and Educational Institutions"
+  ];
   return (
     <form className="mx-auto" style={{ marginTop:"0%", marginLeft: "-30%", width: "500px" }}>
             <div className="mb-4">
               <div className='mx-auto flex justify-between'>
-                <label htmlFor="nurseFirst" className="mr-5 block text-gray-700">First Name
+                <label htmlFor="employer" className="mr-5 block text-gray-700">Company Name
                   <input
                     type="text"
-                    id="nurse1"
-                    value={obj.nurseFirst}
+                    id="employer"
+                    value={obj.employer}
                     onChange={(e) => {
-                      obj.setNurseFirst(e.target.value)
+                      obj.setEmployer(e.target.value)
                     }}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
                   />
                 </label>
-                <label htmlFor="nurseLast" className="block text-gray-700">Last Name
+                <label htmlFor="phone" className="mr-5 block text-gray-700">Phone Number
                   <input
                     type="text"
-                    id="nurseLast"
-                    value={obj.nurseLast}
+                    id="phone"
+                    value={obj.phone}
                     onChange={(e) => {
-                      obj.setNurseLast(e.target.value)
+                      const numericValue = e.target.value.replace(/\D/g, '')
+                      obj.setPhone(numericValue)
                     }}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
                   />
@@ -122,72 +127,19 @@ const continueNurse: React.FC<{obj: ObjProps}> = ({obj}) => {
                 </label>
               </div>
               <div className='mt-5 mx-auto flex justify-between'>
-                <label htmlFor="phone" className="mr-5 block text-gray-700">Phone Number
-                  <input
-                    type="text"
-                    id="phone"
-                    value={obj.phone}
-                    onChange={(e) => {
-                      const numericValue = e.target.value.replace(/\D/g, '')
-                      obj.setPhone(numericValue)
-                    }}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
-                  />
-                </label>
-                <label htmlFor="gender" className="block text-gray-700">Gender
+                <label htmlFor="facilityType" className="mr-5 block text-gray-700">Type
                   <select
                     id="dropdown"
-                    value={obj.gender}
-                    onChange={(e) => obj.setGender(e.target.value)}
+                    value={obj.facilityType}
+                    onChange={(e) => obj.setFacilityType(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
                   >
-                    <option value="">{''}</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
+                    {healthcareFacilities.map((facility, index) => {
+                      return (
+                        <option key={index} value={facility}>{facility}</option>
+                      )
+                    })}
                   </select>
-                </label>
-              </div>
-              <div className='mt-5 mx-auto flex justify-between'>
-                <label htmlFor="yoe" className="mr-5 block text-gray-700">Years of Experience
-                  <select
-                    id="dropdown"
-                    value={obj.yoe}
-                    onChange={(e) => obj.setyoe(Number(e.target.value))}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
-                  >
-                    <option value={0}>0</option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                    <option value={5}>5</option>
-                    <option value={6}>6</option>
-                    <option value={7}>7+</option>
-                  </select>
-                </label>
-              </div>
-              <div className='mt-5 mx-auto flex justify-between'>
-                <label htmlFor="license" className="mr-5 block text-gray-700">License
-                  <input
-                    type="text"
-                    id="license"
-                    value={obj.license}
-                    onChange={(e) => {
-                      obj.setLicense(e.target.value)
-                    }}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
-                  />
-                </label>
-                <label htmlFor="expire" className="mr-5 block text-gray-700">Expiration Date
-                  <input
-                    type="date"
-                    id="expire"
-                    value={obj.expire ? obj.expire.toISOString().split('T')[0] : ''}
-                    onChange={(e) => {
-                      obj.setExpire(new Date(e.target.value))
-                    }}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
-                  />
                 </label>
               </div>
             </div>
@@ -205,4 +157,4 @@ const continueNurse: React.FC<{obj: ObjProps}> = ({obj}) => {
   )
 }
 
-export default  continueNurse
+export default  continueEmployer;

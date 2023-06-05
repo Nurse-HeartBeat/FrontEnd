@@ -76,6 +76,11 @@ export default function Login() {
             <h1 className="flex text-text flex-row">Are you an employer?
               <RadioBut checked={employer} onChange={employerHandler} label={''}/>
             </h1>
+            <button
+              // onClick={handleForgotCredentials}
+              className="mt-5 text-blue-500 underline italic">
+              Forgot Email/Password?
+            </button>
             <button type="submit" className="flex px-4 py-2 text-white bg-accent rounded-md hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5">
               Submit
             </button>
