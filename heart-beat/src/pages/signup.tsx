@@ -150,7 +150,7 @@ export default function SignUp() {
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black" />
               </div>
                 <h1 className="flex text-text flex-row">Are you an employer?
-                  <RadioBut checked={employer} onChange={employerHandler} label={''} />
+                  <RadioBut checked={isEmployer} onChange={employerHandler} label={''} />
                 </h1>
                 {passStatus && (
                   <li className='flex' style={{color:'red'}}>*The password and re-enter password is not the same</li>
