@@ -33,6 +33,7 @@ export default function SignUp() {
   const [postal, setPostal] = useState('');
   const [gender, setGender] = useState('');
   const [facilityType, setFacilityType] = useState('');
+  const [company, setCompany] = useState('')
 
   //to check whether redux is working
   // const dispatch = useDispatch();
@@ -100,7 +101,7 @@ export default function SignUp() {
   }
 
   let employerObj = {
-    employer, setEmployer,
+    company, setCompany,
     address1, setAddress1,
     address2, setAddress2,
     city, setCity,
@@ -166,7 +167,7 @@ export default function SignUp() {
               <ConNurse obj={nurseObj} />
             )}
             {(continueBut && employer) && (
-              <ConEmployer obj={nurseObj} />
+              <ConEmployer obj={employerObj} />
             )}
           </form>
         </div>

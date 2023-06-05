@@ -1,8 +1,8 @@
 import React, { FormEvent, MouseEventHandler } from 'react';
 
 interface ObjProps {
-  employer: string;
-  setEmployer: (value: string) => void;
+  company: string;
+  setCompany: (value: string) => void;
   phone: string;
   setPhone: (value: string) => void;
   address1: string;
@@ -35,16 +35,16 @@ const continueEmployer: React.FC<{obj: ObjProps}> = ({obj}) => {
     "Schools and Educational Institutions"
   ];
   return (
-    <form className="mx-auto" style={{ marginTop:"0%", marginLeft: "-30%", width: "500px" }}>
+    <div className="mx-auto" style={{ marginTop:"0%", marginLeft: "-30%", width: "500px" }}>
             <div className="mb-4">
               <div className='mx-auto flex justify-between'>
                 <label htmlFor="employer" className="mr-5 block text-gray-700">Company Name
                   <input
                     type="text"
                     id="employer"
-                    value={obj.employer}
+                    value={obj.company}
                     onChange={(e) => {
-                      obj.setEmployer(e.target.value)
+                      obj.setCompany(e.target.value)
                     }}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
                   />
@@ -131,7 +131,10 @@ const continueEmployer: React.FC<{obj: ObjProps}> = ({obj}) => {
                   <select
                     id="dropdown"
                     value={obj.facilityType}
-                    onChange={(e) => obj.setFacilityType(e.target.value)}
+                    onChange={(e) =>
+                      obj.setFacilityType(e.target.value)
+                      // console.log(e.target.value)
+                    }
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
                   >
                     {healthcareFacilities.map((facility, index) => {
@@ -153,7 +156,7 @@ const continueEmployer: React.FC<{obj: ObjProps}> = ({obj}) => {
                 Submit
               </button>
             </div>
-          </form>
+          </div>
   )
 }
 
