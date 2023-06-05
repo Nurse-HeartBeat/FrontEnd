@@ -19,7 +19,7 @@ export default function SignUp() {
   const [emailStatus, setEmailStatus] = useState(false);
   const [repass, setRepass] = useState('');
   const [email, setEmail] = useState('');
-  const [employer, setEmployer] = useState(false);
+  const [isEmployer, setIsEmployer] = useState(false);
   const [nurseFirst, setNurseFirst] = useState('');
   const [nurseLast, setNurseLast] = useState('');
   const [license, setLicense] = useState('');
@@ -58,7 +58,7 @@ export default function SignUp() {
   };
 
   const employerHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmployer(!employer)
+    setIsEmployer(!isEmployer)
   }
 
   const handleSubmit = (e: FormEvent) => {
@@ -163,10 +163,10 @@ export default function SignUp() {
                 </button>
                 </>
             )}
-            {(continueBut && !employer) && (
+            {(continueBut && !isEmployer) && (
               <ConNurse obj={nurseObj} />
             )}
-            {(continueBut && employer) && (
+            {(continueBut && isEmployer) && (
               <ConEmployer obj={employerObj} />
             )}
           </form>
