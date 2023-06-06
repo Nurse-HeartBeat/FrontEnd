@@ -22,7 +22,8 @@ function UserStatusHandle () {
   const dispatch = useDispatch();
   const userStatus = Auth.onAuthStateChanged((user) => {
     if (user) {
-      dispatch(setUser(user))
+      console.log(user)
+      dispatch(setUser({hi:1}))
     } else {
       dispatch(setUser(null))
     }
