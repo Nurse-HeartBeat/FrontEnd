@@ -1,5 +1,5 @@
 import Nav from '../components/nav';
-import { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../redux/user';
 import { useEffect } from 'react';
@@ -9,20 +9,26 @@ import Footer from '../components/footer';
 import Image from 'next/image';
 import loginCartoon from '../../public/loginCartoon.png';
 import RadioBut from '../components/radioBut';
+import { Router, useRouter } from 'next/router';
 
 export default function Login() {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [employer, setEmployer] = useState(false);
+  const [isForgot, setIsForgot] = useState(false);
 
 
 
   //to check whether redux is working
   // const dispatch = useDispatch();
-  // const user = useSelector((state:any) => state.user);
-  // useEffect(() => {
-  //   console.log(user, 'from redux')
-  // }, [user])
+  const reduxState = useSelector((state:any) => state.user);
+  const router = useRouter();
+  useEffect(() => {
+    if(reduxState.user) {
+      const redirectRoute = '/jobs';
+      router.push(redirectRoute);
+    }
+  }, [reduxState.user, router])
 
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -76,14 +82,17 @@ export default function Login() {
               <RadioBut checked={employer} onChange={employerHandler} label={''}/>
             </h1>
             <button
-              // onClick={handleForgotCredentials}
+              onClick={() => setIsForgot(true)}
               className="mt-5 text-blue-500 underline italic">
-              Forgot Email/Password?
+              Forgot Password?
             </button>
             <button type="submit" className="flex px-4 py-2 text-white rounded-md  bg-primary-light hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5">
               Submit
             </button>
           </form>
+          {isForgot && (
+            <ForgotModal close={setIsForgot}/>
+          )}
         </div>
         <Image src={loginCartoon} alt={''} className='flex' style={{ width: "50%", marginRight: "5%" }} />
         {/* <Image src={loginCartoon} alt={''} className='flex' style={{ width: "600px", marginRight: "5%", height: "500px" }} /> */}
@@ -92,3 +101,53 @@ export default function Login() {
     </div>
   )
 }
+//  interface CloseProps {
+//   setIsForgot: (value: boolean) => void;
+//  }
+const ForgotModal: React.FC<{close: (value: boolean) => void;}> =  ({close}) => {
+  const [email, setEmail] = useState('');
+
+  const closeModal = () => {
+    close(false)
+    setEmail('');
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Logic for handling the form submission, such as sending a password reset email
+    console.log('Forgot email/password form submitted:', email);
+    closeModal();
+  };
+
+  return (
+    <div>
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+          <div className="bg-white rounded p-4 max-w-sm mx-auto relative">
+            <button
+              className="absolute top-2 right-2 text-gray-600"
+              onClick={closeModal}
+            >
+              &times;
+            </button>
+            <h2 className="text-lg font-bold mb-4 text-black">Input your email</h2>
+            <form onSubmit={handleSubmit}>
+              <label className="block mb-2">Email:</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="border border-gray-300 rounded px-2 py-1 mb-4 text-black"
+              />
+              <button
+                type="submit"
+                className="flex px-4 py-2 text-white rounded-md  bg-primary-light hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+    </div>
+  );
+};

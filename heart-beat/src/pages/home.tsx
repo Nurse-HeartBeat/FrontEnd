@@ -4,10 +4,22 @@ import { FaCalendarAlt, FaComments, FaMapMarkerAlt } from 'react-icons/fa';
 import Slideshow from '../components/slideShow';
 import Footer from '../components/footer';
 import { Router, useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 
 export default function Home() {
+
   let router = useRouter();
+  const reduxState = useSelector((state:any) => state.user);
+
+  useEffect(() => {
+    if (reduxState.user) {
+      const redirectRoute = '/jobs';
+      router.push(redirectRoute);
+    }
+  }, [reduxState.user, router])
+
   let login = () => {
     const redirectRoute = '/login';
     router.push(redirectRoute);

@@ -4,36 +4,40 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../redux/user';
 import { useEffect } from 'react';
 import Auth from '../auth/firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import Footer from '../components/footer';
 import Image from 'next/image';
 import signUpCartoon from '../../public/signUpCartoon.png';
 import RadioBut from '../components/radioBut';
 import ConNurse from '../components/continueNurse';
 import ConEmployer from '../components/continueEmployer';
+import { Router, useRouter } from 'next/router';
 
 export default function SignUp() {
   const [continueBut, setContinueBut] = useState(false);
+  //shared properties
   const [password, setPassword] = useState('');
   const [passStatus, setPassStatus] = useState(false);
   const [emailStatus, setEmailStatus] = useState(false);
   const [repass, setRepass] = useState('');
   const [email, setEmail] = useState('');
-  const [isEmployer, setIsEmployer] = useState(false);
-  const [nurseFirst, setNurseFirst] = useState('');
-  const [nurseLast, setNurseLast] = useState('');
-  const [license, setLicense] = useState('');
-  const [yoe, setyoe] = useState(0);
-  const [expire, setExpire] = useState(new Date());
   const [phone, setPhone] = useState('');
   const [address1, setAddress1] = useState('');
   const [address2, setAddress2] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [postal, setPostal] = useState('');
+//nurse
+  const [nurseFirst, setNurseFirst] = useState('');
+  const [nurseLast, setNurseLast] = useState('');
+  const [license, setLicense] = useState('');
+  const [yoe, setyoe] = useState(0);
+  const [expire, setExpire] = useState(new Date());
   const [gender, setGender] = useState('');
+//employer-company
+  const [isEmployer, setIsEmployer] = useState(false);
   const [facilityType, setFacilityType] = useState('');
-  const [company, setCompany] = useState('')
+  const [company, setCompany] = useState('');
 
   //to check whether redux is working
   // const dispatch = useDispatch();
@@ -41,6 +45,14 @@ export default function SignUp() {
   // useEffect(() => {
   //   console.log(user, 'from redux')
   // }, [user])
+  let router = useRouter();
+  const reduxState = useSelector((state:any) => state.user);
+  useEffect(() => {
+    if(reduxState.user) {
+      const redirectRoute = '/jobs';
+      router.push(redirectRoute);
+    }
+  }, [reduxState.user, router])
 
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -64,6 +76,24 @@ export default function SignUp() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     // Handle form submission logic here
+    createUserWithEmailAndPassword(Auth, email, password)
+      .then(() => {
+        if (isEmployer) {
+          let companyProfileObj = {
+            email, phone, address1, address2, city, state, postal, facilityType, company
+          }
+          //send to the backend
+        } else {
+          let nurseProfileObj = {
+            nurseFirst, nurseLast, license, yoe, expire, gender, email, phone,
+            address1, address2, city, state, postal
+          }
+          //send to the backend
+        }
+      })
+      .catch((err) => {
+        window.alert(err)
+      })
   };
   const handleContinue = (e: FormEvent) => {
     e.preventDefault();
@@ -113,7 +143,6 @@ export default function SignUp() {
     continueBut, setContinueBut,
     facilityType
   }
-
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Nav />
