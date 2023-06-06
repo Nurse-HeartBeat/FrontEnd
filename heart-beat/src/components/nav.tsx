@@ -16,13 +16,13 @@ export default function Nav() {
       <Head>
         <title>HeartBeat | One Heart Beat, Bridging Nursing's Gap</title>
       </Head>
-      <nav className="flex justify-between">
+      <nav className="flex md:flex-row flex-col md:justify-between items-center">
         <div>
           <Link href="/home" className="text-white text-lg font-bold">
             <Image src={Logo} alt="Logo" className="flex h-10 w-auto" />
           </Link>
         </div>
-        <div className="flex space-x-4">
+        <div className="flex md:space-x-4 md:flex-row flex-col md:justify-between items-start">
           <Link href="/jobs" className="text-white text-lg">Jobs</Link>
           {!reduxState.user ? (
             <>

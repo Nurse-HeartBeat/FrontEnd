@@ -23,16 +23,16 @@ const Footer = () => {
         <div className="flex flex-col items-center justify-center">
           <div className="flex space-x-4">
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-              <FaTwitter className="text-primary hover:text-blue-700" />
+              <FaTwitter className="text-primary hover:text-primary-light" />
             </a>
             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-              <FaFacebook className="text-primary hover:text-blue-700" />
+              <FaFacebook className="text-primary hover:text-primary-light" />
             </a>
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-              <FaInstagram className="text-primary hover:text-blue-700" />
+              <FaInstagram className="text-primary hover:text-primary-light" />
             </a>
             <a href="mailto:contact@example.com">
-              <FaEnvelope className="text-primary hover:text-blue-700" />
+              <FaEnvelope className="text-primary hover:text-primary-light" />
             </a>
           </div>
           <div className="mt-2 text-gray-600">
