@@ -69,7 +69,7 @@ export default function Login() {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="name" className="block text-gray-700">Password:</label>
+              <label htmlFor="password" className="block text-gray-700">Password:</label>
               <input
                 type="password"
                 id="password"

@@ -10,30 +10,40 @@ import { useState } from 'react';
 import { Router, useRouter } from 'next/router';
 
 export default function Nav() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const reduxState = useSelector((state:any) => state.user); //need for photo
   return (
     <header className="p-5 bg-primary">
       <Head>
         <title>HeartBeat | One Heart Beat, Bridging Nursing's Gap</title>
       </Head>
-      <nav className="flex justify-between">
+      <nav className="flex flex-wrap md:flex-nowrap justify-between items-center">
         <div>
           <Link href="/home" className="text-white text-lg font-bold">
             <Image src={Logo} alt="Logo" className="flex h-10 w-auto" />
           </Link>
         </div>
-        <div className="flex space-x-4">
-          <Link href="/jobs" className="text-white text-lg">Jobs</Link>
-          {!reduxState.user ? (
-            <>
-              <Link href="/login" className="text-white text-lg">Login</Link>
-              <Link href="/signup" className="text-white text-lg">Signup</Link>
-            </>
-          ) :
-          (
-            <ProfileDropdown />
-          )}
-
+        <div className='flex-col'>
+          <div className='flex justify-end'>
+            <button
+              className="md:hidden text-white text-lg"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? "X" : "Menu"}
+            </button>
+          </div>
+          <div className={`${!isMenuOpen && 'hidden'} flex flex-col md:flex-row md:space-x-4 md:flex md:items-end `}>
+            <Link href="/jobs" className="text-white text-lg mb-2">Jobs</Link>
+            {!reduxState.user ? (
+              <>
+                <Link href="/login" className="text-white text-lg mb-2">Login</Link>
+                <Link href="/signup" className="text-white text-lg mb-2">Signup</Link>
+              </>
+            ) :
+              (
+                <ProfileDropdown />
+              )}
+          </div>
         </div>
       </nav>
     </header>
@@ -50,7 +60,7 @@ const ProfileDropdown = () => {
   let router = useRouter();
 
   return (
-    <div className="relative">
+    <div className="">
       <button
        className={`w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center hover:ring-2 ring-blue-500`}
       onClick={toggleDropdown}
