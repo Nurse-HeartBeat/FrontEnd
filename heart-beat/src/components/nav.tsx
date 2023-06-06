@@ -32,8 +32,7 @@ export default function Nav() {
               {isMenuOpen ? "X" : "Menu"}
             </button>
           </div>
-          <div className={`flex flex-col md:flex-row md:space-x-4 ${isMenuOpen ? 'block' : 'hidden'} md:block`}>
-          {/* <div className={`flex flex-col md:flex-row md:space-x-4 md:items-center`}> */}
+          <div className={`${!isMenuOpen && 'hidden'} flex flex-col md:flex-row md:space-x-4 md:flex md:items-end `}>
             <Link href="/jobs" className="text-white text-lg mb-2">Jobs</Link>
             {!reduxState.user ? (
               <>
