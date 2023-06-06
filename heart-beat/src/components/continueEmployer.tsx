@@ -62,7 +62,7 @@ const continueEmployer: React.FC<{obj: ObjProps}> = ({obj}) => {
                   />
                 </label>
               </div>
-              <div className='mt-5 flex justify-between'>
+              <div className='mt-5 flex justify-between mb-2'>
                 <label htmlFor="address1" className="mr-5 block text-gray-700">Address
                   <input
                     type="text"
@@ -88,7 +88,7 @@ const continueEmployer: React.FC<{obj: ObjProps}> = ({obj}) => {
                 </label>
               </div>
               <div className='flex justify-between'>
-                <label htmlFor="city" className="block text-gray-700 text-white">
+                <label htmlFor="city" className="block text-gray-700 text-white mr-2">
                   <input
                     type="text"
                     id="city"
@@ -100,7 +100,7 @@ const continueEmployer: React.FC<{obj: ObjProps}> = ({obj}) => {
                      py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
                     placeholder="City"/>
                 </label>
-                <label htmlFor="state" className="block text-gray-700 text-white">
+                <label htmlFor="state" className="block text-gray-700 text-white mr-2">
                   <input
                     type="text"
                     id="state"

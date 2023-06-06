@@ -49,7 +49,6 @@ export default function Login() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Nav />
-      Login Placeholder
       <div className="flex lg:flex-row flex-col flex-grow items-center">
         <div className="flex w-1/2">
           <form onSubmit={handleSubmit} className="mx-auto lg:my-0 my-20" style={{ }}>

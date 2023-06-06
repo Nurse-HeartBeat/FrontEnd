@@ -29,7 +29,7 @@ export default function SignUp() {
   const [address1, setAddress1] = useState('');
   const [address2, setAddress2] = useState('');
   const [city, setCity] = useState('');
-  const [state, setState] = useState ('');
+  const [state, setState] = useState('');
   const [postal, setPostal] = useState('');
   const [gender, setGender] = useState('');
   const [facilityType, setFacilityType] = useState('');
@@ -65,7 +65,7 @@ export default function SignUp() {
     e.preventDefault();
     // Handle form submission logic here
   };
-  const handleContinue = (e:FormEvent) => {
+  const handleContinue = (e: FormEvent) => {
     e.preventDefault();
     if (email === '') {
       setEmailStatus(true)
@@ -73,7 +73,7 @@ export default function SignUp() {
     if (password === '') {
       setPassStatus(true)
     } else {
-      if (email!== '' && (password === repass)) {
+      if (email !== '' && (password === repass)) {
         setContinueBut(!continueBut)
         setPassStatus(false)
       }
@@ -117,51 +117,51 @@ export default function SignUp() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Nav />
-      Login Placeholder
       <div className="flex lg:flex-row flex-col flex-grow items-center justify-items-center">
         <div className="flex lg:w-1/2">
-          <form onSubmit={handleContinue} className="mx-auto lg:my-0 my-20" style={{ }}>
+          <form onSubmit={handleContinue} className="mx-auto lg:my-0 my-20" >
             {!continueBut && (
-            <><div className="mb-4">
-                <label htmlFor="email" className="block text-gray-700">Email:</label>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={handleChangeEmail}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black" />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="name" className="block text-gray-700">Password:</label>
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={handleChangePassword}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black" />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="name" className="block text-gray-700">Re-enter Password:</label>
-                <input
-                  type="password"
-                  id="re-password"
-                  value={repass}
-                  onChange={handleChangeRePassword}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black" />
-              </div>
+              <div style={{ width: "300px" }}>
+                <div className="mb-4">
+                  <label htmlFor="email" className="block text-gray-700">Email:</label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={handleChangeEmail}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black" />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="name" className="block text-gray-700">Password:</label>
+                  <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={handleChangePassword}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black" />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="name" className="block text-gray-700">Re-enter Password:</label>
+                  <input
+                    type="password"
+                    id="re-password"
+                    value={repass}
+                    onChange={handleChangeRePassword}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black" />
+                </div>
                 <h1 className="flex text-text flex-row">Are you an employer?
                   <RadioBut checked={isEmployer} onChange={employerHandler} label={''} />
                 </h1>
                 {passStatus && (
-                  <li className='flex' style={{color:'red'}}>*The password and re-enter password is not the same</li>
+                  <li className='' style={{ color: 'red' }}>The password and re-enter password is not the same</li>
                 )}
                 {emailStatus && (
-                  <li className='flex' style={{color:'red'}}>*Please input the email</li>
+                  <li className='' style={{ color: 'red' }}>Please input the email</li>
                 )}
                 <button type="submit" className="flex px-4 py-2 text-white bg-accent rounded-md hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5">
                   Continue
                 </button>
-                </>
+              </div>
             )}
             {(continueBut && !isEmployer) && (
               <ConNurse obj={nurseObj} />
@@ -171,7 +171,7 @@ export default function SignUp() {
             )}
           </form>
         </div>
-        <Image src={loginCartoon} alt={''} className='flex' style={{ width: '600px', marginRight: '5%', height: '500px'}} />
+        <Image src={loginCartoon} alt={''} className='flex' style={{ width: '600px', marginRight: '5%', height: '500px' }} />
       </div>
       <Footer />
     </div>
