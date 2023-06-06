@@ -6,7 +6,7 @@ import Link from 'next/link';
 const Footer = () => {
   return (
     <footer className="bg-background py-5">
-      <div className="grid grid-cols-3 items-center px-5">
+      <div className="md:grid md:grid-cols-3 md:items-center md:px-5 flex flex-col items-center">
         <div className='py-4'>
           <Link href="/home" className="text-white text-lg font-bold">
             <Image
