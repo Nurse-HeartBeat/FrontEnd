@@ -118,9 +118,9 @@ export default function SignUp() {
     <div className="flex flex-col min-h-screen bg-white">
       <Nav />
       Login Placeholder
-      <div className="flex flex-row flex-grow items-center">
-        <div className="flex w-1/2">
-          <form onSubmit={handleContinue} className="mx-auto" style={{ marginLeft: "30%", width: "300px" }}>
+      <div className="flex lg:flex-row flex-col flex-grow items-center justify-items-center">
+        <div className="flex lg:w-1/2">
+          <form onSubmit={handleContinue} className="mx-auto" style={{ }}>
             {!continueBut && (
             <><div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700">Email:</label>
@@ -171,7 +171,7 @@ export default function SignUp() {
             )}
           </form>
         </div>
-        <Image src={loginCartoon} alt={''} className='flex' style={{ width: "600px", marginRight: "10%", height: "500px" }} />
+        <Image src={loginCartoon} alt={''} className='flex' style={{ width: '400px', marginRight: '5%', height: '300px'}} />
       </div>
       <Footer />
     </div>

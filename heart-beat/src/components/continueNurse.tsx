@@ -31,7 +31,7 @@ interface ObjProps {
 }
 const continueNurse: React.FC<{obj: ObjProps}> = ({obj}) => {
   return (
-    <div className="mx-auto" style={{ marginTop:"0%", marginLeft: "-30%", width: "500px" }}>
+    <div className="" style={{ marginTop:"0%", marginLeft: "10px", width: "500px" }}>
             <div className="mb-4">
               <div className='mx-auto flex justify-between'>
                 <label htmlFor="nurseFirst" className="mr-5 block text-gray-700">First Name
