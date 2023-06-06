@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import data from './data';
+import { people } from './data';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import Image from 'next/image';
 
 const Slideshow = () => {
-  const people = data;
   const [index, setIndex] = React.useState(0);
   useEffect(() => {
     console.log(people)

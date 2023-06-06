@@ -17,6 +17,7 @@ export default function Home() {
     if (reduxState.user) {
       const redirectRoute = '/jobs';
       router.push(redirectRoute);
+      // console.log('router: ', router)
     }
   }, [reduxState.user, router])
 
