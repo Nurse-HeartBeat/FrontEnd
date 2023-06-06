@@ -120,7 +120,7 @@ export default function SignUp() {
       Login Placeholder
       <div className="flex lg:flex-row flex-col flex-grow items-center justify-items-center">
         <div className="flex lg:w-1/2">
-          <form onSubmit={handleContinue} className="mx-auto" style={{ }}>
+          <form onSubmit={handleContinue} className="mx-auto lg:my-0 my-20" style={{ }}>
             {!continueBut && (
             <><div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700">Email:</label>
@@ -171,7 +171,7 @@ export default function SignUp() {
             )}
           </form>
         </div>
-        <Image src={loginCartoon} alt={''} className='flex' style={{ width: '400px', marginRight: '5%', height: '300px'}} />
+        <Image src={loginCartoon} alt={''} className='flex' style={{ width: '600px', marginRight: '5%', height: '500px'}} />
       </div>
       <Footer />
     </div>

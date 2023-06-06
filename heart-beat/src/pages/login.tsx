@@ -50,9 +50,9 @@ export default function Login() {
     <div className="flex flex-col min-h-screen bg-white">
       <Nav />
       Login Placeholder
-      <div className="flex flex-row flex-grow items-center">
+      <div className="flex lg:flex-row flex-col flex-grow items-center">
         <div className="flex w-1/2">
-          <form onSubmit={handleSubmit} className="mx-auto" style={{ marginLeft: "30%", width: "300px" }}>
+          <form onSubmit={handleSubmit} className="mx-auto lg:my-0 my-20" style={{ }}>
             <div className="mb-4">
               <label htmlFor="email" className="block text-gray-700">Email:</label>
               <input
@@ -86,7 +86,7 @@ export default function Login() {
             </button>
           </form>
         </div>
-        <Image src={loginCartoon} alt={''} className='flex' style={{ width: "600px", marginRight: "10%", height: "500px" }} />
+        <Image src={loginCartoon} alt={''} className='flex' style={{ width: "600px", marginRight: "5%", height: "500px" }} />
       </div>
       <Footer />
     </div>
