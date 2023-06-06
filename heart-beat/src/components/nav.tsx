@@ -6,8 +6,7 @@ export default function Nav() {
       <nav className="flex justify-between">
         <div>
           <Link href="/home" className="text-white text-lg font-bold">
-            {/* Placeholder for Logo */}
-            {/* <img src="/path/to/logo.png" alt="Logo" className="h-10 w-auto" /> */}
+            <img src="/logo-transparent-background.png" alt="Logo" className="h-10 w-auto" />
           </Link>
         </div>
         <div className="flex space-x-4">

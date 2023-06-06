@@ -2,7 +2,7 @@ const people = [
   {
     id: 1,
     image: '/person0.png',
-    name: 'Emily Chen',
+    name: 'Samantha Parker',
     title: 'Registered Nurse',
     quote:
       'The HeartBeat has revolutionized the way I find nursing job opportunities, making it seamless and efficien.',
@@ -18,7 +18,7 @@ const people = [
   {
     id: 3,
     image: '/person2.png',
-    name: 'Samantha Parker',
+    name: 'Emily Chen',
     title: 'Oncology Nurse',
     quote:
       'The HeartBeat provides a user-friendly platform with a seamless authentication experience, making it convenient to access job opportunities.',

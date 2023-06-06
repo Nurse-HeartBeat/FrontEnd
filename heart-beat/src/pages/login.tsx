@@ -51,7 +51,7 @@ export default function Login() {
       <Nav />
       <div className="flex lg:flex-row flex-col flex-grow items-center">
         <div className="flex w-1/2">
-          <form onSubmit={handleSubmit} className="mx-auto lg:my-0 my-20" style={{ }}>
+          <form onSubmit={handleSubmit} className="mx-auto lg:my-0 my-20" style={{ width: "300px" }}>
             <div className="mb-4">
               <label htmlFor="email" className="block text-gray-700">Email:</label>
               <input
@@ -80,12 +80,13 @@ export default function Login() {
               className="mt-5 text-blue-500 underline italic">
               Forgot Email/Password?
             </button>
-            <button type="submit" className="flex px-4 py-2 text-white bg-accent rounded-md hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5">
+            <button type="submit" className="flex px-4 py-2 text-white rounded-md  bg-primary-light hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5">
               Submit
             </button>
           </form>
         </div>
-        <Image src={loginCartoon} alt={''} className='flex' style={{ width: "600px", marginRight: "5%", height: "500px" }} />
+        <Image src={loginCartoon} alt={''} className='flex' style={{ width: "50%", marginRight: "5%" }} />
+        {/* <Image src={loginCartoon} alt={''} className='flex' style={{ width: "600px", marginRight: "5%", height: "500px" }} /> */}
       </div>
       <Footer />
     </div>

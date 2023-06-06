@@ -147,12 +147,12 @@ const continueEmployer: React.FC<{obj: ObjProps}> = ({obj}) => {
               </div>
             </div>
             <div className ='flex flex-row items-center justify-between'>
-              <button type="button" className="justify-start flex px-4 py-2 text-white bg-accent rounded-md hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5" onClick={() => {
+              <button type="button" className="justify-start flex px-4 py-2 text-white  rounded-md bg-primary-light hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5" onClick={() => {
                 obj.setContinueBut(!obj.continueBut)
               }}>
                 Back
               </button>
-              <button type="button" className="justify-end flex px-4 py-2 text-white bg-accent rounded-md hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5" onClick={obj.handleSubmit}>
+              <button type="button" className="justify-end flex px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5" onClick={obj.handleSubmit}>
                 Submit
               </button>
             </div>

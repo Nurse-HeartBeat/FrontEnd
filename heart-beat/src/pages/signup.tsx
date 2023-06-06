@@ -7,7 +7,7 @@ import Auth from '../auth/firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import Footer from '../components/footer';
 import Image from 'next/image';
-import loginCartoon from '../../public/loginCartoon.png';
+import signUpCartoon from '../../public/signUpCartoon.png';
 import RadioBut from '../components/radioBut';
 import ConNurse from '../components/continueNurse';
 import ConEmployer from '../components/continueEmployer';
@@ -158,7 +158,7 @@ export default function SignUp() {
                 {emailStatus && (
                   <li className='' style={{ color: 'red' }}>Please input the email</li>
                 )}
-                <button type="submit" className="flex px-4 py-2 text-white bg-accent rounded-md hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5">
+                <button type="submit" className="flex px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5">
                   Continue
                 </button>
               </div>
@@ -171,7 +171,7 @@ export default function SignUp() {
             )}
           </form>
         </div>
-        <Image src={loginCartoon} alt={''} className='flex' style={{ width: '600px', marginRight: '5%', height: '500px' }} />
+        <Image src={signUpCartoon} alt={''} className='flex' style={{ width: "50%", marginRight: "5%" }} />
       </div>
       <Footer />
     </div>

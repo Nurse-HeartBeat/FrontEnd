@@ -12,14 +12,14 @@ module.exports = {
       },
       colors: {
         primary: {
-          DEFAULT: '#808080', // Coral
-          light: '#333333', //Light Salmon
+          DEFAULT: '#420f5a', // Coral
+          light: '#771fa1', //Light Salmon
         },
         background: {
           DEFAULT: '#F5F5F5', // Vanilla
         },
         accent:{
-          DEFAULT: '#0077B5', // Deep Saffron
+          DEFAULT: '#214666', // Deep Saffron
         },
         text:{
           DEFAULT: '#4A4A4A', // Dim Gray
