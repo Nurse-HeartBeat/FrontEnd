@@ -51,7 +51,7 @@ export default function Home() {
       </div>
 
 
-      <div className="bg-white grid grid-cols-1 md:grid-cols-3 gap-8 py-10 px-20 text-black">
+      <div className="bg-white grid grid-cols-1 md:grid-cols-3 gap-8 py-10 md:px-20 px-4 text-black">
         <div className="bg-white rounded-lg p-8 shadow-md mx-10">
           <div className="flex items-center justify-center mb-4">
             <FaCalendarAlt className="w-6 h-6 mr-2" />
