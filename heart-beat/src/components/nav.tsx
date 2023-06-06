@@ -1,8 +1,12 @@
 import Link from 'next/link';
+import Head from 'next/head'
 
 export default function Nav() {
   return (
     <header className="p-5 bg-primary">
+      <Head>
+        <title>HeartBeat | One Heart Beat, Bridging Nursing's Gap</title>
+      </Head>
       <nav className="flex justify-between">
         <div>
           <Link href="/home" className="text-white text-lg font-bold">
