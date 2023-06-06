@@ -32,12 +32,13 @@ export default function Nav() {
               {isMenuOpen ? "X" : "Menu"}
             </button>
           </div>
-          <div className={`flex flex-col md:space-x-4 ${isMenuOpen ? 'block' : 'hidden'} md:block`}>
-            <Link href="/jobs" className="text-white text-lg">Jobs</Link>
+          <div className={`flex flex-col md:flex-row md:space-x-4 ${isMenuOpen ? 'block' : 'hidden'} md:block`}>
+          {/* <div className={`flex flex-col md:flex-row md:space-x-4 md:items-center`}> */}
+            <Link href="/jobs" className="text-white text-lg mb-2">Jobs</Link>
             {!reduxState.user ? (
               <>
-                <Link href="/login" className="text-white text-lg">Login</Link>
-                <Link href="/signup" className="text-white text-lg">Signup</Link>
+                <Link href="/login" className="text-white text-lg mb-2">Login</Link>
+                <Link href="/signup" className="text-white text-lg mb-2">Signup</Link>
               </>
             ) :
               (
@@ -60,7 +61,7 @@ const ProfileDropdown = () => {
   let router = useRouter();
 
   return (
-    <div className="relative">
+    <div className="">
       <button
        className={`w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center hover:ring-2 ring-blue-500`}
       onClick={toggleDropdown}
