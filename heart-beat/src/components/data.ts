@@ -35,11 +35,11 @@ const people = [
 
 const jobs = [
   {
-    "id": 1,
+    "id": "1",
     "category": "Nursing",
     "year_required": 5,
     "title": "Senior Nurse",
-    "employer": 123,
+    "employer": "123",
     "assignTo": null,
     "approve": false,
     "completed": false,
@@ -67,11 +67,11 @@ const jobs = [
     "additionalDetails": "N/A"
   },
   {
-    "id": 2,
+    "id": "2",
     "category": "Paediatrics",
     "year_required": 3,
     "title": "Children's Nurse",
-    "employer": 789,
+    "employer": "789",
     "assignTo": null,
     "approve": false,
     "completed": false,
@@ -99,11 +99,11 @@ const jobs = [
     "additionalDetails": "N/A"
   },
   {
-    "id": 3,
+    "id": "3",
     "category": "ICU",
     "year_required": 7,
     "title": "ICU Nurse",
-    "employer": 321,
+    "employer": "321",
     "assignTo": null,
     "approve": false,
     "completed": false,
@@ -131,11 +131,11 @@ const jobs = [
     "additionalDetails": "This is a night shift position in an ICU unit"
   },
   {
-    "id": 4,
+    "id": "4",
     "category": "Psychiatric",
     "year_required": 2,
     "title": "Psychiatric Nurse",
-    "employer": 987,
+    "employer": "987",
     "assignTo": null,
     "approve": false,
     "completed": false,
