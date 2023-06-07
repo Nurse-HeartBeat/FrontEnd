@@ -1,6 +1,5 @@
 import { Job } from './types.js';
-import { FaCalendarAlt, FaComments, FaMapMarkerAlt } from 'react-icons/fa';
-import { FaRegCalendarAlt, FaRegClock, FaUsers, FaDollarSign, FaCircle } from 'react-icons/fa';
+import { FaComments, FaMapMarkerAlt, FaRegCalendarAlt, FaRegClock, FaUsers, FaDollarSign, FaCircle } from 'react-icons/fa';
 import { FaUser, FaPersonBooth, FaEnvelope, FaParking, FaInfoCircle } from 'react-icons/fa';
 
 interface JobDetailProps {
@@ -13,8 +12,10 @@ interface DayCircleProps {
 
 const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
   return (
-    <div className='mx-5 px-5 border border-gray-300 text-black'>
+    <div className='px-5 my-10 border border-gray-300 text-black rounded-2xl'>
       placeholder for map
+      <hr className="border-t border-gray-300 my-6" />
+
       <div className="flex justify-start items-center mb-2 space-x-4">
         <h2 className="text-2xl font-bold">{job.title}</h2>
         <h2 className="text-2xl font-bold">${job.weekly_pay}</h2>
@@ -69,7 +70,8 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
       </div>
 
       <hr className="border-t border-gray-300 my-6" />
-      <h2 className="text-xl font-bold ">Compensation</h2>
+
+      <h2 className="text-xl font-bold mb-4">Compensation</h2>
       <div className="flex items-center mb-4">
         <p>Stipend: {job.stipend}</p>
       </div>
@@ -79,31 +81,29 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
       <div className="flex items-center  mb-4">
         <p>Bonus: {job.bonus}</p>
       </div>
-      <div className="flex items-center">
-        <FaPersonBooth className="mr-2" />
+      <hr className="border-t border-gray-300 my-6" />
+      <h2 className="text-xl font-bold mb-4">Contact</h2>
+
+      <div className="flex items-center mb-4">
+        <FaUser className="mr-2" />
         <p>{job.contact_person}</p>
       </div>
 
-      <div className="flex items-center">
+      <div className="flex items-center mb-4">
         <FaEnvelope className="mr-2" />
         <p>{job.contact_email}</p>
       </div>
+      <hr className="border-t border-gray-300 my-6" />
+      <h2 className="text-xl font-bold mb-4">Additonal Information</h2>
 
-      <div className="flex items-center">
+      <div className="flex items-center mb-4">
         <FaParking className="mr-2" />
         <p>{job.parkingFree ? 'Free Parking' : 'No Free Parking'}</p>
       </div>
-
-
-
-
-
-
-
-      {/* <div className="flex items-center space-x-2">
-            <FaInfoCircle />
-            <span>{job.additionalDetails}</span>
-        </div> */}
+      <div className="flex items-center mb-4">
+        <FaInfoCircle className="mr-2" />
+        <span>{job.additionalDetails}</span>
+      </div>
 
 
 
