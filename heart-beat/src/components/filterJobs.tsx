@@ -32,7 +32,7 @@ return (
           distance
         </button>
         {distanceTab && (
-          <div className='mt-0 left-10 rounded-lg bg-lightP mt-2 z-100 absolute flex-col h-10 items-center justify-center' style={{'width': '200px'}}>
+          <div className='flex mt-0 left-10 rounded-lg bg-lightP mt-2 z-100 absolute flex-col h-10 items-center justify-center' style={{'width': '200px'}}>
             <label htmlFor="distanceSlider"></label>
               <input
                 type="range"
