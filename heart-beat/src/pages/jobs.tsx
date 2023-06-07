@@ -2,7 +2,8 @@ import Nav from '../components/nav';
 import Filter from '../components/filterJobs';
 import Footer from '../components/footer';
 import React, {useState} from 'react';
-
+import JobDetail from '../components/jobDetail';
+import { jobs } from '../components/data';
 
 export default function Jobs () {
   let daysObj = {
@@ -38,6 +39,7 @@ export default function Jobs () {
       <Nav />
       <Filter filterPass={filterPass}/>
       Jobs Placeholder
+      <JobDetail job={jobs[1]}/>
     </div>
   )
 }
