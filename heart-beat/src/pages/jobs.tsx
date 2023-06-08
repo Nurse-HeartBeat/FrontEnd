@@ -27,6 +27,7 @@ export default function Jobs() {
   const [startHour, setStartHour] = useState(0)
   const [endHour, setEndHour] = useState(23.59)
   const [dates, setDates] = useState(new Date())
+  const [postal, setPostal] = useState(0) //later default using the nurse profile (redux)
   const [filteredJobs, setFilteredJobs] = useState(jobs); // use dummy data for now. should fetch data from the server
 
 
@@ -46,7 +47,8 @@ export default function Jobs() {
     days, setDays,
     startHour, setStartHour,
     endHour, setEndHour,
-    dates, setDates
+    dates, setDates,
+    postal, setPostal
   }
   return (
     <div className='bg-white flex-col min-h-screen'>

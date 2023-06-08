@@ -1,4 +1,5 @@
 import React, { useState, FormEvent, MouseEventHandler } from 'react';
+import FilterDistance from './filterComp/filterDistance';
 
 interface FilterPass {
   distance: number;
@@ -17,6 +18,8 @@ interface FilterPass {
   setEndHour: (value: number) => void;
   dates: Date;
   setDates: (value: Date) => void;
+  postal: number;
+  setPostal: (value: number) => void;
 }
 
 const Filter:React.FC<{filterPass: FilterPass}> = ({filterPass}) => {
@@ -28,38 +31,24 @@ return (
     <div className='flex flex-row justify-between text-black mt-5'>
 
       <div>
-        <button className={`hover:bg-primary-light text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20 ${distanceTab ? 'bg-lightP' : 'bg-gray-200'}`} onClick={() => { setDistanceTab(!distanceTab) }}>
+        <button className={`hover:bg-primary-light text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20 ${distanceTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+        onClick={() => { setDistanceTab(!distanceTab) }}>
           distance
         </button>
         {distanceTab && (
-          <div className='flex mt-0 left-10 rounded-lg bg-lightP mt-2 z-100 absolute flex-col h-10 items-center justify-center' style={{'width': '200px'}}>
-            <label htmlFor="distanceSlider"></label>
-              <input
-                type="range"
-                id="distanceSlider"
-                min="1"
-                max="100"
-                value={filterPass.distance}
-                onChange={(e) => filterPass.setDistance(Number(e.target.value))}
-              />
-              <input
-                type="number"
-                min="1"
-                max="100"
-                value={filterPass.distance}
-                onChange={(e) => {
-                  const value = e.target.value.trim() === "" ? "" : Number(e.target.value);
-                  filterPass.setDistance(value);
-                }}
-                className='bg-p-5'
-              />
-          </div>
+          <FilterDistance filterPass={filterPass} />
         )}
       </div>
 
-      <button className="bg-gray-200 hover:bg-gray-300 text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20">
-        distance
-      </button>
+      <div>
+        <button className={`hover:bg-primary-light text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20 ${distanceTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+        onClick={() => { setDistanceTab(!distanceTab) }}>
+          distance
+        </button>
+        {distanceTab && (
+          <FilterDistance filterPass={filterPass} />
+        )}
+      </div>
 
       <button className="bg-gray-200 hover:bg-gray-300 text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20">
         distance
