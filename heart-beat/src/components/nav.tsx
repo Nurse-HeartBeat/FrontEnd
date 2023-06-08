@@ -20,11 +20,15 @@ export default function Nav() {
   };
 
   useEffect(() => {
-    const linksHeight = linksRef.current.getBoundingClientRect().height;
+    const linksHeight = linksRef.current?.getBoundingClientRect().height;
     if (showLinks) {
-      linksContainerRef.current.style.height = `${linksHeight}px`;
+      if (linksContainerRef.current) {
+        linksContainerRef.current.style.height = `${linksHeight}px`;
+      }
     } else {
-      linksContainerRef.current.style.height = '0px';
+      if (linksContainerRef.current) {
+        linksContainerRef.current.style.height = '0px';
+      }
     }
   }, [showLinks]);
 
