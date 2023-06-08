@@ -5,7 +5,7 @@ import { Job } from './types.js';
 interface JobListProps {
   jobs: Job[];
   onJobClick: (job: Job) => void;
-  selectedJobID: Job;
+  selectedJob: Job;
 }
 
 const JobList: React.FC<JobListProps> = ({ jobs, onJobClick, selectedJob }) => {
