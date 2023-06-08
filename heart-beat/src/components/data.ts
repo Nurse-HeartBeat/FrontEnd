@@ -1,7 +1,7 @@
 const people = [
   {
     id: 1,
-    image: '/person0.png',
+    image: '/person0001.png',
     name: 'Samantha Parker',
     title: 'Registered Nurse',
     quote:
@@ -9,7 +9,7 @@ const people = [
   },
   {
     id: 2,
-    image: '/person1.png',
+    image: '/person0003.png',
     name: 'Sarah Ramirez',
     title: 'Pediatric Nurse',
     quote:
@@ -17,7 +17,7 @@ const people = [
   },
   {
     id: 3,
-    image: '/person2.png',
+    image: '/person0005.png',
     name: 'Emily Chen',
     title: 'Oncology Nurse',
     quote:
@@ -25,7 +25,7 @@ const people = [
   },
   {
     id: 4,
-    image: '/person3.png',
+    image: '/person0004.png',
     name: 'Michael Collins',
     title: 'Critical Care Nurse',
     quote:

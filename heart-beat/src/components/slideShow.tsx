@@ -25,12 +25,7 @@ const Slideshow = () => {
     };
   }, [index]);
   return (
-    <section className="section bg-white pt-10">
-      {/* <div className="title">
-        <h2 className="text-2xl">
-          reviews
-        </h2>
-      </div> */}
+    <section className="section pt-12 pb-10 ">
       <div className="section-center">
         {people.map((person, personIndex) => {
           const { id, image, name, title, quote } = person;
@@ -47,9 +42,9 @@ const Slideshow = () => {
           }
 
           return (
-            <article className={position} key={id}>
+            <article className={`${position}`} key={id}>
               <div className="flex items-center justify-center">
-                <Image src={image} width={200} height={200} alt={name} className="person-img" />
+                <Image src={image} width={250} height={250} alt={name} className="person-img" />
               </div>
               <h4 className="text-lg text-text font-bold">{name}</h4>
               <p className="title text-lg text-text">{title}</p>
@@ -57,10 +52,10 @@ const Slideshow = () => {
             </article>
           );
         })}
-        <button className="prev bg-accent hover:bg-primary-light" onClick={() => setIndex(index - 1)}>
+        <button className="prev bg-primary-light hover:bg-primary" onClick={() => setIndex(index - 1)}>
           <FaAngleLeft />
         </button>
-        <button className="next bg-accent hover:bg-primary-light" onClick={() => setIndex(index + 1)}>
+        <button className="next bg-primary-light hover:bg-primary" onClick={() => setIndex(index + 1)}>
           <FaAngleRight />
         </button>
       </div>

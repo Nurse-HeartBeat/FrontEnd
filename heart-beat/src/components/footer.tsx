@@ -5,9 +5,9 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer className="bg-background py-5">
-      <div className="md:grid md:grid-cols-3 md:items-center md:px-5 flex flex-col items-center">
-        <div className='py-4'>
+    <footer className="bg-background py-3">
+      <div className=" flex flex-col items-center">
+        {/* <div className='py-1 ml-5'>
           <Link href="/home" className="text-white text-lg font-bold">
             <Image
               src="/logo-purple-transparent-background.png"
@@ -18,7 +18,7 @@ const Footer = () => {
           </Link>
 
 
-        </div>
+        </div> */}
 
         <div className="flex flex-col items-center justify-center">
           <div className="flex space-x-4">
@@ -39,8 +39,6 @@ const Footer = () => {
             <p>© {new Date().getFullYear()} HeartBeat</p>
           </div>
         </div>
-
-        <div></div>
       </div>
     </footer>
 

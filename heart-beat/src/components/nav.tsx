@@ -13,7 +13,7 @@ export default function Nav() {
   const [showLinks, setShowLinks] = useState(false);
   const linksContainerRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<HTMLUListElement>(null);
-  const reduxState = useSelector((state:any) => state.user); //need for photo
+  const reduxState = useSelector((state: any) => state.user); //need for photo
 
   const toggleLinks = () => {
     setShowLinks(!showLinks);
@@ -32,26 +32,26 @@ export default function Nav() {
     <nav>
       <div className='nav-center'>
         <div className='nav-header'>
-            <Link href="/home" className="text-white text-lg font-bold">
-              <Image src={Logo} alt="Logo" className="flex h-10 w-auto" />
-            </Link>
+          <Link href="/home" className="text-white text-lg font-bold">
+            <Image src={Logo} alt="Logo" className="flex h-10 w-auto" />
+          </Link>
           <button className='nav-toggle' onClick={toggleLinks}>
             <FaBars />
           </button>
         </div>
         <div className='links-container' ref={linksContainerRef}>
-          {!reduxState.user ?
-            <ul className='links' ref={linksRef}>
-              <li><Link href="/jobs" className="text-white text-lg mb-2">Jobs</Link></li>
-              <li><Link href="/login" className="text-white text-lg mb-2">Login</Link></li>
-              <li><Link href="/signup" className="text-white text-lg mb-2">Signup</Link></li>
-            </ul> :
-            <ul className='links' ref={linksRef}>
-              <li><Link href="/jobs" className="text-white text-lg mb-2">Jobs</Link></li>
+          <ul className='links' ref={linksRef}>
+            <li><Link href="/jobs" className="text-white text-lg mb-2">Jobs</Link></li>
+            {!reduxState.user ?
+              <>
+                <li><Link href="/login" className="text-white text-lg mb-2">Login</Link></li>
+                <li><Link href="/signup" className="text-white text-lg mb-2">Signup</Link></li>
+              </> :
               <li><ProfileDropdown /></li>
-            </ul>
-          }
+            }
+          </ul>
         </div>
+
       </div>
     </nav>
   );
@@ -70,14 +70,13 @@ const ProfileDropdown = () => {
   return (
     <div className="">
       <button className={`w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center hover:ring-2 ring-blue-500`}
-      onClick={toggleDropdown}
+        onClick={toggleDropdown}
       >
         <div
-          className={`w-full h-full rounded-full ${
-            isDropdownOpen ? 'ring-2 ring-blue-500' : ''
-          }`}
+          className={`w-full h-full rounded-full ${isDropdownOpen ? 'ring-2 ring-blue-500' : ''
+            }`}
         >
-          <Image src={ProfilePicHolder} alt="Profile" className="w-full h-full rounded-full"/>
+          <Image src={ProfilePicHolder} alt="Profile" className="w-full h-full rounded-full" />
         </div>
       </button>
 
