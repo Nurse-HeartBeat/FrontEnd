@@ -1,4 +1,5 @@
 import { Job } from './types.js';
+import { formatDate } from '../utils/formatDate';
 
 interface JobEntryProps {
   job: Job;
@@ -7,6 +8,7 @@ interface JobEntryProps {
 }
 
 const JobEntry: React.FC<JobEntryProps> = ({ job, onJobClick, selectedJob }) => {
+
   return (
     <div onClick={() => onJobClick(job)} className={`mx-5 mb-5 px-5 py-5 border border-gray-300 text-black hover:border-primary-light  ${selectedJob.id === job.id ? 'border-2 border-primary shadow-lg' : 'border-gray-300'} rounded-xl` }
     >
@@ -21,7 +23,7 @@ const JobEntry: React.FC<JobEntryProps> = ({ job, onJobClick, selectedJob }) => 
         <p className="text-gray-600 ">{job.location}</p>
       </div>
       <div className="flex items-center">
-        <p>{job.startDate}</p>
+        <p>{formatDate(job.startDate)} - {formatDate(job.endDate)}</p>
       </div>
       <div className="flex items-center">
         <p>{job.start} - {job.end} ({job.shiftHour} hours)</p>

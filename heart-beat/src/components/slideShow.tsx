@@ -52,10 +52,10 @@ const Slideshow = () => {
             </article>
           );
         })}
-        <button className="prev hover:bg-primary-light bg-primary" onClick={() => setIndex(index - 1)}>
+        <button className="prev hover:bg-primary-light bg-grey-100" onClick={() => setIndex(index - 1)}>
           <FaAngleLeft />
         </button>
-        <button className="next hover:bg-primary-light bg-primary" onClick={() => setIndex(index + 1)}>
+        <button className="next hover:bg-primary-light bg-grey-100" onClick={() => setIndex(index + 1)}>
           <FaAngleRight />
         </button>
       </div>

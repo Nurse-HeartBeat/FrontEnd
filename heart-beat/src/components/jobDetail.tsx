@@ -1,6 +1,7 @@
 import { Job } from './types.js';
 import { FaComments, FaMapMarkerAlt, FaRegCalendarAlt, FaRegClock, FaUsers, FaDollarSign, FaCircle } from 'react-icons/fa';
 import { FaUser, FaPersonBooth, FaEnvelope, FaParking, FaInfoCircle } from 'react-icons/fa';
+import { formatDate } from '../utils/formatDate';
 
 interface JobDetailProps {
   job: Job;
@@ -48,11 +49,11 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex items-center">
           <FaRegCalendarAlt className="mr-2" />
-          <p>Start Date: {job.startDate}</p>
+          <p>Start Date: {formatDate(job.startDate)}</p>
         </div>
         <div className="flex items-center">
           <FaRegCalendarAlt className="mr-2" />
-          <p>End Date: {job.endDate}</p>
+          <p>End Date: {formatDate(job.endDate)}</p>
         </div>
         <div className="flex items-center">
           <FaRegClock className="mr-2" />
@@ -64,7 +65,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
         </div>
 
         <div className="flex items-center">
-          <FaUsers className="mr-2" />
+          <FaPersonBooth className="mr-2" />
           <p>Patient Population: {job.patient_population}</p>
         </div>
       </div>
@@ -104,10 +105,6 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
         <FaInfoCircle className="mr-2" />
         <span>{job.additionalDetails}</span>
       </div>
-
-
-
-
     </div>
 
   );
