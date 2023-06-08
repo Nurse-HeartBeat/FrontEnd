@@ -6,12 +6,13 @@ import Footer from '../components/footer';
 import { Router, useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import Head from 'next/head'
 
 
 export default function Home() {
 
   let router = useRouter();
-  const reduxState = useSelector((state:any) => state.user);
+  const reduxState = useSelector((state: any) => state.user);
 
   useEffect(() => {
     if (reduxState.user) {
@@ -34,6 +35,9 @@ export default function Home() {
 
   return (
     <div>
+      <Head>
+        <title>HeartBeat | One Heart Beat, Bridging Nursing's Gap</title>
+      </Head>
       <Nav />
       <div className="bg-cover bg-center h-90 flex flex-col items-start text-white"
         style={{ backgroundImage: `url('/bgImage.png')` }}>

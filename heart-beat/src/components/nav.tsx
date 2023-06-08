@@ -1,55 +1,63 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { FaBars } from 'react-icons/fa';
 import Link from 'next/link';
-import Head from 'next/head'
 import Image from 'next/image';
 import Logo from '../../public/logo-transparent-background.png';
 import ProfilePicHolder from '../../public/ProfilePicHolder.jpeg';
 import { useSelector } from 'react-redux';
 import Auth from '../auth/firebase';
 import { signOut } from "firebase/auth";
-import { useState } from 'react';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 export default function Nav() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showLinks, setShowLinks] = useState(false);
+  const linksContainerRef = useRef<HTMLDivElement>(null);
+  const linksRef = useRef<HTMLUListElement>(null);
   const reduxState = useSelector((state:any) => state.user); //need for photo
+
+  const toggleLinks = () => {
+    setShowLinks(!showLinks);
+  };
+
+  useEffect(() => {
+    const linksHeight = linksRef.current.getBoundingClientRect().height;
+    if (showLinks) {
+      linksContainerRef.current.style.height = `${linksHeight}px`;
+    } else {
+      linksContainerRef.current.style.height = '0px';
+    }
+  }, [showLinks]);
+
   return (
-    <header className="p-5 bg-primary">
-      <Head>
-        <title>HeartBeat | One Heart Beat, Bridging Nursing's Gap</title>
-      </Head>
-      <nav className="flex flex-wrap md:flex-nowrap justify-between items-center">
-        <div>
-          <Link href="/home" className="text-white text-lg font-bold">
-            <Image src={Logo} alt="Logo" className="flex h-10 w-auto" />
-          </Link>
+    <nav>
+      <div className='nav-center'>
+        <div className='nav-header'>
+            <Link href="/home" className="text-white text-lg font-bold">
+              <Image src={Logo} alt="Logo" className="flex h-10 w-auto" />
+            </Link>
+          <button className='nav-toggle' onClick={toggleLinks}>
+            <FaBars />
+          </button>
         </div>
-        <div className='flex-col'>
-          <div className='flex justify-end'>
-            <button
-              className="md:hidden text-white text-lg"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? "X" : "Menu"}
-            </button>
-          </div>
-          <div className={`${!isMenuOpen && 'hidden'} flex flex-col md:flex-row md:space-x-4 md:flex md:items-end `}>
-            <Link href="/jobs" className="text-white text-lg mb-2">Jobs</Link>
-            {!reduxState.user ? (
-              <>
-                <Link href="/login" className="text-white text-lg mb-2">Login</Link>
-                <Link href="/signup" className="text-white text-lg mb-2">Signup</Link>
-              </>
-            ) :
-              (
-                <ProfileDropdown />
-              )}
-          </div>
+        <div className='links-container' ref={linksContainerRef}>
+          {!reduxState.user ?
+            <ul className='links' ref={linksRef}>
+              <li><Link href="/jobs" className="text-white text-lg mb-2">Jobs</Link></li>
+              <li><Link href="/login" className="text-white text-lg mb-2">Login</Link></li>
+              <li><Link href="/signup" className="text-white text-lg mb-2">Signup</Link></li>
+            </ul> :
+            <ul className='links' ref={linksRef}>
+              <li><Link href="/jobs" className="text-white text-lg mb-2">Jobs</Link></li>
+              <li><ProfileDropdown /></li>
+            </ul>
+          }
         </div>
-      </nav>
-    </header>
+      </div>
+    </nav>
   );
 }
 
+// Assuming the ProfileDropdown component is defined somewhere else.
 const ProfileDropdown = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -61,8 +69,7 @@ const ProfileDropdown = () => {
 
   return (
     <div className="">
-      <button
-       className={`w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center hover:ring-2 ring-blue-500`}
+      <button className={`w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center hover:ring-2 ring-blue-500`}
       onClick={toggleDropdown}
       >
         <div
@@ -70,9 +77,7 @@ const ProfileDropdown = () => {
             isDropdownOpen ? 'ring-2 ring-blue-500' : ''
           }`}
         >
-          <Image src={ProfilePicHolder} alt="Profile"
-            className="w-full h-full rounded-full"
-          />
+          <Image src={ProfilePicHolder} alt="Profile" className="w-full h-full rounded-full"/>
         </div>
       </button>
 
