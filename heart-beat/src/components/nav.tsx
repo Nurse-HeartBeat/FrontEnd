@@ -20,9 +20,9 @@ export default function Nav() {
 
   useEffect(() => {
     const linksHeight = linksRef.current?.getBoundingClientRect().height;
-    if (showLinks) {
+    if (showLinks && linksHeight !== undefined) {
       if (linksContainerRef.current) {
-        linksContainerRef.current.style.height = `${linksHeight}px`;
+        linksContainerRef.current.style.height = `${linksHeight + 15}px`;
       }
     } else {
       if (linksContainerRef.current) {
@@ -30,6 +30,7 @@ export default function Nav() {
       }
     }
   }, [showLinks]);
+
 
   return (
     <nav>
@@ -54,7 +55,6 @@ export default function Nav() {
             }
           </ul>
         </div>
-
       </div>
     </nav>
   );
@@ -71,7 +71,7 @@ const ProfileDropdown = () => {
   let router = useRouter();
 
   return (
-    <div className="">
+    <div className="mx-3 hover:mx-5 transition-all duration-300">
       <button className={`w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center hover:ring-2 ring-blue-500`}
         onClick={toggleDropdown}
       >
@@ -79,12 +79,12 @@ const ProfileDropdown = () => {
           className={`w-full h-full rounded-full ${isDropdownOpen ? 'ring-2 ring-blue-500' : ''
             }`}
         >
-          <Image src='/profilePicHolder.jpeg' alt="Profile" className="w-full h-full rounded-full" />
+          <Image src='/profilePicHolder.jpeg' alt="Profile" width={200} height={200} className="w-full h-full rounded-full" />
         </div>
       </button>
 
       {isDropdownOpen && (
-        <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-lg">
+        <div className="absolute left-0 md:right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-lg md:ml-auto">
           <button
             className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
             onClick={() => {

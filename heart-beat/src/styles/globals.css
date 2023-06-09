@@ -113,6 +113,10 @@ nav {
   padding: 0.5rem 1rem;
   transition: var(--transition);
 }
+.links li:hover{
+  background: var(--clr-primary-8);
+}
+
 .links a:hover {
   background: var(--clr-primary-8);
   color: white;
@@ -127,7 +131,7 @@ nav {
 .show-container {
   height: 10rem;
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 768px) {
   .nav-center {
     max-width: 2000px;
     margin: 0 auto;
@@ -148,6 +152,10 @@ nav {
   .links {
     display: flex;
     align-items: center;
+  }
+
+  .links li:hover{
+    background: var(--clr-primary-1);
   }
 
   .links a:hover {
