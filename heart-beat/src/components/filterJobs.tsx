@@ -2,7 +2,7 @@ import React, { useState, FormEvent, MouseEventHandler } from 'react';
 import FilterDistance from './filterComp/filterDistance';
 import FilterCategory from './filterComp/filterCategory';
 import FilterPatient from './filterComp/filterPatient';
-import {FilterPassTypes} from './filterComp/typesFilter';
+import {FilterPassTypes} from './types';
 
 const Filter:React.FC<{FilterPass: FilterPassTypes}> = ({FilterPass}) => {
 

@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, MouseEventHandler } from 'react';
-import {FilterPassTypes} from './typesFilter';
+import {FilterPassTypes} from '../types';
 
 const FilterPatient: React.FC<{filterPass: FilterPassTypes}> = ({filterPass}) => {
   const handleApply = (e: React.MouseEvent<HTMLButtonElement>) => {
