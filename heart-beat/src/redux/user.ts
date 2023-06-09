@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // import auth from '../../firebaseConfig';
-import { User } from './utils/types.ts'
+import { User } from '../utils/types'
 
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
-    user: null,
+    user: null as User | null,  // Add this type annotation
   },
   reducers: {
     // login: (state, action) => {

@@ -55,8 +55,8 @@ export interface FilterPass {
   setPatientNum: (value: number) => void;
   weeklyPay: number;
   setWeeklyPay: (value: number) => void;
-  days: Record<string, boolean>;
-  setDays: (value: Record<string, boolean>) => void;
+  days: Days;
+  setDays: (value: Days) => void;
   startHour: number;
   setStartHour: (value: number) => void;
   endHour: number;
@@ -90,3 +90,12 @@ export type NursingRoles = {
   'Public Health Nurse': boolean;
 };
 
+type Days = {
+  M: boolean;
+  T: boolean;
+  W: boolean;
+  Th: boolean;
+  F: boolean;
+  St: boolean;
+  Sn: boolean;
+};

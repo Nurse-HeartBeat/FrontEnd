@@ -23,8 +23,13 @@ function UserStatusHandle () {
   const userStatus = Auth.onAuthStateChanged((user) => {
     if (user) {
       console.log(user)
-      dispatch(setUser({hi:1}))
-    } else {
+      dispatch(setUser({
+        id:'1',
+        name: "Test User",
+        email: "test@example.com",
+        //...other properties
+      }));
+        } else {
       dispatch(setUser(null))
     }
   })

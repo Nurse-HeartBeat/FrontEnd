@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, MouseEventHandler } from 'react';
-import { FilterPass } from '../../utils/types.js';
+import { FilterPass } from '../../utils/types';
 
 
 const FilterCategory: React.FC<{ filterPass: FilterPass }> = ({ filterPass }) => {

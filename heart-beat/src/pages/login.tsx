@@ -112,7 +112,7 @@ const ForgotModal: React.FC<{close: (value: boolean) => void;}> =  ({close}) => 
     setEmail('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Logic for handling the form submission, such as sending a password reset email
     console.log('Forgot email/password form submitted:', email);
