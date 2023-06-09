@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 import Head from 'next/head'
 import Link from 'next/link';
 
-
 export default function Home() {
 
   let router = useRouter();
@@ -59,41 +58,41 @@ export default function Home() {
       </div>
 
 
-      <div className="bg-white grid grid-cols-1 md:grid-cols-3 gap-8 py-20 lg:px-20 px-4 text-black">
-  <div className="bg-white rounded-lg p-8 shadow-md mx-10 hover:bg-background transform transition-transform duration-500 ease-in-out hover:scale-110">
-    <div className="flex items-center justify-center mb-4">
-      <FaCalendarAlt className="w-6 h-6 mr-2" />
-    </div>
-    <div className="flex items-center justify-center mb-4">
-      <h2 className="text-2xl font-bold">Job Booking</h2>
-    </div>
-    <p className="text-lg">
-      Find and book nursing job opportunities conveniently through our platform.
-    </p>
-  </div>
-  <div className="bg-white rounded-lg p-8 shadow-md mx-10 hover:bg-background transform transition-transform duration-500 ease-in-out hover:scale-110">
-    <div className="flex items-center justify-center mb-4">
-      <FaComments className="w-6 h-6 mr-2" />
-    </div>
-    <div className="flex items-center justify-center mb-4">
-      <h2 className="text-2xl font-bold">Real-time Chat</h2>
-    </div>
-    <p className="text-lg">
-      Communicate and collaborate with employers and colleagues in real-time chat.
-    </p>
-  </div>
-  <div className="bg-white rounded-lg p-8 shadow-md mx-10 hover:bg-background transform transition-transform duration-500 ease-in-out hover:scale-110">
-    <div className="flex items-center justify-center mb-4">
-      <FaMapMarkerAlt className="w-6 h-6 mr-2" />
-    </div>
-    <div className="flex items-center justify-center mb-4">
-      <h2 className="text-2xl font-bold">Mapping</h2>
-    </div>
-    <p className="text-lg">
-      Utilize our mapping feature to locate job opportunities and plan your work schedule.
-    </p>
-  </div>
-</div>
+      <div className="bg-white grid grid-cols-1 md:grid-cols-3 gap-8 py-16 lg:px-20 px-4 text-black">
+        <div className="bg-white rounded-lg p-8 shadow-md mx-10 hover:bg-background transform transition-transform duration-500 ease-in-out hover:scale-110">
+          <div className="flex items-center justify-center mb-4">
+            <FaCalendarAlt className="w-6 h-6 mr-2" />
+          </div>
+          <div className="flex items-center justify-center mb-4">
+            <h2 className="text-2xl font-bold">Job Booking</h2>
+          </div>
+          <p className="text-lg">
+            Find and book nursing job opportunities conveniently through our platform.
+          </p>
+        </div>
+        <div className="bg-white rounded-lg p-8 shadow-md mx-10 hover:bg-background transform transition-transform duration-500 ease-in-out hover:scale-110">
+          <div className="flex items-center justify-center mb-4">
+            <FaComments className="w-6 h-6 mr-2" />
+          </div>
+          <div className="flex items-center justify-center mb-4">
+            <h2 className="text-2xl font-bold">Real-time Chat</h2>
+          </div>
+          <p className="text-lg">
+            Communicate and collaborate with employers and colleagues in real-time chat.
+          </p>
+        </div>
+        <div className="bg-white rounded-lg p-8 shadow-md mx-10 hover:bg-background transform transition-transform duration-500 ease-in-out hover:scale-110">
+          <div className="flex items-center justify-center mb-4">
+            <FaMapMarkerAlt className="w-6 h-6 mr-2" />
+          </div>
+          <div className="flex items-center justify-center mb-4">
+            <h2 className="text-2xl font-bold">Mapping</h2>
+          </div>
+          <p className="text-lg">
+            Utilize our mapping feature to locate job opportunities and plan your work schedule.
+          </p>
+        </div>
+      </div>
 
 
       <Slideshow />

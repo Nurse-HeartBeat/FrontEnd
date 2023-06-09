@@ -1,15 +1,16 @@
 import Nav from '../components/nav';
 import Filter from '../components/filterJobs';
 import Footer from '../components/footer';
-import React, { useState } from 'react';
+import React, { use, useState, useEffect } from 'react';
 import JobDetail from '../components/jobDetail';
 import JobList from '../components/jobList';
 import { Job as JobType } from '../components/types.js';
-
-import { jobs } from '../components/data';
+import { generateJobs } from '../utils/seedJobs';
 
 
 export default function Jobs() {
+
+
   let daysObj = {
     M: true,
     T: true,
@@ -49,11 +50,12 @@ export default function Jobs() {
   const [endHour, setEndHour] = useState(23.59)
   const [dates, setDates] = useState(new Date())
   const [postal, setPostal] = useState(0) //later default using the nurse profile (redux)
-  const [filteredJobs, setFilteredJobs] = useState(jobs); // use dummy data for now. should fetch data from the server
+  const [filteredJobs, setFilteredJobs] = useState([]); // use dummy data for now. should fetch data from the server
 
 
-  const [selectedJob, setSelectedJob] = useState(jobs[0]); //default job selected
-  const [selectedJobID, setSelectedJobID] = useState(jobs[0].id); //default job selected
+  const [jobs, setJobs] = useState<JobType[]>([]);
+
+  const [selectedJob, setSelectedJob] = useState<JobType>(); //default job selected
 
 
   const handleJobClick = (job: JobType) => {
@@ -71,6 +73,14 @@ export default function Jobs() {
     dates, setDates,
     postal, setPostal
   }
+
+  useEffect(() => {
+    const jobData = generateJobs(10);
+    setJobs(jobData);
+    setSelectedJob(jobData[0])
+    // Now do something with 'jobs'
+  }, []);
+
   return (
     <div className='bg-white flex-col min-h-screen'>
       <Nav />
@@ -81,6 +91,7 @@ export default function Jobs() {
           {selectedJob && <JobDetail job={selectedJob} />}
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
