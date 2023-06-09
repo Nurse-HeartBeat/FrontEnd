@@ -1,24 +1,6 @@
 import React, { useState, FormEvent, MouseEventHandler } from 'react';
-interface FilterPass {
-  distance: number;
-  setDistance: (value: number) => void;
-  category: Record<string, boolean>;
-  setCategory: (value: object) => void;
-  patientNum: number;
-  setPatientNum: (value: number) => void;
-  weeklyPay: number;
-  setWeeklyPay: (value: number) => void;
-  days: object;
-  setDays: (value: object) => void;
-  startHour: number;
-  setStartHour: (value: number) => void;
-  endHour: number;
-  setEndHour: (value: number) => void;
-  dates: Date;
-  setDates: (value: Date) => void;
-  postal: number;
-  setPostal: (value: number) => void;
-}
+import { FilterPass } from '../../utils/types.js';
+
 
 const FilterDistance: React.FC<{filterPass: FilterPass}> = ({filterPass}) => {
 return (

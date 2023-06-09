@@ -1,24 +1,6 @@
 import React, { useState, FormEvent, MouseEventHandler } from 'react';
-interface FilterPass {
-  distance: number;
-  setDistance: (value: number) => void;
-  category: Record<string, boolean>;
-  setCategory: (value: object) => void;
-  patientNum: number;
-  setPatientNum: (value: number) => void;
-  weeklyPay: number;
-  setWeeklyPay: (value: number) => void;
-  days: object;
-  setDays: (value: object) => void;
-  startHour: number;
-  setStartHour: (value: number) => void;
-  endHour: number;
-  setEndHour: (value: number) => void;
-  dates: Date;
-  setDates: (value: Date) => void;
-  postal: number;
-  setPostal: (value: number) => void;
-}
+import { FilterPass } from '../../utils/types.js';
+
 
 const FilterCategory: React.FC<{ filterPass: FilterPass }> = ({ filterPass }) => {
   const nurseCategories = Object.keys(filterPass.category)
@@ -29,13 +11,12 @@ const FilterCategory: React.FC<{ filterPass: FilterPass }> = ({ filterPass }) =>
         {nurseCategories.map((category) => {
           return (
             <div className='mt-5 ml-5' key={category}>
-              <input name={`checkbox ${category}`} type='checkbox' checked={filterPass.category[category]}
+              <input name={`checkbox ${category}`} type='checkbox' checked={filterPass.category[category as keyof typeof filterPass.category]}
                 onClick={() => {
-                  filterPass.setCategory((prevState: any) => ({
-                    ...prevState,
-                    [category]: !filterPass.category[category]
-                  }));
-                }} />
+                  const newState = { ...filterPass.category, [category]: !filterPass.category[category as keyof typeof filterPass.category] };
+                  filterPass.setCategory(newState);
+                }}
+              />
               <label htmlFor={`checkbox ${category}`}>{' - ' + category}</label>
             </div>
           )

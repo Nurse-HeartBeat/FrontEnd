@@ -45,3 +45,48 @@ export interface Job {
   parkingFree: boolean;
   additionalDetails?: string;
 }
+
+export interface FilterPass {
+  distance: number;
+  setDistance: (value: number) => void;
+  category: NursingRoles;
+  setCategory: (value: NursingRoles) => void;
+  patientNum: number;
+  setPatientNum: (value: number) => void;
+  weeklyPay: number;
+  setWeeklyPay: (value: number) => void;
+  days: Record<string, boolean>;
+  setDays: (value: Record<string, boolean>) => void;
+  startHour: number;
+  setStartHour: (value: number) => void;
+  endHour: number;
+  setEndHour: (value: number) => void;
+  dates: Date;
+  setDates: (value: Date) => void;
+  postal: number;
+  setPostal: (value: number) => void;
+}
+
+export type NursingRoles = {
+  'Registered Nurse (RN)': boolean;
+  'Licensed Practical Nurse (LPN)': boolean;
+  'Certified Nursing Assistant (CNA)': boolean;
+  'Nurse Practitioner (NP)': boolean;
+  'Pediatric Nurse': boolean;
+  'Geriatric Nurse': boolean;
+  'Critical Care Nurse': boolean;
+  'Emergency Room Nurse': boolean;
+  'Operating Room Nurse': boolean;
+  'Neonatal Intensive Care Unit (NICU) Nurse': boolean;
+  'Obstetric Nurse': boolean;
+  'Psychiatric Nurse': boolean;
+  'Oncology Nurse': boolean;
+  'Rehabilitation Nurse': boolean;
+  'Home Health Nurse': boolean;
+  'Intensive Care Unit (ICU) Nurse': boolean;
+  'Surgical Nurse': boolean;
+  'Cardiac Nurse': boolean;
+  'Hospice Nurse': boolean;
+  'Public Health Nurse': boolean;
+};
+

@@ -6,8 +6,6 @@ import JobDetail from '../components/jobDetail';
 import JobList from '../components/jobList';
 import { Job as JobType } from '../utils/types.js';
 import { generateJobs } from '../utils/seedJobs';
-
-
 export default function Jobs() {
 
 
