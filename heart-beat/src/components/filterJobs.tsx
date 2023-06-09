@@ -5,9 +5,9 @@ import FilterPatient from './filterComp/filterPatient';
 
 interface FilterPass {
   distance: number;
-  setDistance:(value: number) => void;
-  category: string;
-  setCategory: (value: string) => void;
+  setDistance: (value: number) => void;
+  category: Record<string, boolean>;
+  setCategory: (value: object) => void;
   patientNum: number;
   setPatientNum: (value: number) => void;
   weeklyPay: number;
@@ -24,6 +24,8 @@ interface FilterPass {
   setPostal: (value: number) => void;
 }
 
+
+
 const Filter:React.FC<{filterPass: FilterPass}> = ({filterPass}) => {
 
   // const [distanceTab, setDistanceTab] = useState(false);
@@ -39,12 +41,17 @@ const Filter:React.FC<{filterPass: FilterPass}> = ({filterPass}) => {
     dateTab: false
   });
 
-  function filterOrganize (category:string) {
-    setState(prevState => ({
-      ...Object.fromEntries(Object.keys(prevState).map(key => [key, false])),
-      [category]: !state[category]
-    }));
+  function filterOrganize(category: keyof typeof state) {
+    const newState = { ...state };
+    for (let key in newState) {
+      newState[key as keyof typeof state] = false;
+    }
+    newState[category] = true;
+
+    setState(newState);
   }
+
+
 
 return (
   <div className='mx-20'>

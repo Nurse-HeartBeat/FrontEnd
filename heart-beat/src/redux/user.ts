@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // import auth from '../../firebaseConfig';
+import { User } from './utils/types.ts'
 
 export const userSlice = createSlice({
   name: 'user',
@@ -19,7 +20,7 @@ export const userSlice = createSlice({
     //   auth.signOut();
     //   state.user = null;
     // },
-    setUser: (state: any, action: PayloadAction<object>) => {
+    setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload
       console.log(state.user)
     }

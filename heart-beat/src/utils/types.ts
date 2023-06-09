@@ -1,3 +1,12 @@
+export interface User {
+  // Define your user fields here
+  // For example:
+  id: string;
+  name: string;
+  email: string;
+  // etc.
+}
+
 export interface Job {
   id: string;
   category: string;
