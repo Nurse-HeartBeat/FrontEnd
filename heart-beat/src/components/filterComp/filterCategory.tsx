@@ -24,17 +24,22 @@ return (
     })}
   </div>
 
-  <button className='flex px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary mt-5'>Apply</button>
+<div className='flex flex-row'>
   <button
-    onClick={() => {
-      filterPass.setCategory((prevState: CategoryTypes) => {
-        const updatedCategory = Object.fromEntries(
-          Object.keys(prevState).map((key) => [key, false])
-        ) as unknown as CategoryTypes;
-        return updatedCategory;
-      });
+      onClick={() => {
+        filterPass.setCategory((prevState: CategoryTypes) => {
+          const updatedCategory = Object.fromEntries(
+            Object.keys(prevState).map((key) => [key, false])
+          ) as unknown as CategoryTypes;
+          return updatedCategory;
+        });
 
-    }}>Unselect All</button>
+      }}
+      className='flex px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary mt-5 mr-3'>Unselect All
+  </button>
+  <button className='flex px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary mt-5 ml-3'>Apply
+  </button>
+</div>
 </div>
 )
 }

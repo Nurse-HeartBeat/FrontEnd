@@ -3,6 +3,8 @@ import FilterDistance from './filterComp/filterDistance';
 import FilterCategory from './filterComp/filterCategory';
 import FilterPatient from './filterComp/filterPatient';
 import FilterWeeklyPay from './filterComp/filterWeeklyPay';
+import FilterDays from './filterComp/filterDays';
+import FilterHour from './filterComp/filterHour';
 import {FilterPassTypes} from '../utils/types';
 
 
@@ -96,7 +98,7 @@ return (
            Days
         </button>
         {state.daysTab && (
-          <FilterCategory filterPass={FilterPass} />
+          <FilterDays filterPass={FilterPass} />
         )}
       </div>
 
@@ -105,24 +107,13 @@ return (
         onClick={() => {
           filterOrganize('startHourTab');
           }}>
-           Start Hour
+          Hour
         </button>
         {state.startHourTab && (
-          <FilterCategory filterPass={FilterPass} />
+          <FilterHour filterPass={FilterPass} />
         )}
       </div>
 
-      <div>
-        <button className={`hover:bg-primary-light text-black font-semibold h-13 flex items-center justify-center rounded-lg w-20 ${state.endHourTab ? 'bg-gray-300' : 'bg-gray-200'}`}
-        onClick={() => {
-          filterOrganize('endHourTab');
-          }}>
-           End Hour
-        </button>
-        {state.endHourTab && (
-          <FilterCategory filterPass={FilterPass} />
-        )}
-      </div>
 
       <div>
         <button className={`hover:bg-primary-light text-black font-semibold h-13 flex items-center justify-center rounded-lg w-20 ${state.dateTab ? 'bg-gray-300' : 'bg-gray-200'}`}

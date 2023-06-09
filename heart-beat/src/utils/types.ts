@@ -47,8 +47,8 @@ export interface FilterPassTypes {
   setPatientNum: (value: number) => void;
   weeklyPay: number;
   setWeeklyPay: (value: number) => void;
-  days: object;
-  setDays: (value: { M: boolean; T: boolean; W: boolean; Th: boolean; F: boolean; St: boolean; Sn: boolean }) => void;
+  days: { [key: string]: boolean };
+  setDays: (value:(prevState:DaysTypes) => DaysTypes) => void;
   startHour: number;
   setStartHour: (value: number) => void;
   endHour: number;
@@ -81,3 +81,12 @@ export interface CategoryTypes {
   'Hospice Nurse': boolean;
   'Public Health Nurse': boolean;
 }
+
+export interface DaysTypes{
+  'M': boolean;
+  'T': boolean;
+  'W': boolean;
+  'Th': boolean;
+  'F': boolean;
+  'St': boolean;
+  'Sn': boolean }
