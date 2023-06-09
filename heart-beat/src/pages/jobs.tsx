@@ -20,7 +20,28 @@ export default function Jobs() {
     Sn: true
   }
   const [distance, setDistance] = useState(25);
-  const [category, setCategory] = useState(null);
+  const [category, setCategory] = useState({
+    'Registered Nurse (RN)': true,
+    'Licensed Practical Nurse (LPN)': true,
+    'Certified Nursing Assistant (CNA)': true,
+    'Nurse Practitioner (NP)': true,
+    'Pediatric Nurse': true,
+    'Geriatric Nurse': true,
+    'Critical Care Nurse': true,
+    'Emergency Room Nurse': true,
+    'Operating Room Nurse': true,
+    'Neonatal Intensive Care Unit (NICU) Nurse': true,
+    'Obstetric Nurse': true,
+    'Psychiatric Nurse': true,
+    'Oncology Nurse': true,
+    'Rehabilitation Nurse': true,
+    'Home Health Nurse': true,
+    'Intensive Care Unit (ICU) Nurse': true,
+    'Surgical Nurse': true,
+    'Cardiac Nurse': true,
+    'Hospice Nurse': true,
+    'Public Health Nurse': true
+  });
   const [patientNum, setPatientNum] = useState(100);
   const [weeklyPay, setWeeklyPay] = useState(3000);
   const [days, setDays] = useState(daysObj);

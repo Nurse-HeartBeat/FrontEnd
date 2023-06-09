@@ -1,5 +1,7 @@
 import React, { useState, FormEvent, MouseEventHandler } from 'react';
 import FilterDistance from './filterComp/filterDistance';
+import FilterCategory from './filterComp/filterCategory';
+import FilterPatient from './filterComp/filterPatient';
 
 interface FilterPass {
   distance: number;
@@ -24,55 +26,125 @@ interface FilterPass {
 
 const Filter:React.FC<{filterPass: FilterPass}> = ({filterPass}) => {
 
-  const [distanceTab, setDistanceTab] = useState(false);
+  // const [distanceTab, setDistanceTab] = useState(false);
+  // const [categoryTab, setCategoryTab] = useState(false);
+  const [state, setState] = useState({
+    distanceTab: false,
+    categoryTab: false,
+    patientTab: false,
+    weeklyPayTab: false,
+    daysTab: false,
+    startHourTab: false,
+    endHourTab: false,
+    dateTab: false
+  });
+
+  function filterOrganize (category:string) {
+    setState(prevState => ({
+      ...Object.fromEntries(Object.keys(prevState).map(key => [key, false])),
+      [category]: !state[category]
+    }));
+  }
 
 return (
   <div className='mx-20'>
     <div className='flex flex-row justify-between text-black mt-5'>
 
       <div>
-        <button className={`hover:bg-primary-light text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20 ${distanceTab ? 'bg-gray-300' : 'bg-gray-200'}`}
-        onClick={() => { setDistanceTab(!distanceTab) }}>
-          distance
+        <button className={`hover:bg-primary-light text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20 ${state.distanceTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+        onClick={() => {
+          filterOrganize('distanceTab');
+          }}>
+          Distance
         </button>
-        {distanceTab && (
+        {state.distanceTab && (
           <FilterDistance filterPass={filterPass} />
         )}
       </div>
 
       <div>
-        <button className={`hover:bg-primary-light text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20 ${distanceTab ? 'bg-gray-300' : 'bg-gray-200'}`}
-        onClick={() => { setDistanceTab(!distanceTab) }}>
-          distance
+        <button className={`hover:bg-primary-light text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20 ${state.categoryTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+        onClick={() => {
+          filterOrganize('categoryTab');
+          }}>
+          Category
         </button>
-        {distanceTab && (
-          <FilterDistance filterPass={filterPass} />
+        {state.categoryTab && (
+          <FilterCategory filterPass={filterPass} />
         )}
       </div>
 
-      <button className="bg-gray-200 hover:bg-gray-300 text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20">
-        distance
-      </button>
+      <div>
+        <button className={`hover:bg-primary-light text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20 ${state.patientTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+        onClick={() => {
+          filterOrganize('patientTab');
+          }}>
+          Patient #
+        </button>
+        {state.patientTab && (
+          <FilterPatient filterPass={filterPass} />
+        )}
+      </div>
 
-      <button className="bg-gray-200 hover:bg-gray-300 text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20">
-        distance
-      </button>
+      <div>
+        <button className={`hover:bg-primary-light text-black font-semibold h-13 flex items-center justify-center rounded-lg w-auto ${state.weeklyPayTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+        onClick={() => {
+          filterOrganize('weeklyPayTab');
+          }}>
+           Weekly Pay
+        </button>
+        {state.weeklyPayTab && (
+          <FilterCategory filterPass={filterPass} />
+        )}
+      </div>
 
-      <button className="bg-gray-200 hover:bg-gray-300 text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20">
-        distance
-      </button>
+      <div>
+        <button className={`hover:bg-primary-light text-black font-semibold h-13 flex items-center justify-center rounded-lg w-20 ${state.daysTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+        onClick={() => {
+          filterOrganize('daysTab');
+          }}>
+           Days
+        </button>
+        {state.daysTab && (
+          <FilterCategory filterPass={filterPass} />
+        )}
+      </div>
 
-      <button className="bg-gray-200 hover:bg-gray-300 text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20">
-        distance
-      </button>
+      <div>
+        <button className={`hover:bg-primary-light text-black font-semibold h-13 flex items-center justify-center rounded-lg w-20 ${state.startHourTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+        onClick={() => {
+          filterOrganize('startHourTab');
+          }}>
+           Start Hour
+        </button>
+        {state.startHourTab && (
+          <FilterCategory filterPass={filterPass} />
+        )}
+      </div>
 
-      <button className="bg-gray-200 hover:bg-gray-300 text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20">
-        distance
-      </button>
+      <div>
+        <button className={`hover:bg-primary-light text-black font-semibold h-13 flex items-center justify-center rounded-lg w-20 ${state.endHourTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+        onClick={() => {
+          filterOrganize('endHourTab');
+          }}>
+           End Hour
+        </button>
+        {state.endHourTab && (
+          <FilterCategory filterPass={filterPass} />
+        )}
+      </div>
 
-      <button className="bg-gray-200 hover:bg-gray-300 text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20">
-        distance
-      </button>
+      <div>
+        <button className={`hover:bg-primary-light text-black font-semibold h-13 flex items-center justify-center rounded-lg w-20 ${state.dateTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+        onClick={() => {
+          filterOrganize('dateTab');
+          }}>
+           Dates
+        </button>
+        {state.dateTab && (
+          <FilterCategory filterPass={filterPass} />
+        )}
+      </div>
 
     </div>
   </div>
