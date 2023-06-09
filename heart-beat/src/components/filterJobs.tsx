@@ -5,6 +5,7 @@ import FilterPatient from './filterComp/filterPatient';
 import FilterWeeklyPay from './filterComp/filterWeeklyPay';
 import FilterDays from './filterComp/filterDays';
 import FilterHour from './filterComp/filterHour';
+import FilterDates from './filterComp/filterDates';
 import {FilterPassTypes} from '../utils/types';
 
 
@@ -123,7 +124,7 @@ return (
            Dates
         </button>
         {state.dateTab && (
-          <FilterCategory filterPass={FilterPass} />
+          <FilterDates filterPass={FilterPass} />
         )}
       </div>
 
