@@ -19,7 +19,7 @@ export const userSlice = createSlice({
     //   auth.signOut();
     //   state.user = null;
     // },
-    setUser: (state: any, action: PayloadAction<object>) => {
+    setUser: (state: any, action: PayloadAction<object | null>) => {
       state.user = action.payload
       console.log(state.user)
     }

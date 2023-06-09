@@ -1,26 +1,7 @@
 import React, { useState, FormEvent, MouseEventHandler } from 'react';
-interface FilterPass {
-  distance: number;
-  setDistance:(value: number) => void;
-  category: object;
-  setCategory: (value: object) => void;
-  patientNum: number;
-  setPatientNum: (value: number) => void;
-  weeklyPay: number;
-  setWeeklyPay: (value: number) => void;
-  days: object;
-  setDays: (value: object) => void;
-  startHour: number;
-  setStartHour: (value: number) => void;
-  endHour: number;
-  setEndHour: (value: number) => void;
-  dates: Date;
-  setDates: (value: Date) => void;
-  postal: number;
-  setPostal: (value: number) => void;
-}
+import {FilterPassTypes} from './typesFilter';
 
-const FilterDistance: React.FC<{filterPass: FilterPass}> = ({filterPass}) => {
+const FilterDistance: React.FC<{filterPass: FilterPassTypes}> = ({filterPass}) => {
 return (
 <div className='flex rounded-lg bg-gray-300 mt-2 z-100 absolute flex-col h-10 items-center justify-center shadow-lg ring-2 ring-Primary' style={{'width': '200px', 'marginTop':'-0px', 'height':'300px'}}>
   <label htmlFor="distanceSlider"></label>

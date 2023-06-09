@@ -16,7 +16,7 @@ const Resource = () => {
   </div>
   <div className="link-hover">
     <h3 className="font-bold text-2xl mb-3 h3-underline">Contact</h3>
-    <p>Have questions or want to get in touch with us? We'd love to hear from you.</p>
+    <p>{`Have questions or want to get in touch with us? We'd love to hear from you.`}</p>
     <Link className="link-hover" href="/contact">Contact us</Link>
   </div>
   <div className="link-hover">

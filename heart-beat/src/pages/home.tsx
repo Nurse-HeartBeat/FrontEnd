@@ -38,7 +38,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>HeartBeat | One Heart Beat, Bridging Nursing's Gap</title>
+        <title>{`HeartBeat | One Heart Beat, Bridging Nursing's Gap`}</title>
       </Head>
       <Nav />
       <div className="bg-cover bg-center h-90 flex flex-col items-start text-white"

@@ -2,29 +2,9 @@ import React, { useState, FormEvent, MouseEventHandler } from 'react';
 import FilterDistance from './filterComp/filterDistance';
 import FilterCategory from './filterComp/filterCategory';
 import FilterPatient from './filterComp/filterPatient';
+import {FilterPassTypes} from './filterComp/typesFilter';
 
-interface FilterPass {
-  distance: number;
-  setDistance:(value: number) => void;
-  category: string;
-  setCategory: (value: string) => void;
-  patientNum: number;
-  setPatientNum: (value: number) => void;
-  weeklyPay: number;
-  setWeeklyPay: (value: number) => void;
-  days: object;
-  setDays: (value: object) => void;
-  startHour: number;
-  setStartHour: (value: number) => void;
-  endHour: number;
-  setEndHour: (value: number) => void;
-  dates: Date;
-  setDates: (value: Date) => void;
-  postal: number;
-  setPostal: (value: number) => void;
-}
-
-const Filter:React.FC<{filterPass: FilterPass}> = ({filterPass}) => {
+const Filter:React.FC<{FilterPass: FilterPassTypes}> = ({FilterPass}) => {
 
   // const [distanceTab, setDistanceTab] = useState(false);
   // const [categoryTab, setCategoryTab] = useState(false);
@@ -40,9 +20,17 @@ const Filter:React.FC<{filterPass: FilterPass}> = ({filterPass}) => {
   });
 
   function filterOrganize (category:string) {
-    setState(prevState => ({
+    setState((prevState: { [key: string]: boolean }) => ({
       ...Object.fromEntries(Object.keys(prevState).map(key => [key, false])),
-      [category]: !state[category]
+      distanceTab: false,
+      categoryTab: false,
+      patientTab: false,
+      weeklyPayTab: false,
+      daysTab: false,
+      startHourTab: false,
+      endHourTab: false,
+      dateTab: false,
+      [category]: !prevState[category],
     }));
   }
 
@@ -58,7 +46,7 @@ return (
           Distance
         </button>
         {state.distanceTab && (
-          <FilterDistance filterPass={filterPass} />
+          <FilterDistance filterPass={FilterPass} />
         )}
       </div>
 
@@ -70,7 +58,7 @@ return (
           Category
         </button>
         {state.categoryTab && (
-          <FilterCategory filterPass={filterPass} />
+          <FilterCategory filterPass={FilterPass} />
         )}
       </div>
 
@@ -82,7 +70,7 @@ return (
           Patient #
         </button>
         {state.patientTab && (
-          <FilterPatient filterPass={filterPass} />
+          <FilterPatient filterPass={FilterPass} />
         )}
       </div>
 
@@ -94,7 +82,7 @@ return (
            Weekly Pay
         </button>
         {state.weeklyPayTab && (
-          <FilterCategory filterPass={filterPass} />
+          <FilterCategory filterPass={FilterPass} />
         )}
       </div>
 
@@ -106,7 +94,7 @@ return (
            Days
         </button>
         {state.daysTab && (
-          <FilterCategory filterPass={filterPass} />
+          <FilterCategory filterPass={FilterPass} />
         )}
       </div>
 
@@ -118,7 +106,7 @@ return (
            Start Hour
         </button>
         {state.startHourTab && (
-          <FilterCategory filterPass={filterPass} />
+          <FilterCategory filterPass={FilterPass} />
         )}
       </div>
 
@@ -130,7 +118,7 @@ return (
            End Hour
         </button>
         {state.endHourTab && (
-          <FilterCategory filterPass={filterPass} />
+          <FilterCategory filterPass={FilterPass} />
         )}
       </div>
 
@@ -142,7 +130,7 @@ return (
            Dates
         </button>
         {state.dateTab && (
-          <FilterCategory filterPass={filterPass} />
+          <FilterCategory filterPass={FilterPass} />
         )}
       </div>
 
@@ -151,4 +139,4 @@ return (
 )
 }
 
-export default Filter
+export default Filter;

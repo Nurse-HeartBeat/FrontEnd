@@ -1,27 +1,7 @@
 import React, { useState, FormEvent, MouseEventHandler } from 'react';
-interface FilterPass {
-  distance: number;
-  setDistance:(value: number) => void;
-  category: object;
-  setCategory: (value: object) => void;
-  patientNum: number;
-  setPatientNum: (value: number) => void;
-  weeklyPay: number;
-  setWeeklyPay: (value: number) => void;
-  days: object;
-  setDays: (value: object) => void;
-  startHour: number;
-  setStartHour: (value: number) => void;
-  endHour: number;
-  setEndHour: (value: number) => void;
-  dates: Date;
-  setDates: (value: Date) => void;
-  postal: number;
-  setPostal: (value: number) => void;
-}
+import {FilterPassTypes} from './typesFilter';
 
-const FilterPatient: React.FC<{filterPass: FilterPass}> = ({filterPass}) => {
-  const nurseCategories = Object.keys(filterPass.category)
+const FilterPatient: React.FC<{filterPass: FilterPassTypes}> = ({filterPass}) => {
   const handleApply = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (filterPass.patientNum === 0) {
       setWarning(true)

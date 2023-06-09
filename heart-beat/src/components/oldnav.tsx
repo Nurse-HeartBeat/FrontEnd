@@ -16,7 +16,7 @@ export default function Nav() {
   return (
     <header className="p-5 bg-primary">
       <Head>
-        <title>HeartBeat | One Heart Beat, Bridging Nursing's Gap</title>
+        <title>{`HeartBeat | One Heart Beat, Bridging Nursing's Gap`}</title>
       </Head>
       <nav className="flex flex-wrap md:flex-nowrap justify-between items-center">
         <div>
