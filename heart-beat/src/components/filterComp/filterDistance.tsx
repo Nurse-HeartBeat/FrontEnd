@@ -2,8 +2,8 @@ import React, { useState, FormEvent, MouseEventHandler } from 'react';
 interface FilterPass {
   distance: number;
   setDistance:(value: number) => void;
-  category: string;
-  setCategory: (value: string) => void;
+  category: object;
+  setCategory: (value: object) => void;
   patientNum: number;
   setPatientNum: (value: number) => void;
   weeklyPay: number;

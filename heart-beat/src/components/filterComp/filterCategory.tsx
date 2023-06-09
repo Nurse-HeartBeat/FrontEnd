@@ -43,6 +43,9 @@ return (
   </div>
 
   <button className='flex px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary mt-5'>Apply</button>
+  <button onClick={(e) => {
+    
+  }}>Unselect All</button>
 </div>
 )
 }
