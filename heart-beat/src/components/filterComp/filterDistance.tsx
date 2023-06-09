@@ -22,7 +22,7 @@ interface FilterPass {
 
 const FilterDistance: React.FC<{filterPass: FilterPass}> = ({filterPass}) => {
 return (
-<div className='flex left-10 rounded-lg bg-gray-300 mt-2 z-100 absolute flex-col h-10 items-center justify-center shadow-lg ring-2 ring-Primary' style={{'width': '200px', 'marginTop':'-0px', 'height':'300px'}}>
+<div className='flex rounded-lg bg-gray-300 mt-2 z-100 absolute flex-col h-10 items-center justify-center shadow-lg ring-2 ring-Primary' style={{'width': '200px', 'marginTop':'-0px', 'height':'300px'}}>
   <label htmlFor="distanceSlider"></label>
   <div className='flex flex-col mb-5 justify-center items-center'>
     <label htmlFor='postalInputSlider' className='flex'> Enter Postal Code:</label>
