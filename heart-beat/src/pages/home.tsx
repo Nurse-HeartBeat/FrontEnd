@@ -22,7 +22,7 @@ export default function Home() {
       router.push(redirectRoute);
       // console.log('router: ', router)
     }
-  }, [reduxState.user, router])
+  }, [reduxState.user])
 
   let login = () => {
     const redirectRoute = '/login';
