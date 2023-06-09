@@ -3,7 +3,6 @@ import { FaBars } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
 import Logo from '../../public/logo-transparent-background.png';
-import ProfilePicHolder from '../../public/ProfilePicHolder.jpeg';
 import { useSelector } from 'react-redux';
 import Auth from '../auth/firebase';
 import { signOut } from "firebase/auth";
@@ -80,7 +79,7 @@ const ProfileDropdown = () => {
           className={`w-full h-full rounded-full ${isDropdownOpen ? 'ring-2 ring-blue-500' : ''
             }`}
         >
-          <Image src={ProfilePicHolder} alt="Profile" className="w-full h-full rounded-full" />
+          <Image src='/ProfilePicHolder.jpeg' alt="Profile" className="w-full h-full rounded-full" />
         </div>
       </button>
 
