@@ -4,7 +4,7 @@ import Footer from '../components/footer';
 import React, { use, useState, useEffect } from 'react';
 import JobDetail from '../components/jobDetail';
 import JobList from '../components/jobList';
-import { Job as JobType } from '../components/types.js';
+import { Job as JobType } from '../utils/types.js';
 import { generateJobs } from '../utils/seedJobs';
 
 

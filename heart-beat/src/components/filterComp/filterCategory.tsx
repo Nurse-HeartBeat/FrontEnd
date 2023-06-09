@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, MouseEventHandler } from 'react';
-import {FilterPassTypes} from '../types';
+import {FilterPassTypes} from '../../utils/types';
 
 const FilterCategory: React.FC<{filterPass: FilterPassTypes}> = ({filterPass}) => {
   const nurseCategories = Object.keys(filterPass.category)
