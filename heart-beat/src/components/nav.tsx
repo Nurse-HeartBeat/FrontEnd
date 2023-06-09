@@ -22,7 +22,7 @@ export default function Nav() {
     const linksHeight = linksRef.current?.getBoundingClientRect().height;
     if (showLinks && linksHeight !== undefined) {
       if (linksContainerRef.current) {
-        linksContainerRef.current.style.height = `${linksHeight + 10}px`;
+        linksContainerRef.current.style.height = `${linksHeight + 15}px`;
       }
     } else {
       if (linksContainerRef.current) {
@@ -84,7 +84,7 @@ const ProfileDropdown = () => {
       </button>
 
       {isDropdownOpen && (
-        <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-lg">
+        <div className="absolute left-0 md:right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-lg md:ml-auto">
           <button
             className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
             onClick={() => {
