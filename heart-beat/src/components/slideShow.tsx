@@ -25,7 +25,7 @@ const Slideshow = () => {
     };
   }, [index]);
   return (
-    <section className="section pt-12 pb-10 bg-gray-300">
+    <section className="section pt-12 pb-10 bg-gray-100">
       <div className="section-center">
         {people.map((person, personIndex) => {
           const { id, image, name, title, quote } = person;
