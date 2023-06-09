@@ -1,7 +1,6 @@
 import { Job } from './types.js';
 import { FaComments, FaMapMarkerAlt, FaRegCalendarAlt, FaRegClock, FaUsers, FaDollarSign, FaCircle } from 'react-icons/fa';
 import { FaUser, FaPersonBooth, FaEnvelope, FaParking, FaInfoCircle } from 'react-icons/fa';
-import { formatDate } from '../utils/formatDate';
 
 interface JobDetailProps {
   job: Job;
@@ -24,7 +23,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
       <p className="text-lg text-gray-600 mb-2">{job.category}</p>
       <div className="flex items-center">
         <FaMapMarkerAlt className="mr-2 mb-2" />
-        <p className="text-gray-600 mb-2">{job.location}</p>
+        <p className="text-gray-600 mb-2">{job.city}, {job.state}</p>
       </div>
 
       <div className='flex flex-col md:flex-row md:space-x-4 '>
@@ -49,11 +48,11 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex items-center">
           <FaRegCalendarAlt className="mr-2" />
-          <p>Start Date: {formatDate(job.startDate)}</p>
+          <p>Start Date: {new Intl.DateTimeFormat('en-US').format(new Date(job.startDate))}</p>
         </div>
         <div className="flex items-center">
           <FaRegCalendarAlt className="mr-2" />
-          <p>End Date: {formatDate(job.endDate)}</p>
+          <p>End Date: {new Intl.DateTimeFormat('en-US').format(new Date(job.endDate))}</p>
         </div>
         <div className="flex items-center">
           <FaRegClock className="mr-2" />

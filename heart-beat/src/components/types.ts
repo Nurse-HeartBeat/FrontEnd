@@ -4,12 +4,18 @@ export interface Job {
   year_required: number;
   title: string;
   employer: string;
-  assignTo: string | null;
+  assignTo?: number;
   approve: boolean;
   completed: boolean;
-  location: string;
-  startDate: string;
-  endDate: string;
+  address1: string;
+  address2?: string;
+  city: string;
+  state: string;
+  postal: string;
+  latitude: number;
+  longitude: number;
+  startDate: Date;
+  endDate: Date;
   M: boolean,
   T: boolean,
   W: boolean,
@@ -28,5 +34,5 @@ export interface Job {
   contact_person: string;
   contact_email: string;
   parkingFree: boolean;
-  additionalDetails: string | null;
+  additionalDetails?: string;
 }
