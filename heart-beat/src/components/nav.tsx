@@ -79,7 +79,7 @@ const ProfileDropdown = () => {
           className={`w-full h-full rounded-full ${isDropdownOpen ? 'ring-2 ring-blue-500' : ''
             }`}
         >
-          <Image src='/ProfilePicHolder.jpeg' alt="Profile" className="w-full h-full rounded-full" />
+          <Image src='/profilePicHolder.jpeg' alt="Profile" className="w-full h-full rounded-full" />
         </div>
       </button>
 
