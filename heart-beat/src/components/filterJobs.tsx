@@ -2,6 +2,7 @@ import React, { useState, FormEvent, MouseEventHandler } from 'react';
 import FilterDistance from './filterComp/filterDistance';
 import FilterCategory from './filterComp/filterCategory';
 import FilterPatient from './filterComp/filterPatient';
+import FilterWeeklyPay from './filterComp/filterWeeklyPay';
 import {FilterPassTypes} from './types';
 
 const Filter:React.FC<{FilterPass: FilterPassTypes}> = ({FilterPass}) => {
@@ -82,7 +83,7 @@ return (
            Weekly Pay
         </button>
         {state.weeklyPayTab && (
-          <FilterCategory filterPass={FilterPass} />
+          <FilterWeeklyPay filterPass={FilterPass} />
         )}
       </div>
 

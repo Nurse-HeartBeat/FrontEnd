@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, MouseEventHandler } from 'react';
-import {FilterPassTypes} from '../types';
+import {CategoryTypes, FilterPassTypes} from '../types';
 
 const FilterCategory: React.FC<{filterPass: FilterPassTypes}> = ({filterPass}) => {
   const nurseCategories = Object.keys(filterPass.category)
@@ -24,9 +24,16 @@ return (
   </div>
 
   <button className='flex px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary mt-5'>Apply</button>
-  <button onClick={(e) => {
+  <button
+    onClick={() => {
+      filterPass.setCategory((prevState: CategoryTypes) => {
+        const updatedCategory = Object.fromEntries(
+          Object.keys(prevState).map((key) => [key, false])
+        ) as unknown as CategoryTypes;
+        return updatedCategory;
+      });
 
-  }}>Unselect All</button>
+    }}>Unselect All</button>
 </div>
 )
 }

@@ -44,7 +44,7 @@ export default function Jobs() {
     'Public Health Nurse': true
   });
   const [patientNum, setPatientNum] = useState(100);
-  const [weeklyPay, setWeeklyPay] = useState(3000);
+  const [weeklyPay, setWeeklyPay] = useState(1000);
   const [days, setDays] = useState(daysObj);
   const [startHour, setStartHour] = useState(0)
   const [endHour, setEndHour] = useState(23.59)
