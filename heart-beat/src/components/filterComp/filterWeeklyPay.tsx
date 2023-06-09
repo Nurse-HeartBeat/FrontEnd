@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, MouseEventHandler, ChangeEvent } from 'react';
-import {FilterPassTypes} from '../types';
+import {FilterPassTypes} from '../../utils/types';
 
 const FilterWeeklyPay: React.FC<{filterPass: FilterPassTypes}> = ({filterPass}) => {
   let weeklyPay = [1000, 2000, 3000, 4000, 5000];

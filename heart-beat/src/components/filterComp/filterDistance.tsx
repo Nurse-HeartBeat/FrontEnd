@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, MouseEventHandler } from 'react';
-import {FilterPassTypes} from '../types';
+import {FilterPassTypes} from '../../utils/types';
 
 const FilterDistance: React.FC<{filterPass: FilterPassTypes}> = ({filterPass}) => {
 return (

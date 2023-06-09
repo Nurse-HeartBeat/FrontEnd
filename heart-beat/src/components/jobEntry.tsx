@@ -1,4 +1,4 @@
-import { Job } from './types.js';
+import { Job } from '../utils/types.js';
 import { formatDate } from '../utils/formatDate';
 
 interface JobEntryProps {

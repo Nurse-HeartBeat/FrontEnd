@@ -3,7 +3,8 @@ import FilterDistance from './filterComp/filterDistance';
 import FilterCategory from './filterComp/filterCategory';
 import FilterPatient from './filterComp/filterPatient';
 import FilterWeeklyPay from './filterComp/filterWeeklyPay';
-import {FilterPassTypes} from './types';
+import {FilterPassTypes} from '../utils/types';
+
 
 const Filter:React.FC<{FilterPass: FilterPassTypes}> = ({FilterPass}) => {
 

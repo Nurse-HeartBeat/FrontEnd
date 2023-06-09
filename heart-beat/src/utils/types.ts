@@ -39,6 +39,7 @@ export interface Job {
 
 export interface FilterPassTypes {
   distance: number;
+
   setDistance: (value: number) => void;
   category: { [key: string]: boolean };
   setCategory: (value: (prevState: CategoryTypes) => CategoryTypes) => void;
