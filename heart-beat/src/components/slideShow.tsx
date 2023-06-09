@@ -14,7 +14,7 @@ const Slideshow = () => {
     if (index > lastIndex) {
       setIndex(0);
     }
-  }, [index, people]);
+  }, [index]);
 
   useEffect(() => {
     let slider = setInterval(() => {
