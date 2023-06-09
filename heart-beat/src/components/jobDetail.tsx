@@ -13,7 +13,7 @@ interface DayCircleProps {
 const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
   return (
     <div className='px-5 my-10 border border-gray-300 text-black rounded-2xl'>
-      placeholder for map
+      placeholder for map/ 2
       <hr className="border-t border-gray-300 my-6" />
 
       <div className="flex justify-start items-center mb-2 space-x-4">
