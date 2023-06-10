@@ -308,12 +308,14 @@ Resources
 .h3-underline:hover::after {
   width: 50%;
 }
-
+.filter-btn {
+  @apply hover:bg-primary-light text-black font-semibold h-7 flex items-center justify-center rounded-lg w-24
+}
 .filter-dropdown-btn {
   @apply flex px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary
 }
 
 .filter-dropdown-container {
-  @apply flex rounded-lg bg-white mt-2 z-10 flex-col items-center justify-center shadow-lg ring-2 absolute inset-x-0 mx-auto left-1/2 -translate-x-1/2 w-3/4 md:inset-auto md:mx-0
+  @apply flex rounded-lg bg-white mt-2 z-10 flex-col items-center justify-center shadow-lg ring-2 absolute inset-x-0 mx-auto left-1/2 -translate-x-1/2 w-5/6 md:inset-auto md:mx-0
 
 }

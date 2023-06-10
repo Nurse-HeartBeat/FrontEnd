@@ -16,13 +16,13 @@ export interface Job {
   longitude: number;
   startDate: Date;
   endDate: Date;
-  M: boolean,
-  T: boolean,
-  W: boolean,
-  Th: boolean,
-  F: boolean,
-  St: boolean,
-  Sn: boolean,
+  Monday: boolean;
+  Tuesday: boolean;
+  Wednesday: boolean;
+  Thursday: boolean;
+  Friday: boolean;
+  Saturday: boolean;
+  Sunday: boolean
   start: string;
   end: string;
   shiftHour: number;
@@ -39,7 +39,6 @@ export interface Job {
 
 export interface FilterPassTypes {
   distance: number;
-
   setDistance: (value: number) => void;
   category: { [key: string]: boolean };
   setCategory: (value: (prevState: CategoryTypes) => CategoryTypes) => void;
@@ -48,7 +47,7 @@ export interface FilterPassTypes {
   weeklyPay: number;
   setWeeklyPay: (value: number) => void;
   days: { [key: string]: boolean };
-  setDays: (value:(prevState:DaysTypes) => DaysTypes) => void;
+  setDays: (value: (prevState: DaysTypes) => DaysTypes) => void;
   startHour: number;
   setStartHour: (value: number) => void;
   endHour: number;
@@ -82,11 +81,12 @@ export interface CategoryTypes {
   'Public Health Nurse': boolean;
 }
 
-export interface DaysTypes{
-  'M': boolean;
-  'T': boolean;
-  'W': boolean;
-  'Th': boolean;
-  'F': boolean;
-  'St': boolean;
-  'Sn': boolean }
+export interface DaysTypes {
+  'Monday': boolean;
+  'Tuesday': boolean;
+  'Wednesday': boolean;
+  'Thursday': boolean;
+  'Friday': boolean;
+  'Saturday': boolean;
+  'Sunday': boolean
+}

@@ -12,13 +12,13 @@ export default function Jobs() {
 
 
   let daysObj = {
-    M: true,
-    T: true,
-    W: true,
-    Th: true,
-    F: true,
-    St: true,
-    Sn: true
+    Monday: true,
+    Tuesday: true,
+    Wednesday: true,
+    Thursday: true,
+    Friday: true,
+    Saturday: true,
+    Sunday: true
   }
   const [distance, setDistance] = useState(25);
   const [category, setCategory] = useState({

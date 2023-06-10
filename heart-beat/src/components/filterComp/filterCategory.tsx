@@ -5,7 +5,7 @@ import { FilterPassTypes, CategoryTypes } from '../../utils/types';
 const FilterCategory: React.FC<{ filterPass: FilterPassTypes }> = ({ filterPass }) => {
   const nurseCategories = Object.keys(filterPass.category)
   return (
-    <div className="filter-dropdown-container md:w-[300px] md:max-h-[500px] md:-translate-x-10">
+    <div className="filter-dropdown-container md:w-[300px] md:max-h-[300px] md:-translate-x-10">
       <label htmlFor="category"></label>
       <div className='flex flex-col' style={{ width: '300px', maxHeight: '500px', overflowY: 'auto' }}>
         {nurseCategories.map((category, index) => {

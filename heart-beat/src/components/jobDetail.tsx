@@ -37,13 +37,13 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
 
       <hr className="border-t border-gray-300 my-4" />
       <div className="flex space-x-2">
-        <DayCircle day='M' active={job.M} />
-        <DayCircle day='T' active={job.T} />
-        <DayCircle day='W' active={job.W} />
-        <DayCircle day='Th' active={job.Th} />
-        <DayCircle day='F' active={job.F} />
-        <DayCircle day='St' active={job.St} />
-        <DayCircle day='Sn' active={job.Sn} />
+        <DayCircle day='M' active={job.Monday} />
+        <DayCircle day='T' active={job.Tuesday} />
+        <DayCircle day='W' active={job.Wednesday} />
+        <DayCircle day='Th' active={job.Thursday} />
+        <DayCircle day='F' active={job.Friday} />
+        <DayCircle day='St' active={job.Saturday} />
+        <DayCircle day='Sn' active={job.Sunday} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex items-center">

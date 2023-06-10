@@ -56,7 +56,7 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
         </div>
 
         <div className='mx-2'>
-          <button className={`hover:bg-primary-light text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20 ${state.categoryTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+          <button className={`filter-btn ${state.categoryTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
               filterOrganize('categoryTab');
             }}>
@@ -68,7 +68,7 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
         </div>
 
         <div className='mx-2'>
-          <button className={`hover:bg-primary-light text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20 ${state.patientTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+          <button className={`filter-btn ${state.patientTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
               filterOrganize('patientTab');
             }}>
@@ -80,7 +80,7 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
         </div>
 
         <div className='mx-2'>
-          <button className={`hover:bg-primary-light text-black font-semibold h-13 flex items-center justify-center rounded-lg w-auto ${state.weeklyPayTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+          <button className={`filter-btn w-32 ${state.weeklyPayTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
               filterOrganize('weeklyPayTab');
             }}>
@@ -92,7 +92,7 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
         </div>
 
         <div className='mx-2'>
-          <button className={`hover:bg-primary-light text-black font-semibold h-13 flex items-center justify-center rounded-lg w-20 ${state.daysTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+          <button className={`filter-btn ${state.daysTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
               filterOrganize('daysTab');
             }}>
@@ -104,7 +104,7 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
         </div>
 
         <div className='mx-2'>
-          <button className={`hover:bg-primary-light text-black font-semibold h-13 flex items-center justify-center rounded-lg w-20 ${state.startHourTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+          <button className={`filter-btn ${state.startHourTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
               filterOrganize('startHourTab');
             }}>
@@ -117,7 +117,7 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
 
 
         <div className='mx-2'>
-          <button className={`hover:bg-primary-light text-black font-semibold h-13 flex items-center justify-center rounded-lg w-20 ${state.dateTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+          <button className={`filter-btn ${state.dateTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
               filterOrganize('dateTab');
             }}>
