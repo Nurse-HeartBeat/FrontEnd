@@ -9,11 +9,11 @@ const FilterWeeklyPay: React.FC<{filterPass: FilterPassTypes}> = ({filterPass}) 
   }
 
 return (
-<div className="mt-0 flex rounded-lg bg-gray-300 mt-2 z-100 absolute flex-col items-center justify-center shadow-lg ring-2 ring-Primary" style={{ width: '300px', maxHeight: '500px', minHeight: '200px' }}>
+<div className="mt-0 flex rounded-lg bg-white mt-2 z-100 absolute flex-col items-center justify-end shadow-lg ring-2 ring-Primary" style={{ width: '200px', maxHeight: '120px', minHeight: '110px' }}>
   <label htmlFor="patientNum"></label>
   <div className='flex flex-row items-center justify-center'>
     <select id='dropdown' value={filterPass.weeklyPay} onChange={(e) => filterPass.setWeeklyPay(Number(e.target.value))}
-    className='flex items-center'>
+    className='flex items-center bg-slate-200'>
       {weeklyPay.map((rate:number, index) => {
         return (
           <option value={rate} key={index}>{`$ ${rate} +`}</option>
@@ -23,7 +23,7 @@ return (
     <div className='flex ml-1'>{'/week'}</div>
 
   </div>
-  <button className='flex px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary mt-5' onClick={handleApply}>Apply</button>
+  <button className='flex px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary mt-5 mb-2' onClick={handleApply}>Apply</button>
 </div>
 )
 }

@@ -5,9 +5,9 @@ import {FilterPassTypes, DaysTypes} from '../../utils/types';
 const FilterCategory: React.FC<{filterPass: FilterPassTypes}> = ({filterPass}) => {
   const days = Object.keys(filterPass.days)
 return (
-<div className="mt-0 flex rounded-lg bg-gray-300 mt-2 z-100 absolute flex-col items-center justify-center shadow-lg ring-2 ring-Primary" style={{ width: '300px', maxHeight: '500px' }}>
+<div className="mt-0 flex rounded-lg bg-white mt-2 z-100 absolute flex-col items-center justify-center shadow-lg ring-2 ring-Primary" style={{ width: '250px', maxHeight: '500px' }}>
   <label htmlFor="category"></label>
-  <div className='flex flex-col' style={{ width: '300px', maxHeight: '500px', overflowY: 'auto' }}>
+  <div className='flex flex-col' style={{ width: '250px', maxHeight: '500px', overflowY: 'auto' }}>
     {days.map((day, index) => {
       return (
         <div className='mt-5 ml-5' key={index}>
@@ -24,7 +24,7 @@ return (
     })}
   </div>
 
-  <div className='flex flex-row'>
+  <div className='flex flex-row mb-2'>
     <button
         onClick={() => {
           filterPass.setDays((prevState: DaysTypes) => {
@@ -37,7 +37,7 @@ return (
         }}
         className='flex px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary mt-5 mr-3'>Unselect All
     </button>
-    <button className='flex px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary mt-5 ml-3'>Apply
+    <button className='flex px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary mt-5 ml-3 '>Apply
     </button>
   </div>
 </div>

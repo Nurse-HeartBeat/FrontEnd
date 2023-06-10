@@ -5,7 +5,7 @@ import {FilterPassTypes, CategoryTypes} from '../../utils/types';
 const FilterCategory: React.FC<{filterPass: FilterPassTypes}> = ({filterPass}) => {
   const nurseCategories = Object.keys(filterPass.category)
 return (
-<div className="mt-0 flex rounded-lg bg-gray-300 mt-2 z-100 absolute flex-col items-center justify-center shadow-lg ring-2 ring-Primary" style={{ width: '300px', maxHeight: '500px' }}>
+<div className="mt-0 flex rounded-lg bg-white mt-2 z-100 absolute flex-col items-center justify-center shadow-lg ring-2 ring-Primary" style={{ width: '300px', maxHeight: '500px' }}>
   <label htmlFor="category"></label>
   <div className='flex flex-col' style={{ width: '300px', maxHeight: '500px', overflowY: 'auto' }}>
     {nurseCategories.map((category, index) => {
@@ -24,7 +24,7 @@ return (
     })}
   </div>
 
-<div className='flex flex-row'>
+<div className='flex flex-row mb-2'>
   <button
       onClick={() => {
         filterPass.setCategory((prevState: CategoryTypes) => {
