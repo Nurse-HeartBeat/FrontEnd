@@ -44,7 +44,7 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
       <div className='flex flex-row overflow-auto justify-between text-black mt-5'>
 
         <div className='mx-2'>
-          <button className={`hover:bg-primary-light text-black font-semibold h-7 flex items-center justify-center rounded-lg w-20 ${state.distanceTab ? 'bg-gray-300' : 'bg-gray-200'}`}
+          <button className={`filter-btn ${state.distanceTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
               filterOrganize('distanceTab');
             }}>
