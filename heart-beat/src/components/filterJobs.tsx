@@ -40,9 +40,9 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
   }
 
   return (
-    <div className='mx-20 mt-10 mb-5'>
-      <div className='flex flex-row overflow-auto justify-between text-black mt-5'>
-        <div className='mx-2'>
+    <div className='mx-4 md:mx-20 mt-10 mb-5'>
+      <div className='flex flex-wrap text-black mt-5 justify-center md:space-x-20'>
+        <div className='mx-2 flex-shrink-0 my-2'>
           <button className={`filter-btn ${state.distanceTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
               filterOrganize('distanceTab');
@@ -54,7 +54,7 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
           )}
         </div>
 
-        <div className='mx-2'>
+        <div className='mx-2 flex-shrink-0 my-2'>
           <button className={`filter-btn ${state.categoryTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
               filterOrganize('categoryTab');
@@ -66,7 +66,7 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
           )}
         </div>
 
-        <div className='mx-2'>
+        <div className='mx-2 flex-shrink-0 my-2'>
           <button className={`filter-btn ${state.patientTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
               filterOrganize('patientTab');
@@ -78,7 +78,7 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
           )}
         </div>
 
-        <div className='mx-2'>
+        <div className='mx-2 flex-shrink-0 my-2'>
           <button className={`filter-btn w-32 ${state.weeklyPayTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
               filterOrganize('weeklyPayTab');
@@ -90,7 +90,7 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
           )}
         </div>
 
-        <div className='mx-2'>
+        <div className='mx-2 flex-shrink-0 my-2'>
           <button className={`filter-btn ${state.daysTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
               filterOrganize('daysTab');
@@ -102,7 +102,7 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
           )}
         </div>
 
-        <div className='mx-2'>
+        <div className='mx-2 flex-shrink-0 my-2'>
           <button className={`filter-btn ${state.startHourTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
               filterOrganize('startHourTab');
@@ -115,7 +115,7 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
         </div>
 
 
-        <div className='mx-2'>
+        <div className='mx-2 flex-shrink-0 my-2'>
           <button className={`filter-btn ${state.dateTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
               filterOrganize('dateTab');
