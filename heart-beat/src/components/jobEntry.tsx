@@ -10,7 +10,7 @@ interface JobEntryProps {
 const JobEntry: React.FC<JobEntryProps> = ({ job, onJobClick, selectedJob }) => {
 
   return (
-    <div onClick={() => onJobClick(job)} className={`mx-5 mb-5 px-5 py-5 border border-gray-300 text-black hover:border-primary-light  ${selectedJob?.id === job.id ? 'border-2 border-primary shadow-lg' : 'border-gray-300'} rounded-xl`}
+    <div onClick={() => onJobClick(job)} className={`mb-5 px-5 py-5 border border-gray-300 text-black hover:border-primary-light  ${selectedJob?.id === job.id ? 'border-2 border-primary shadow-lg' : 'border-gray-300'} rounded-xl`}
     >
       <h2 className="text-lg font-bold">
         <span className="mr-2">{job.title}</span>

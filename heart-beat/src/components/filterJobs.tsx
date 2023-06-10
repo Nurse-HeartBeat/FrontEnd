@@ -40,9 +40,8 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
   }
 
   return (
-    <div className='mx-20'>
+    <div className='mx-20 mt-10 mb-5'>
       <div className='flex flex-row overflow-auto justify-between text-black mt-5'>
-
         <div className='mx-2'>
           <button className={`filter-btn ${state.distanceTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
