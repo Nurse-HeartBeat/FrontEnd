@@ -43,15 +43,15 @@ export default function Home() {
       <Nav />
       <div className="bg-cover bg-center h-90 flex flex-col items-start text-white"
         style={{ backgroundImage: `url('/bgImage.png')` }}>
-        <div className="md:w-1/2 mt-20 ml-20 mr-20">
-          <h1 className="text-5xl font-bold">Welcome to The HeartBeat</h1>
+        <div className="md:w-1/2 mt-20 mx-10 md:mx-20">
+          <h1 className="text-5xl font-bold leading-relaxed">Welcome to HeartBeat</h1>
           <p className="text-2xl font-bold mt-20">The ultimate web platform connecting nurses with employers, offering real-time chat, mapping functionality, and seamless authentication experiences.</p>
         </div>
-        <div className="w-2/3 text-lg mt-10  mb-10 flex flex-col md:flex-row items-center justify-start">
-          <button className="bg-white hover:bg-accent hover:text-white text-black font-bold py-2 px-10 w-40 rounded-full ml-20 my-5 transition-colors duration-200" onClick={login}>
+        <div className="md:w-2/3  w-full text-lg mt-10  mb-10 flex flex-col md:flex-row items-center jusitify-center md:justify-start">
+          <button className="bg-white hover:bg-accent hover:text-white text-black font-bold py-2 px-10 w-40 rounded-full md:ml-20 my-5 transition-colors duration-200" onClick={login}>
             Log in
           </button>
-          <button className="bg-white hover:bg-accent hover:text-white text-black font-bold py-2 px-10 w-40 rounded-full ml-20 my-5 transition-colors duration-200" onClick={signup}>
+          <button className="bg-white hover:bg-accent hover:text-white text-black font-bold py-2 px-10 w-40 rounded-full md:ml-20 my-5 transition-colors duration-200" onClick={signup}>
             Sign up
           </button>
         </div>
