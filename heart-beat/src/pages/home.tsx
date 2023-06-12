@@ -1,5 +1,4 @@
 import Nav from '../components/nav';
-import bgImage from '../../public/bgImage.png';
 import { FaCalendarAlt, FaComments, FaMapMarkerAlt } from 'react-icons/fa';
 import Slideshow from '../components/slideShow';
 import Footer from '../components/footer';
@@ -22,7 +21,7 @@ export default function Home() {
       router.push(redirectRoute);
       // console.log('router: ', router)
     }
-  }, [reduxState.user])
+  }, [reduxState.user, router])
 
   let login = () => {
     const redirectRoute = '/login';
