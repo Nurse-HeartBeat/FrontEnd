@@ -100,7 +100,7 @@ export default function Jobs({ jobs }: { jobs: JobType[] }) {
 
 export async function getServerSideProps() {
   // Fetch data from  API
-  const res = await fetch(`http://localhost:3000/api/jobs`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`)
   const jobs = await res.json()
 
   // Pass data to the page via props
