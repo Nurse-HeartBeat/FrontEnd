@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { people } from './data';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
-import Image from 'next/image';
+
+const LazyImage = React.lazy(() => import('next/image'));
 
 const Slideshow = () => {
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = useState(0);
+
   useEffect(() => {
-    console.log(people)
     const lastIndex = people.length - 1;
     if (index < 0) {
       setIndex(lastIndex);
@@ -18,12 +19,13 @@ const Slideshow = () => {
 
   useEffect(() => {
     let slider = setInterval(() => {
-      setIndex(index + 1);
+      setIndex((prevIndex) => (prevIndex + 1) % people.length);
     }, 5000);
     return () => {
       clearInterval(slider);
     };
-  }, [index]);
+  }, []);
+
   return (
     <section className="section pt-12 pb-10 bg-gray-100">
       <div className="section-center">
@@ -44,7 +46,15 @@ const Slideshow = () => {
           return (
             <article className={`${position}`} key={id}>
               <div className="flex items-center justify-center">
-                <Image src={image} width={250} height={250} alt={name} className="person-img" />
+                <Suspense fallback={<div>Loading...</div>}>
+                  <LazyImage
+                    src={image}
+                    width={250}
+                    height={250}
+                    alt={name}
+                    className="person-img"
+                  />
+                </Suspense>
               </div>
               <h4 className="text-lg text-text font-bold">{name}</h4>
               <p className="title text-lg text-text">{title}</p>
@@ -52,15 +62,20 @@ const Slideshow = () => {
             </article>
           );
         })}
-        <button className="prev hover:bg-primary-light bg-grey-100" onClick={() => setIndex(index - 1)}>
+        <button
+          className="prev hover:bg-primary-light bg-grey-100"
+          onClick={() => setIndex((prevIndex) => prevIndex - 1)}
+        >
           <FaAngleLeft />
         </button>
-        <button className="next hover:bg-primary-light bg-grey-100" onClick={() => setIndex(index + 1)}>
+        <button
+          className="next hover:bg-primary-light bg-grey-100"
+          onClick={() => setIndex((prevIndex) => prevIndex + 1)}
+        >
           <FaAngleRight />
         </button>
       </div>
     </section>
-
   );
 };
 

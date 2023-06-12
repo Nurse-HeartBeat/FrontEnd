@@ -35,6 +35,8 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.9.0",
     "react-ios-time-picker": "^0.2.2",
+    "react-lazyload": "^3.2.0",
+    "react-lazyload-v18": "^1.0.0",
     "react-redux": "^8.0.7",
     "react-time-picker": "^6.2.0",
     "redux": "^4.2.1",

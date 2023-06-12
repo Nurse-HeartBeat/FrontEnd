@@ -4,12 +4,12 @@ import { FaCalendarAlt, FaComments, FaMapMarkerAlt } from 'react-icons/fa';
 import Slideshow from '../components/slideShow';
 import Footer from '../components/footer';
 import Resource from '../components/resource';
-
 import { Router, useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Head from 'next/head'
 import Link from 'next/link';
+
 
 export default function Home() {
 
@@ -43,7 +43,7 @@ export default function Home() {
       <Nav />
       <div className="bg-cover bg-center h-90 flex flex-col items-start text-white"
         style={{ backgroundImage: `url('/bgImage.png')` }}>
-        <div className="md:w-1/2 mt-20 mx-10 md:mx-20">
+        <div className="md:w-1/2 mt-20 mx-10 md:mx-20 text-center md:text-start">
           <h1 className="text-5xl font-bold leading-relaxed">Welcome to HeartBeat</h1>
           <p className="text-2xl font-bold mt-20">The ultimate web platform connecting nurses with employers, offering real-time chat, mapping functionality, and seamless authentication experiences.</p>
         </div>
