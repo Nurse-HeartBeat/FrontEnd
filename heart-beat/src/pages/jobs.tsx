@@ -8,8 +8,7 @@ import { Job as JobType } from '../utils/types.js';
 import { generateJobs } from '../utils/seedJobs';
 
 
-export default function Jobs() {
-
+export default function Jobs({ jobs }: { jobs: JobType[] }) {
 
   let daysObj = {
     Monday: true,
@@ -53,9 +52,9 @@ export default function Jobs() {
   const [filteredJobs, setFilteredJobs] = useState([]); // use dummy data for now. should fetch data from the server
 
 
-  const [jobs, setJobs] = useState<JobType[]>([]);
+  // const [jobs, setJobs] = useState<JobType[]>([]);
 
-  const [selectedJob, setSelectedJob] = useState<JobType>(); //default job selected
+  const [selectedJob, setSelectedJob] = useState<JobType>(jobs[0]); //default job selected
 
 
   const handleJobClick = (job: JobType) => {
@@ -74,12 +73,12 @@ export default function Jobs() {
     postal, setPostal
   }
 
-  useEffect(() => {
-    const jobData = generateJobs(10);
-    setJobs(jobData);
-    setSelectedJob(jobData[0])
-    // Now do something with 'jobs'
-  }, []);
+  // useEffect(() => {
+  //   const jobData = generateJobs(10);
+  //   setJobs(jobData);
+  //   setSelectedJob(jobData[0])
+  //   // Now do something with 'jobs'
+  // }, []);
 
   return (
 
@@ -97,4 +96,13 @@ export default function Jobs() {
       <Footer />
     </div>
   )
+}
+
+export async function getServerSideProps() {
+  // Fetch data from  API
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`)
+  const jobs = await res.json()
+
+  // Pass data to the page via props
+  return { props: { jobs } }
 }
