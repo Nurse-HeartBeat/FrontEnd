@@ -98,73 +98,73 @@ export default function Jobs({ jobs }: { jobs: JobType[] }) {
   )
 }
 
-export async function getServerSideProps() {
-  // Fetch data from API
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/jobs`; // Your GraphQL API endpoint
-
-  // const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/jobs_apollo`; // Your GraphQL API endpoint
-
-  const res = await fetch(apiUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      query: `
-        query GetJobs {
-          jobs {
-            id
-            category
-            year_required
-            title
-            employer
-            assignTo
-            approve
-            completed
-            address1
-            address2
-            city
-            state
-            postal
-            latitude
-            longitude
-            startDate
-            endDate
-            Monday
-            Tuesday
-            Wednesday
-            Thursday
-            Friday
-            Saturday
-            Sunday
-            start
-            end
-            shiftHour
-            patient_population
-            patient_number
-            stipend
-            weekly_pay
-            bonus
-            contact_person
-            contact_email
-            parkingFree
-            additionalDetails
-          }
-        }
-      `,
-    }),
-  });
-
-
-  const { data } = await res.json();
-  const jobs = data.jobs;
-  return { props: { jobs } };
-}
 // export async function getServerSideProps() {
-//   // Fetch data from  API
-//   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`)
-//   const jobs = await res.json()
+//   // Fetch data from API
+//   const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/jobs`; // Your GraphQL API endpoint
 
-//   // Pass data to the page via props
-//   return { props: { jobs } }
+//   // const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/jobs_apollo`; // Your GraphQL API endpoint
+
+//   const res = await fetch(apiUrl, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({
+//       query: `
+//         query GetJobs {
+//           jobs {
+//             id
+//             category
+//             year_required
+//             title
+//             employer
+//             assignTo
+//             approve
+//             completed
+//             address1
+//             address2
+//             city
+//             state
+//             postal
+//             latitude
+//             longitude
+//             startDate
+//             endDate
+//             Monday
+//             Tuesday
+//             Wednesday
+//             Thursday
+//             Friday
+//             Saturday
+//             Sunday
+//             start
+//             end
+//             shiftHour
+//             patient_population
+//             patient_number
+//             stipend
+//             weekly_pay
+//             bonus
+//             contact_person
+//             contact_email
+//             parkingFree
+//             additionalDetails
+//           }
+//         }
+//       `,
+//     }),
+//   });
+
+
+//   const { data } = await res.json();
+//   const jobs = data.jobs;
+//   return { props: { jobs } };
 // }
+export async function getServerSideProps() {
+  // Fetch data from  API
+  const res = await fetch(`api/jobs`)
+  const jobs = await res.json()
+
+  // Pass data to the page via props
+  return { props: { jobs } }
+}
