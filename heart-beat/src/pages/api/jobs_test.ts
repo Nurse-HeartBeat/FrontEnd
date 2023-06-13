@@ -3,6 +3,7 @@ import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { gql } from 'graphql-tag';
 import { generateJobs } from '../../utils/seedJobs';
 import { DateTypeDefinition } from 'graphql-scalars';
+import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 
 const typeDefs = gql`
 scalar DateTypeDefinition,
@@ -64,9 +65,15 @@ const server = new ApolloServer({
   typeDefs,
 });
 
+const nextHandler = startServerAndCreateNextHandler(server);
 
-export default startServerAndCreateNextHandler(server);
 
+export default async function handler(req : NextApiRequest, res: NextApiResponse) {
+  res.setHeader('Access-Control-Allow-Origin', 'https://studio.apollographql.com');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+  await nextHandler(req, res);
+}
 // export default function handler(req: NextApiRequest, res: NextApiResponse) {
 //   if (req.method === 'GET') {
 //     const jobs = generateJobs(10);  // generate jobs data
