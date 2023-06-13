@@ -8,8 +8,7 @@ import { Job as JobType } from '../utils/types.js';
 import { generateJobs } from '../utils/seedJobs';
 
 
-export default function Jobs() {
-
+export default function Jobs({ jobs }: { jobs: JobType[] }) {
 
   let daysObj = {
     Monday: true,
@@ -53,9 +52,9 @@ export default function Jobs() {
   const [filteredJobs, setFilteredJobs] = useState([]); // use dummy data for now. should fetch data from the server
 
 
-  const [jobs, setJobs] = useState<JobType[]>([]);
+  // const [jobs, setJobs] = useState<JobType[]>([]);
 
-  const [selectedJob, setSelectedJob] = useState<JobType>(); //default job selected
+  const [selectedJob, setSelectedJob] = useState<JobType>(jobs[0]); //default job selected
 
 
   const handleJobClick = (job: JobType) => {
@@ -74,12 +73,12 @@ export default function Jobs() {
     postal, setPostal
   }
 
-  useEffect(() => {
-    const jobData = generateJobs(10);
-    setJobs(jobData);
-    setSelectedJob(jobData[0])
-    // Now do something with 'jobs'
-  }, []);
+  // useEffect(() => {
+  //   const jobData = generateJobs(10);
+  //   setJobs(jobData);
+  //   setSelectedJob(jobData[0])
+  //   // Now do something with 'jobs'
+  // }, []);
 
   return (
 
@@ -97,4 +96,75 @@ export default function Jobs() {
       <Footer />
     </div>
   )
+}
+
+// export async function getServerSideProps() {
+//   // Fetch data from API
+//   const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/jobs`; // Your GraphQL API endpoint
+
+//   // const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/jobs_apollo`; // Your GraphQL API endpoint
+
+//   const res = await fetch(apiUrl, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({
+//       query: `
+//         query GetJobs {
+//           jobs {
+//             id
+//             category
+//             year_required
+//             title
+//             employer
+//             assignTo
+//             approve
+//             completed
+//             address1
+//             address2
+//             city
+//             state
+//             postal
+//             latitude
+//             longitude
+//             startDate
+//             endDate
+//             Monday
+//             Tuesday
+//             Wednesday
+//             Thursday
+//             Friday
+//             Saturday
+//             Sunday
+//             start
+//             end
+//             shiftHour
+//             patient_population
+//             patient_number
+//             stipend
+//             weekly_pay
+//             bonus
+//             contact_person
+//             contact_email
+//             parkingFree
+//             additionalDetails
+//           }
+//         }
+//       `,
+//     }),
+//   });
+
+
+//   const { data } = await res.json();
+//   const jobs = data.jobs;
+//   return { props: { jobs } };
+// }
+export async function getServerSideProps() {
+  // Fetch data from  API
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`)
+  const jobs = await res.json()
+
+  // Pass data to the page via props
+  return { props: { jobs } }
 }
