@@ -100,7 +100,9 @@ export default function Jobs({ jobs }: { jobs: JobType[] }) {
 
 export async function getServerSideProps() {
   // Fetch data from API
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/jobs_apollo`; // Your GraphQL API endpoint
+  const apiUrl = `https://front-go2b7a1fa-hr2023.vercel.app/api/jobs_apollo`; // Your GraphQL API endpoint
+
+  // const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/jobs_apollo`; // Your GraphQL API endpoint
 
   const res = await fetch(apiUrl, {
     method: 'POST',
