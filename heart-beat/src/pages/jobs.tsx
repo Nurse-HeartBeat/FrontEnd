@@ -151,4 +151,5 @@ export async function getServerSideProps() {
 
   // Pass data to the page via props
   return { props: { jobs: data.jobs } }
+
 }
