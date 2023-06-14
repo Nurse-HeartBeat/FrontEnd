@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.15",
     "@apollo/server": "^4.7.3",
     "@as-integrations/next": "^2.0.0",
     "@reduxjs/toolkit": "^1.9.5",
