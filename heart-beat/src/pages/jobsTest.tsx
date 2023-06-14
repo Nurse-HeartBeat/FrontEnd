@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
 // Set up Apollo Client
 const client = new ApolloClient({
-  uri: `${process.env.NEXT_PUBLIC_API_URL}/api/jobs_apollo`, // replace with your API endpoint
+  uri: `${process.env.NEXT_PUBLIC_API_URL}/api/jobs_test`, // replace with your API endpoint
   cache: new InMemoryCache(),
 });
 
