@@ -53,7 +53,7 @@ type Query {
 const resolvers = {
   Query: {
     jobs: () => {
-      const jobs = generateJobs(10);
+      const jobs = generateJobs(1);
       return jobs;
     },
   },
