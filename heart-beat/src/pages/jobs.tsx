@@ -55,8 +55,8 @@ query GetJobs {
   }
 }`
 
-export default function Jobs({ jobs }: { jobs: JobType[] }) {
-
+export default function Jobs() {
+  const [jobs, setJobs] = useState<JobType[]>([]);
   let daysObj = {
     Monday: true,
     Tuesday: true,
@@ -120,13 +120,15 @@ export default function Jobs({ jobs }: { jobs: JobType[] }) {
     postal, setPostal
   }
 
-  // useEffect(() => {
-  //   const jobData = generateJobs(10);
-  //   setJobs(jobData);
-  //   setSelectedJob(jobData[0])
-  //   // Now do something with 'jobs'
-  // }, []);
+  useEffect(() => {
+    const fetchJobs = async () => {
+      const { data } = await client.query<{ jobs: JobType[] }>({ query: JobQuery });
+      setJobs(data.jobs);
+      setSelectedJob(data.jobs[0]);
+    };
 
+    fetchJobs();
+  }, []);
   return (
 
     <div className='bg-white flex-col min-h-screen'>
@@ -145,11 +147,11 @@ export default function Jobs({ jobs }: { jobs: JobType[] }) {
   )
 }
 
-export async function getServerSideProps() {
-  // Fetch data from  API
-  const { data } = await client.query<{ jobs: JobType[]}>({query: JobQuery})
+// export async function getServerSideProps() {
+//   // Fetch data from  API
+//   const { data } = await client.query<{ jobs: JobType[]}>({query: JobQuery})
 
-  // Pass data to the page via props
-  return { props: { jobs: data.jobs } }
+//   // Pass data to the page via props
+//   return { props: { jobs: data.jobs } }
 
-}
+// }
