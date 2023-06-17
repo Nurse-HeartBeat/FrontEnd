@@ -41,7 +41,7 @@ const Filter: React.FC<{ FilterPass: FilterPassTypes }> = ({ FilterPass }) => {
 
   return (
     <div className='mx-4 md:mx-20 mt-10 mb-5'>
-      <div className='flex flex-wrap text-black mt-5 justify-center md:space-x-20'>
+      <div className='flex flex-wrap text-black mt-5 justify-center md:space-x-12'>
         <div className='mx-2 flex-shrink-0 my-2'>
           <button className={`filter-btn ${state.distanceTab ? 'bg-gray-300' : 'bg-gray-200'}`}
             onClick={() => {
