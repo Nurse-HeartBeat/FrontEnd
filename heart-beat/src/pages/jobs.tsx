@@ -63,10 +63,14 @@ export default function Jobs() {
     const fetchData = async () => {
       const { data } = await client.query<{ jobs: JobType[]}>({query: JobQuery})
       setJobs(data.jobs)
-      setSelectedJob(jobs[0])
+      setSelectedJob(data.jobs[0])
     }
     fetchData()
   }, [])
+
+  // useEffect(() => {
+  //   setSelectedJob(jobs[0])
+  // }, [jobs])
 
   let daysObj = {
     Monday: true,
