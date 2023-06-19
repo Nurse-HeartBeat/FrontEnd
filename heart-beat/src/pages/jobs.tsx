@@ -54,8 +54,19 @@ query GetJobs {
     additionalDetails
   }
 }`
+// { jobs }: { jobs: JobType[] }
+export default function Jobs() {
+  const [jobs, setJobs] = useState<JobType[]>([])
 
-export default function Jobs({ jobs }: { jobs: JobType[] }) {
+  //making client side rendering
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await client.query<{ jobs: JobType[]}>({query: JobQuery})
+      setJobs(data.jobs)
+      setSelectedJob(jobs[0])
+    }
+    fetchData()
+  }, [])
 
   let daysObj = {
     Monday: true,
@@ -101,7 +112,7 @@ export default function Jobs({ jobs }: { jobs: JobType[] }) {
 
   // const [jobs, setJobs] = useState<JobType[]>([]);
 
-  const [selectedJob, setSelectedJob] = useState<JobType>(jobs[0]); //default job selected
+  const [selectedJob, setSelectedJob] = useState<JobType>(); //default job selected
 
 
   const handleJobClick = (job: JobType) => {
@@ -145,11 +156,11 @@ export default function Jobs({ jobs }: { jobs: JobType[] }) {
   )
 }
 
-export async function getServerSideProps() {
-  // Fetch data from  API
-  const { data } = await client.query<{ jobs: JobType[]}>({query: JobQuery})
+// export async function getServerSideProps() {
+//   // Fetch data from  API
+//   const { data } = await client.query<{ jobs: JobType[]}>({query: JobQuery})
 
-  // Pass data to the page via props
-  return { props: { jobs: data.jobs } }
+//   // Pass data to the page via props
+//   return { props: { jobs: data.jobs } }
 
-}
+// }

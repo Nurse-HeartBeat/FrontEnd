@@ -16,7 +16,7 @@ export default function AddJobs () {
   // }, [reduxState, router])
   const [job, setJob] = useState({
     category: '',
-    year_required: '',
+    year_required:0,
     title: '',
     address1: '',
     address2:'',
@@ -69,16 +69,20 @@ export default function AddJobs () {
   'Hospice Nurse',
   'Public Health Nurse']
 
+  let changeState = (cat:string, value:any) => {
+    setJob((prevState) => ({
+      ...prevState,
+      [cat]: value
+    }))
+  }
+
   return (
     <div>
       <Nav />
       <form>
         <div>
           <label htmlFor='category'>Category:</label>
-          <select id='dropdown' name='category' value={job.category} onChange={(e) => setJob((prevState) => ({
-            ...prevState,
-            'category': e.target.value
-          }))}
+          <select id='dropdown' name='category' value={job.category} onChange={(e) => changeState('category', e.target.value)}
           className='flex text-black'>
             {category.map((cat, index) => {
               return (
@@ -86,6 +90,16 @@ export default function AddJobs () {
               )
             })}
           </select>
+        </div>
+        <div>
+          <label htmlFor='year_required'>year required</label>
+          <input type='number' name='year_required' value={job.year_required} onChange={(e) => changeState('year_required', Number(e.target.value))}
+          className='text-black'/>
+        </div>
+        <div>
+          <label htmlFor='title'>title</label>
+          <input type='text' name='title' value={job.title} onChange={(e) => changeState('title', e.target.value)}
+          className='text-black'/>
         </div>
       </form>
       <Footer />
