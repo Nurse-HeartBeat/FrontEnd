@@ -2,6 +2,8 @@ import { Job } from '../utils/types.js';
 import { FaComments, FaMapMarkerAlt, FaRegCalendarAlt, FaRegClock, FaUsers, FaDollarSign, FaCircle } from 'react-icons/fa';
 import { FaUser, FaPersonBooth, FaEnvelope, FaParking, FaInfoCircle } from 'react-icons/fa';
 import Image from 'next/image';
+import Tooltip from "./tooltip";
+
 
 
 interface JobDetailProps {
@@ -26,13 +28,22 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
           <p className="text-gray-600 mb-2">{job.city}, {job.state}</p>
         </div>
 
-        <div className='flex flex-col md:flex-row md:space-x-4 pb-5 '>
-          <button className="flex justify-center items-center w-60 h-10 px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary mt-2">
-            Book
-          </button>
-          <button className="flex justify-center items-center w-12 h-10 px-1 py-1 text-white rounded-md bg-accent hover:bg-primary mt-2">
-            <FaComments />
-          </button>
+        <div className='flex flex-col md:flex-row md:space-x-4 pb-5 relative'>
+          <Tooltip text="Coming soon">
+            <button className="flex justify-center items-center w-60 h-10 px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary mt-2">
+              Book
+            </button>
+          </Tooltip>
+          <Tooltip text="Coming soon">
+            <button className="flex justify-center items-center w-12 h-10 px-1 py-1 text-white rounded-md bg-accent hover:bg-primary mt-2">
+              <FaComments />
+            </button>
+          </Tooltip>
+          <Tooltip text="Coming soon">
+          <button className="flex justify-center items-center h-10 px-4 py-2 text-white rounded-md bg-green-500 hover:bg-green-600  mt-2">
+              Mock with AI
+            </button>
+          </Tooltip>
         </div>
       </div>
 

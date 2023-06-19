@@ -1,0 +1,18 @@
+.tooltip {
+  position: absolute;
+  background: orange;
+  color: white;
+  visibility: hidden;
+  padding: 5px;
+  border-radius: 5px;
+  top:-20px;
+  font-size:x-small;
+}
+.tooltip-arrow {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  border-width: 5px;
+  border-style: solid;
+  border-color: orange transparent transparent;
+}
