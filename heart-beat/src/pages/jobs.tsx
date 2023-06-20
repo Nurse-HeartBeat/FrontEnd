@@ -68,9 +68,6 @@ export default function Jobs() {
     fetchData()
   }, [])
 
-  // useEffect(() => {
-  //   setSelectedJob(jobs[0])
-  // }, [jobs])
 
   let daysObj = {
     Monday: true,
@@ -135,12 +132,6 @@ export default function Jobs() {
     postal, setPostal
   }
 
-  // useEffect(() => {
-  //   const jobData = generateJobs(10);
-  //   setJobs(jobData);
-  //   setSelectedJob(jobData[0])
-  //   // Now do something with 'jobs'
-  // }, []);
 
   return (
 

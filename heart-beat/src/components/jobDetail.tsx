@@ -4,8 +4,6 @@ import { FaUser, FaPersonBooth, FaEnvelope, FaParking, FaInfoCircle } from 'reac
 import Image from 'next/image';
 import Tooltip from "./tooltip";
 
-
-
 interface JobDetailProps {
   job: Job;
 }
