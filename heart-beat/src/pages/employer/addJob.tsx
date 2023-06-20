@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Router, useRouter } from 'next/router';
 import {Job} from '../../utils/types';
+import RadioBut from '../../components/radioBut';
 
 export default function AddJobs () {
   // let router = useRouter();
@@ -43,7 +44,7 @@ export default function AddJobs () {
     start: '',
     end: '',
     shiftHour: 0,
-    patient_population: '',
+    patient_population: 'Neonatal',
     patient_number: 0,
     stipend: 0,
     weekly_pay: 0,
@@ -54,6 +55,10 @@ export default function AddJobs () {
     additionalDetails: '',
   });
 
+  let now = new Date();
+  let formattedDate = now.toISOString().slice(0, 10);
+  const [startDate, setStartDate] = useState(formattedDate);
+  const [endDate, setEndDate] = useState(formattedDate);
   const [startHour, setStartHour] = useState(0);
   const [startMin, setStartMin] = useState(0);
   const [startM, setStartM] = useState('AM');
@@ -82,6 +87,19 @@ export default function AddJobs () {
   'Hospice Nurse',
   'Public Health Nurse']
 
+  let patientPopulations = [
+    "Neonatal", // 0 - 28 days
+    "Infant", // 1 month - 1 year
+    "Toddler", // 1 - 3 years
+    "Preschool", // 3 - 5 years
+    "Pediatric", // 6 - 12 years
+    "Adolescent", // 13 - 18 years
+    "Young Adult", // 19 - 24 years
+    "Adult", // 25 - 64 years
+    "Geriatric" // 65 years and above
+];
+
+
   let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
   let changeState = (cat:string, value:any) => {
@@ -96,7 +114,7 @@ export default function AddJobs () {
       <Nav />
       <div className="flex lg:flex-row flex-col flex-grow items-center justify-items-center bg-white text-black">
         <div className="flex lg:w-1/2">
-          <form className="mx-auto lg:my-0 my-20">
+          <form className="mx-auto lg:my-0 my-20 flex flex-col">
             <div className='mt-5 flex mb-2 flex flex-col'>
               <label htmlFor='category'>Category:</label>
               <select id='dropdown' name='category' value={job.category} onChange={(e) => changeState('category', e.target.value)}
@@ -109,12 +127,12 @@ export default function AddJobs () {
                 </select>
               </div>
               <div className='mt-5 flex mb-2 flex flex-col'>
-                <label htmlFor='year_required'>year required</label>
+                <label htmlFor='year_required'>Years Required</label>
                 <input type='number' name='year_required' value={job.year_required} onChange={(e) => changeState('year_required', Number(e.target.value))}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"/>
             </div>
             <div className='mt-5 flex mb-2 flex flex-col'>
-              <label htmlFor='title'>title
+              <label htmlFor='title'>Title
                 <input type='text' name='title' value={job.title} onChange={(e) => changeState('title', e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"/>
               </label>
@@ -129,7 +147,7 @@ export default function AddJobs () {
                           onChange={(e) => {
                             changeState('address1', e.target.value)
                           }}
-                          className="flex w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
+                          className="mr-2 flex w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
                           placeholder="Address 1"/>
                         <input
                           type="text"
@@ -182,17 +200,20 @@ export default function AddJobs () {
                   />
                 </label>
               </div>
-              <div className='mt-5 flex mb-2 flex flex-col'>
-                <label htmlFor='days'>
+              <div className='mt-5 flex mb-2 flex flex-col px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 hover:cursor-pointer'>
+                <label htmlFor='days'>Select Days</label>
+                <div className='flex flex-row mt-2'>
                   {days.map((day, index) =>
-                    <div key={index} className='flex size-auto'>
-                      <input type='checkbox' checked={job[day]} onClick={() => changeState(day, !job[day])}/>
-                      <span onClick={() => changeState(day, !job[day])}>{day}</span>
-                    </div>
-                  )}
-                </label>
+                      <div key={index} className='flex size-auto mr-3'>
+                        <input type='checkbox' checked={job[day]} onChange={() => changeState(day, !job[day])}
+                        className='mr-0.5 hover:cursor-pointer'/>
+                        <span onClick={() => changeState(day, !job[day])}>{day}</span>
+                      </div>
+                    )}
+                </div>
               </div>
               <div className='mt-5 flex mb-5 flex flex-col px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
+                <label className='mb-3'>Select Hours</label>
                 <div className='flex flex-col'>
                   <label>Start:</label>
                   <div className='flex flex-row'>
@@ -220,6 +241,86 @@ export default function AddJobs () {
                   </div>
                 </div>
               </div>
+              <div className='mt-5 flex mb-5 flex flex-row px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
+                  <div className='flex my-4 mr-5'>
+                    <label htmlFor="date">Start Date:</label>
+                    <input type="date" id="date" name="date" value={startDate} min="2023-01-01" max={String(Number(formattedDate.slice(0, 4)) + 1) + formattedDate.slice(4)} onChange={(e) => setStartDate(e.target.value)} className='bg-slate-200 px-1 mx-2' />
+                  </div>
+                  <div className='flex my-4'>
+                    <label htmlFor="date">End Date:</label>
+                    <input type="date" id="date" name="date" value={endDate} min={startDate} max={String(Number(formattedDate.slice(0, 4)) + 1) + formattedDate.slice(4)} onChange={(e) => setEndDate(e.target.value)} className='bg-slate-200 px-1 mx-2' />
+                  </div>
+                </div>
+                <div className='mt-5 flex mb-5 flex flex-col px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
+                  <div className='flex my-5'>
+                    <label>Patient Number: </label>
+                    <input type='number' value={job.patient_number} onChange={(e) => changeState('patient_number', Number(e.target.value))}
+                    className='flex ml-3 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'/>
+                  </div>
+                  <div className='flex my-4 flex-row'>
+                    <label>Patient Population:</label>
+                    <select id='dropdown' name='patientPopulation' value={job.patient_population} onChange={(e) => changeState('patient_population', e.target.value)}
+                  className="w-1/2 ml-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black">
+                    {patientPopulations.map((patient, index) => {
+                      return (
+                        <option value={patient} key={index}>{patient}</option>
+                      )
+                    })}
+                    </select>
+                  </div>
+                </div>
+                <div className='mt-5 flex mb-5 flex flex-col px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
+                  {/* for weekly_pay */}
+                  <div className='flex flex-row mb-1'>
+                    <label>Weekly-pay $</label>
+                    <input type='number' onChange={(e) => changeState('weekly_pay', Number(e.target.value))}
+                    className='flex border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-1'/>
+                  </div >
+                  {/* stipend */}
+                  <div className='flex flex-row mb-1'>
+                    <label>Stipend $</label>
+                    <input type='number' onChange={(e) => changeState('stipend', Number(e.target.value))}
+                    className='flex border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-1'/>
+                  </div>
+                  {/* bonus */}
+                  <div className='flex flex-row mb-1'>
+                    <label>Bonus $</label>
+                    <input type='number' onChange={(e) => changeState('bonus', Number(e.target.value))}
+                    className='flex border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-1'/>
+                  </div>
+                </div>
+                <div className='mt-5 flex mb-5 flex flex-col px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
+                  <div className='flex flex-row'>
+                    <h1 className="flex text-text flex-row">Free Parking?</h1>
+                    <RadioBut checked={job.parkingFree} onChange={() => changeState('parkingFree', !job.parkingFree)} label={''} />
+                  </div>
+                  <div className='flex flex-row mt-2'>
+                    <label>Contact Person: </label>
+                    <input type='text' value={job.contact_person} onChange={(e) => changeState('contact_person', e.target.value)}
+                    className='flex w-3/4 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-3'/>
+                  </div>
+                  <div className='flex flex-row mt-2'>
+                    <label>Email: </label>
+                      <input type='email' value={job.contact_email} onChange={(e) => changeState('contact_email', e.target.value)}
+                      className='flex w-3/4 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-3'/>
+                  </div>
+                  <div className='flex flex-row mt-2'>
+                    <label>Additional Details: </label>
+                    <textarea
+                      value={job.additional_details}
+                      onChange={(e) => changeState('additional_details', e.target.value)}
+                      className='flex w-3/4 l-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-3'
+                      rows={4}
+                      placeholder='Enter additional details here...'
+                    />
+                  </div>
+                </div>
+                <button
+                type="submit"
+                className="flex px-4 py-2 text-white rounded-md  bg-primary-light hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5 justify-center"
+                >
+                Submit
+              </button>
           </form>
         </div>
       </div>
