@@ -35,6 +35,7 @@ export interface Job {
   contact_email: string;
   parkingFree: boolean;
   additionalDetails?: string;
+  [key: string]: any;
 }
 
 export interface FilterPassTypes {
