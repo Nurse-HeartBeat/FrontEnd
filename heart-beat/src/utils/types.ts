@@ -1,5 +1,5 @@
 export interface Job {
-  id: string;
+  id?: string;
   category: string;
   year_required: number;
   title: string;
@@ -14,8 +14,8 @@ export interface Job {
   postal: string;
   latitude: number;
   longitude: number;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   Monday: boolean;
   Tuesday: boolean;
   Wednesday: boolean;

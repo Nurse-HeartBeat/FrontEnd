@@ -19,7 +19,6 @@ export default function AddJobs () {
   //   }
   // }, [reduxState, router])
   const [job, setJob] = useState<Job>({
-    id: '',
     category: '',
     year_required: 0,
     title: '',
@@ -34,8 +33,8 @@ export default function AddJobs () {
     postal: '',
     latitude: 0,
     longitude: 0,
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: String(new Date()),
+    endDate: String(new Date()),
     Monday: false,
     Tuesday: false,
     Wednesday: false,
@@ -43,8 +42,8 @@ export default function AddJobs () {
     Friday: false,
     Saturday: false,
     Sunday: false,
-    start: '',
-    end: '',
+    start: "12:00",
+    end: "12:00",
     shiftHour: 0,
     patient_population: 'Neonatal',
     patient_number: 0,
@@ -116,8 +115,25 @@ export default function AddJobs () {
   let onSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault()
     setLoading(!loading)
-    setTimeout(()=>setLoading(false), 3000)
+    console.log(typeof startDate)
+    setJob((prevState) => ({
+      ...prevState,
+      startDate: startDate,
+      endDate: endDate,
+      start: String(startHour) + String(startMin) + String(startM),
+      end: String(endHour) + String(endMin) + String(endM)
+    }))
+    // setTimeout(()=>setLoading(false), 3000)
   }
+
+  useEffect(() => {
+    if (loading) {
+      //do a call
+      //then set the loading to false
+      console.log(job);
+      setLoading(false)
+    }
+  }, [loading])
 
   return (
     <div>
@@ -233,27 +249,13 @@ export default function AddJobs () {
               <div className='flex flex-col'>
                 <label>Start:</label>
                 <div className='flex flex-row'>
-                  <label htmlFor="hours">Hour:</label><br />
-                    <input type="number" id="hours" name="hours" min="1" max="12" value={startHour} onChange={(e) => setStartHour(Number(e.target.value))} className='bg-slate-200 px-1 mx-2' /><br />
-                    <label htmlFor="minutes">Minutes:</label><br />
-                    <input type="number" id="minutes" name="minutes" min="0" max="59" value={startMin} onChange={(e) => setStartMin(Number(e.target.value))} className='bg-slate-200 px-1 mx-2' /><br />
-                    <select id="ampm" name="ampm" className='ml-1 bg-slate-200' value={startM} onChange={(e) => setStartM(e.target.value)}>
-                      <option value="AM">AM</option>
-                      <option value="PM">PM</option>
-                    </select>
+                <input type='time' value={job.start} onChange={(e) => console.log(e.target.value)}/>
                 </div>
               </div>
               <div className='flex flex-col mt-5 mb-2'>
                 <label>End:</label>
                 <div className='flex flex-row'>
-                  <label htmlFor="hours">Hour:</label><br />
-                    <input type="number" id="hours" name="hours" min="1" max="12" value={endHour} onChange={(e) => setEndHour(Number(e.target.value))} className='bg-slate-200 px-1 mx-2' /><br />
-                    <label htmlFor="minutes">Minutes:</label><br />
-                    <input type="number" id="minutes" name="minutes" min="0" max="59" value={endMin} onChange={(e) => setEndMin(Number(e.target.value))} className='bg-slate-200 px-1 mx-2' /><br />
-                    <select id="ampm" name="ampm" className='ml-1 bg-slate-200' value={endM} onChange={(e) => setEndM(e.target.value)}>
-                      <option value="AM">AM</option>
-                      <option value="PM">PM</option>
-                    </select>
+
                 </div>
               </div>
             </div>
