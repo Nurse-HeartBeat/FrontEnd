@@ -17,8 +17,8 @@ interface ObjProps {
   setAddress1: (value: string) => void;
   address2?: string;
   setAddress2: (value: string) => void;
-  postal?: string;
-  setPostal: (value: string) => void;
+  postal?: number;
+  setPostal: (value: number) => void;
   gender?: string;
   setGender: (value: string) => void;
   handleSubmit: MouseEventHandler<HTMLButtonElement>;
@@ -114,7 +114,7 @@ const continueNurse: React.FC<{obj: ObjProps}> = ({obj}) => {
                     value={obj.postal}
                     onChange={(e) => {
                       const numericValue = e.target.value.replace(/\D/g, '')
-                      obj.setPostal(numericValue)
+                      obj.setPostal(Number(numericValue))
                     }}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
                     placeholder="Postal Code"

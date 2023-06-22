@@ -11,7 +11,7 @@ export interface Job {
   address2?: string;
   city: string;
   state: string;
-  postal: string;
+  postal: number;
   latitude: number;
   longitude: number;
   startDate: string;

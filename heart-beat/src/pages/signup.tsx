@@ -12,6 +12,62 @@ import RadioBut from '../components/radioBut';
 import ConNurse from '../components/continueNurse';
 import ConEmployer from '../components/continueEmployer';
 import { Router, useRouter } from 'next/router';
+import { gql, useMutation, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+
+const httpLink = new HttpLink({
+  uri: `${process.env.NEXT_PUBLIC_GRAPHQL_URL}`,
+  headers: {
+    'X-CSRFToken': `${process.env.NEXT_PUBLIC_GRAPHQL_TOKEN}`,
+  },
+});
+
+const client = new ApolloClient({
+  // uri: `${process.env.NEXT_PUBLIC_GRAPHQL_URL}`, // replace with your API endpoint
+  link: httpLink,
+  cache: new InMemoryCache()
+});
+
+
+const CREATE_EMPLOYER = gql`
+  mutation CreateEmployer(
+    $companyName: String!,
+    $type: String!,
+    $address1: String!,
+    $address2: String!,
+    $city: String!,
+    $state: String!,
+    $postal: Int!,
+    $email: String!,
+    $phone: String!,
+    $auth: String!
+  ) {
+    createEmployerModel(
+      companyName: $companyName,
+      type: $type,
+      address1: $address1,
+      address2: $address2,
+      city: $city,
+      state: $state,
+      postal: $postal,
+      email: $email,
+      phone: $phone,
+      auth: $auth
+    ) {
+      employerModel {
+        id
+        companyName
+        type
+        address1
+        address2
+        city
+        state
+        postal
+        email
+        phone
+      }
+    }
+  }
+`;
 
 export default function SignUp() {
   const [continueBut, setContinueBut] = useState(false);
@@ -21,12 +77,12 @@ export default function SignUp() {
   const [emailStatus, setEmailStatus] = useState(false);
   const [repass, setRepass] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState(undefined);
   const [address1, setAddress1] = useState('');
   const [address2, setAddress2] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [postal, setPostal] = useState('');
+  const [postal, setPostal] = useState(undefined);
 //nurse
   const [nurseFirst, setNurseFirst] = useState('');
   const [nurseLast, setNurseLast] = useState('');
@@ -73,15 +129,26 @@ export default function SignUp() {
     setIsEmployer(!isEmployer)
   }
 
+  // const [createEmployer, { data }] = useMutation(CREATE_EMPLOYER);
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     // Handle form submission logic here
     createUserWithEmailAndPassword(Auth, email, password)
-      .then(() => {
+      .then((data1) => {
         if (isEmployer) {
+          let auth = (data1.user as any).accessToken
           let companyProfileObj = {
-            email, phone, address1, address2, city, state, postal, facilityType, company
+            email, phone, address1, address2, city, state, postal, type: facilityType, companyName:company, auth
           }
+          // createEmployer({variables: companyProfileObj});
+
+        client.mutate({
+            mutation: CREATE_EMPLOYER,
+            variables: companyProfileObj
+          })
+          .then(data => console.log(data))
+          .catch(err => console.log(err))
           //send to the backend
         } else {
           let nurseProfileObj = {

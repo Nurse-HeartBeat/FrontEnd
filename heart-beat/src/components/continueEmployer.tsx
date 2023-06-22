@@ -3,14 +3,14 @@ import React, { FormEvent, MouseEventHandler } from 'react';
 interface ObjProps {
   company: string;
   setCompany: (value: string) => void;
-  phone: string;
+  phone?: string;
   setPhone: (value: string) => void;
   address1: string;
   setAddress1: (value: string) => void;
   address2?: string;
   setAddress2: (value: string) => void;
-  postal?: string;
-  setPostal: (value: string) => void;
+  postal?: number;
+  setPostal: (value: number) => void;
   handleSubmit: MouseEventHandler<HTMLButtonElement>;
   continueBut: boolean;
   setContinueBut: (value: boolean) => void;
@@ -114,15 +114,15 @@ const continueEmployer: React.FC<{obj: ObjProps}> = ({obj}) => {
                 </label>
                 <label htmlFor="postal" className="appearance-none block text-gray-700 text-white">
                   <input
-                    type="text"
+                    type="number"
                     id="postal"
-                    value={obj.postal}
                     onChange={(e) => {
-                      const numericValue = e.target.value.replace(/\D/g, '')
-                      obj.setPostal(numericValue)
+                      // const numericValue = e.target.value.replace(/\D/g, '')
+                      obj.setPostal(Number(e.target.value))
                     }}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
                     placeholder="Postal Code"
+                    maxLength={5}
                   />
                 </label>
               </div>
