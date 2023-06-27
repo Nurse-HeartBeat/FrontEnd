@@ -12,61 +12,44 @@ import RadioBut from '../components/radioBut';
 import ConNurse from '../components/continueNurse';
 import ConEmployer from '../components/continueEmployer';
 import { Router, useRouter } from 'next/router';
-import { gql, useMutation, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { gql, from, useMutation, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import { setContext } from '@apollo/link-context';
+import Cookies from "universal-cookie/es6";
 
-// const httpLink = new HttpLink({
-//   uri: `${process.env.NEXT_PUBLIC_GRAPHQL_URL}`,
-//   headers: {
-//     'X-CSRFToken': `${process.env.NEXT_PUBLIC_GRAPHQL_TOKEN}`,
-//     // 'Host': '127.0.0.1'
-//   },
-// });
-
-// const client = new ApolloClient({
-//   // uri: `${process.env.NEXT_PUBLIC_GRAPHQL_URL}`, // replace with your API endpoint
-//   link: httpLink,
-//   cache: new InMemoryCache()
-// });
 
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_URL });
-
-
-function getCookie(name:string) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          // Does this cookie string begin with the name we want?
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-              break;
-          }
-      }
-  }
-  return cookieValue;
+let csrftoken: string | null;
+async function getCsrfToken() {
+  if (csrftoken) return csrftoken;
+  csrftoken = await fetch('http://localhost:8000/csrf/')
+      .then(response => response.json())
+      .then(data => data.csrfToken)
+  return await csrftoken
 }
 
-
-const authLink = setContext((_, { headers }) => {
+const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = getCookie('csrftoken')
-  console.log(token, 'this is token')
+
+  csrftoken = await getCsrfToken();
+  console.log('this is token', csrftoken)
   // getCookie("csrftoken"); // Assume you have a function that gets the cookie value
   // return the headers to the context so httpLink can read them
+  const cookies = new Cookies();
+  cookies.set('csrftoken', csrftoken);
   return {
     headers: {
       ...headers,
-      'X-CSRFToken': 'hskgrgG6t3Q12LaQP05DU8xLi7LfoobZQKUEWdaKj20Uf6zdq4oDuLkzBg0C9rh6',
-      'Host':'127.0.0.1'
+      'X-CSRFToken': csrftoken,
     }
   }
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  // link: authLink.concat(httpLink),
+  uri: 'http://localhost:8000/graphql/',
+  link: from([authLink, httpLink]),
   cache: new InMemoryCache(),
+  credentials: 'include', // Add this line
 });
 
 
@@ -188,7 +171,10 @@ export default function SignUp() {
 
         client.mutate({
             mutation: CREATE_EMPLOYER,
-            variables: companyProfileObj
+            variables: companyProfileObj,
+            context: {
+              credentials: 'include', // Add this line
+            },
           })
           .then(data => console.log(data, 'herre is it'))
           .catch(err => console.log(err))
