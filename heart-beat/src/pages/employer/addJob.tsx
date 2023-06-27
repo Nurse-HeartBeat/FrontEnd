@@ -94,7 +94,7 @@ export default function AddJobs () {
   return (
     <div>
       <Nav />
-      <div className="flex lg:flex-row flex-col flex-grow items-center justify-items-center bg-white text-black">
+      <div className="flex lg:flex-row flex-col flex-grow items-center justify-items-center bg-white text-black px-10">
         <div className="flex lg:w-1/2">
           <form className="mx-auto lg:my-0 my-20">
             <div className='mt-5 flex mb-2 flex flex-col'>
