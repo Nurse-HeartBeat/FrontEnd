@@ -11,7 +11,7 @@ export interface Job {
   address2?: string;
   city: string;
   state: string;
-  postal: number;
+  postal?: number;
   latitude: number;
   longitude: number;
   startDate: string;
@@ -55,7 +55,7 @@ export interface FilterPassTypes {
   setEndHour: (value: number) => void;
   dates: Date;
   setDates: (value: Date) => void;
-  postal: number;
+  postal?: number;
   setPostal: (value: number) => void;
 }
 

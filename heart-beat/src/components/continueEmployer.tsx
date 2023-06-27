@@ -9,7 +9,7 @@ interface ObjProps {
   setAddress1: (value: string) => void;
   address2?: string;
   setAddress2: (value: string) => void;
-  postal?: number;
+  postal?: number | null;
   setPostal: (value: number) => void;
   handleSubmit: MouseEventHandler<HTMLButtonElement>;
   continueBut: boolean;
@@ -116,6 +116,7 @@ const continueEmployer: React.FC<{obj: ObjProps}> = ({obj}) => {
                   <input
                     type="number"
                     id="postal"
+                    value={obj.postal || ''}
                     onChange={(e) => {
                       // const numericValue = e.target.value.replace(/\D/g, '')
                       obj.setPostal(Number(e.target.value))

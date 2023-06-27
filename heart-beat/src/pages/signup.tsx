@@ -13,18 +13,60 @@ import ConNurse from '../components/continueNurse';
 import ConEmployer from '../components/continueEmployer';
 import { Router, useRouter } from 'next/router';
 import { gql, useMutation, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { setContext } from '@apollo/link-context';
 
-const httpLink = new HttpLink({
-  uri: `${process.env.NEXT_PUBLIC_GRAPHQL_URL}`,
-  headers: {
-    'X-CSRFToken': `${process.env.NEXT_PUBLIC_GRAPHQL_TOKEN}`,
-  },
+// const httpLink = new HttpLink({
+//   uri: `${process.env.NEXT_PUBLIC_GRAPHQL_URL}`,
+//   headers: {
+//     'X-CSRFToken': `${process.env.NEXT_PUBLIC_GRAPHQL_TOKEN}`,
+//     // 'Host': '127.0.0.1'
+//   },
+// });
+
+// const client = new ApolloClient({
+//   // uri: `${process.env.NEXT_PUBLIC_GRAPHQL_URL}`, // replace with your API endpoint
+//   link: httpLink,
+//   cache: new InMemoryCache()
+// });
+
+const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_URL });
+
+
+function getCookie(name:string) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = getCookie('csrftoken')
+  console.log(token, 'this is token')
+  // getCookie("csrftoken"); // Assume you have a function that gets the cookie value
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      'X-CSRFToken': 'hskgrgG6t3Q12LaQP05DU8xLi7LfoobZQKUEWdaKj20Uf6zdq4oDuLkzBg0C9rh6',
+      'Host':'127.0.0.1'
+    }
+  }
 });
 
 const client = new ApolloClient({
-  // uri: `${process.env.NEXT_PUBLIC_GRAPHQL_URL}`, // replace with your API endpoint
-  link: httpLink,
-  cache: new InMemoryCache()
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
 });
 
 
@@ -77,12 +119,12 @@ export default function SignUp() {
   const [emailStatus, setEmailStatus] = useState(false);
   const [repass, setRepass] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState(undefined);
+  const [phone, setPhone] = useState('');
   const [address1, setAddress1] = useState('');
   const [address2, setAddress2] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [postal, setPostal] = useState(undefined);
+  const [postal, setPostal] = useState<number | null>(null);
 //nurse
   const [nurseFirst, setNurseFirst] = useState('');
   const [nurseLast, setNurseLast] = useState('');
@@ -134,6 +176,7 @@ export default function SignUp() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     // Handle form submission logic here
+
     createUserWithEmailAndPassword(Auth, email, password)
       .then((data1) => {
         if (isEmployer) {
@@ -147,7 +190,7 @@ export default function SignUp() {
             mutation: CREATE_EMPLOYER,
             variables: companyProfileObj
           })
-          .then(data => console.log(data))
+          .then(data => console.log(data, 'herre is it'))
           .catch(err => console.log(err))
           //send to the backend
         } else {

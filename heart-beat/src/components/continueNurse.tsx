@@ -11,13 +11,13 @@ interface ObjProps {
   setyoe: (value: number) => void;
   expire?: Date;
   setExpire: (value: Date) => void;
-  phone?: string;
+  phone: string;
   setPhone: (value: string) => void;
   address1: string;
   setAddress1: (value: string) => void;
   address2?: string;
   setAddress2: (value: string) => void;
-  postal?: number;
+  postal?: number | null;
   setPostal: (value: number) => void;
   gender?: string;
   setGender: (value: string) => void;
@@ -111,7 +111,7 @@ const continueNurse: React.FC<{obj: ObjProps}> = ({obj}) => {
                   <input
                     type="text"
                     id="postal"
-                    value={obj.postal}
+                    value={obj.postal || ''}
                     onChange={(e) => {
                       const numericValue = e.target.value.replace(/\D/g, '')
                       obj.setPostal(Number(numericValue))

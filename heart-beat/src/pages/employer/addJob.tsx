@@ -30,7 +30,7 @@ export default function AddJobs () {
     address2: '',
     city: '',
     state: '',
-    postal: '',
+    postal: undefined,
     latitude: 0,
     longitude: 0,
     startDate: String(new Date()),
