@@ -8,6 +8,7 @@ export async function getCsrfToken() {
   let csrfToken = store.getState().user.csrf
 
   if (csrfToken) {
+    console.log('have csrfToken: ', csrfToken)
     cookies.set('csrftoken', csrfToken);
     return csrfToken;
   }
