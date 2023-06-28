@@ -21,7 +21,7 @@ const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_URL });
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
-let csrftoken = await getCsrfToken();
+let csrftoken = await getCsrfToken(); //remember it is always async
   // getCookie("csrftoken"); // Assume you have a function that gets the cookie value
   // return the headers to the context so httpLink can read them
   console.log('this is csrftoken', csrftoken)
