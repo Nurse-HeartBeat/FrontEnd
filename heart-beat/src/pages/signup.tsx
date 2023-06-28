@@ -14,28 +14,17 @@ import ConEmployer from '../components/continueEmployer';
 import { Router, useRouter } from 'next/router';
 import { gql, from, useMutation, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import { setContext } from '@apollo/link-context';
-import Cookies from "universal-cookie";
+import {getCsrfToken} from '../utils/csrfToken';
 
 
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_URL });
-let csrftoken: string | null;
-async function getCsrfToken() {
-  if (csrftoken) return csrftoken;
-  csrftoken = await fetch('http://localhost:8000/csrf/')
-      .then(response => response.json())
-      .then(data => data.csrfToken)
-  return await csrftoken
-}
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
-
-  csrftoken = await getCsrfToken();
-  console.log('this is token', csrftoken)
+let csrftoken = await getCsrfToken(); //remember it is always async
   // getCookie("csrftoken"); // Assume you have a function that gets the cookie value
   // return the headers to the context so httpLink can read them
-  const cookies = new Cookies();
-  cookies.set('csrftoken', csrftoken);
+  console.log('this is csrftoken', csrftoken)
   return {
     headers: {
       ...headers,
@@ -46,12 +35,11 @@ const authLink = setContext(async (_, { headers }) => {
 
 const client = new ApolloClient({
   // link: authLink.concat(httpLink),
-  // uri: 'http://localhost:8000/graphql/',
+  uri: process.env.NEXT_PUBLIC_GRAPHQL_CSRF,
   link: from([authLink, httpLink]),
   cache: new InMemoryCache(),
   credentials: 'include', // Add this line
 });
-
 
 const CREATE_EMPLOYER = gql`
   mutation CreateEmployer(
@@ -89,6 +77,58 @@ const CREATE_EMPLOYER = gql`
         postal
         email
         phone
+      }
+    }
+  }
+`;
+
+const CREATE_NURSE = gql`
+  mutation CreateNurse(
+    $firstName: String!,
+    $lastName: String!,
+    $address1: String!,
+    $address2: String!,
+    $city: String!,
+    $state: String!,
+    $postal: Int!,
+    $email: String!,
+    $phone: String!,
+    $gender: String!,
+    $yearOfExperience: Int!,
+    $license: String!,
+    $expiration: Date!,
+    $auth: String!
+  ) {
+    createNurseModel(
+      firstName: $firstName,
+      lastName: $lastName,
+      address1: $address1,
+      address2: $address2,
+      city: $city,
+      state: $state,
+      postal: $postal,
+      email: $email,
+      phone: $phone,
+      gender: $gender,
+      yearOfExperience: $yearOfExperience,
+      license: $license,
+      expiration: $expiration,
+      auth: $auth
+    ) {
+      nurseModel {
+        id
+        firstName
+        lastName
+        address1
+        city
+        state
+        postal
+        email
+        phone
+        gender
+        yearOfExperience
+        license
+        expiration
       }
     }
   }
@@ -161,7 +201,7 @@ export default function SignUp() {
     // Handle form submission logic here
 
     createUserWithEmailAndPassword(Auth, email, password)
-      .then((data1) => {
+      .then(async (data1) => {
         if (isEmployer) {
           let auth = (data1.user as any).accessToken
           let companyProfileObj = {
@@ -169,7 +209,7 @@ export default function SignUp() {
           }
           // createEmployer({variables: companyProfileObj});
 
-        client.mutate({
+        await client.mutate({
             mutation: CREATE_EMPLOYER,
             variables: companyProfileObj,
             context: {
@@ -180,10 +220,21 @@ export default function SignUp() {
           .catch(err => console.log(err))
           //send to the backend
         } else {
+
           let nurseProfileObj = {
-            nurseFirst, nurseLast, license, yoe, expire, gender, email, phone,
+            firstName: nurseFirst, lastName: nurseLast, license, yearOfExperience: yoe, expiration: expire, gender, email, phone,
             address1, address2, city, state, postal
           }
+
+          await client.mutate({
+            mutation: CREATE_NURSE,
+            variables: nurseProfileObj,
+            context: {
+              credentials: 'include', // Add this line
+            },
+          })
+          .then(data => console.log(data, 'herre is it'))
+          .catch(err => console.log(err))
           //send to the backend
         }
       })
@@ -191,6 +242,7 @@ export default function SignUp() {
         window.alert(err)
       })
   };
+
   const handleContinue = (e: FormEvent) => {
     e.preventDefault();
     if (email === '') {

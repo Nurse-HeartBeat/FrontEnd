@@ -5,6 +5,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: {
     user: null,
+    csrf: null
   },
   reducers: {
     // login: (state, action) => {
@@ -22,11 +23,14 @@ export const userSlice = createSlice({
     setUser: (state: any, action: PayloadAction<object | null>) => {
       state.user = action.payload
       console.log(state.user)
+    },
+    setCsrf: (state:any, action: PayloadAction<string>) => {
+      state.csrf = action.payload
     }
   },
-});
+},);
 
 // Action creators are generated for each case reducer function
-export const { setUser } = userSlice.actions;
+export const { setUser, setCsrf } = userSlice.actions;
 
 export default userSlice.reducer;
