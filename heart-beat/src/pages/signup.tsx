@@ -15,6 +15,7 @@ import { Router, useRouter } from 'next/router';
 import { gql, from, useMutation, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import { setContext } from '@apollo/link-context';
 import {getCsrfToken} from '../utils/csrfToken';
+import {formatDate} from '../utils/formatDateYYMMDD'
 
 
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_URL });
@@ -202,8 +203,8 @@ export default function SignUp() {
 
     createUserWithEmailAndPassword(Auth, email, password)
       .then(async (data1) => {
+        let auth = (data1.user as any).accessToken
         if (isEmployer) {
-          let auth = (data1.user as any).accessToken
           let companyProfileObj = {
             email, phone, address1, address2, city, state, postal, type: facilityType, companyName:company, auth
           }
@@ -216,16 +217,18 @@ export default function SignUp() {
               credentials: 'include', // Add this line
             },
           })
-          .then(data => console.log(data, 'herre is it'))
+          .then(data =>
+            console.log(data, 'herre is it')
+            )
           .catch(err => console.log(err))
           //send to the backend
         } else {
-
+          let formatedExp = formatDate(String(expire))
           let nurseProfileObj = {
-            firstName: nurseFirst, lastName: nurseLast, license, yearOfExperience: yoe, expiration: expire, gender, email, phone,
-            address1, address2, city, state, postal
+            firstName: nurseFirst, lastName: nurseLast, license, yearOfExperience: yoe, expiration: formatedExp, gender, email, phone,
+            address1, address2, city, state, postal, auth
           }
-
+          // console.log(nurseProfileObj, 'nurse po')
           await client.mutate({
             mutation: CREATE_NURSE,
             variables: nurseProfileObj,
