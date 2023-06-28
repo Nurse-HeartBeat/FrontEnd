@@ -12,7 +12,15 @@ export async function getCsrfToken() {
     return csrfToken;
   }
 
-  const response = await fetch('http://localhost:8000/csrf/');
+
+  const url = process.env.NEXT_PUBLIC_GRAPHQL_CSRF;
+
+  if (!url) {
+    // Handle the case when the URL is undefined or not available
+    throw new Error("GraphQL CSRF URL is undefined or not available");
+  }
+
+  const response = await fetch(url);
   const data = await response.json();
   const newCsrfToken = data.csrfToken;
 

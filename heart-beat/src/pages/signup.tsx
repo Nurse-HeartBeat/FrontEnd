@@ -35,7 +35,7 @@ let csrftoken = await getCsrfToken(); //remember it is always async
 
 const client = new ApolloClient({
   // link: authLink.concat(httpLink),
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_CSRF,
+  // uri: process.env.NEXT_PUBLIC_GRAPHQL_CSRF,
   link: from([authLink, httpLink]),
   cache: new InMemoryCache(),
   credentials: 'include', // Add this line
