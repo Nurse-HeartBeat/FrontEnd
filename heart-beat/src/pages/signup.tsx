@@ -14,7 +14,7 @@ import ConEmployer from '../components/continueEmployer';
 import { Router, useRouter } from 'next/router';
 import { gql, from, useMutation, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import { setContext } from '@apollo/link-context';
-import Cookies from "universal-cookie/es6";
+import Cookies from "universal-cookie";
 
 
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_URL });
