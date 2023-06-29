@@ -11,6 +11,7 @@ import loginCartoon from '../../public/loginCartoon.png';
 import RadioBut from '../components/radioBut';
 import { Router, useRouter } from 'next/router';
 import {QUERY_EMPLOYER, QUERY_NURSE, client} from '../utils/graphQL'
+import { Dispatch } from 'redux';
 
 
 
@@ -20,7 +21,7 @@ export default function Login() {
   const [employer, setEmployer] = useState(false);
   const [isForgot, setIsForgot] = useState(false);
 
-  const dispatch = useDispatch()
+  const dispatch : Dispatch <any> = useDispatch()
 
   const reduxState = useSelector((state:any) => state.user);
 
@@ -66,7 +67,6 @@ export default function Login() {
           .catch(err => console.log(err))
 
         } else {
-          console.log(user.uid)
           //query the nurse
           await client.query({
             query: QUERY_NURSE,
