@@ -59,7 +59,7 @@ export default function Login() {
             },
           })
           .then((data: any) => {
-            let userProfile = data.data['createEmployerModel']['employerModel']
+            let userProfile = data.data.employer
             dispatch(setUser(userProfile))
             dispatch(setEmployer(true))
           })
@@ -76,7 +76,8 @@ export default function Login() {
             },
           })
           .then((data: any) => {
-            let userProfile = data.data['createNurseModel']['nurseModel']
+            console.log(data.data.nurse)
+            let userProfile = data.data.nurse
             console.log(data, 'success')
             dispatch(setUser(userProfile))
             dispatch(setEmployer(false))

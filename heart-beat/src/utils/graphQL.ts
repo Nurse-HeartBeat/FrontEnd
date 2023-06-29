@@ -3,7 +3,7 @@ import { setContext } from '@apollo/link-context';
 import {getCsrfToken} from '../utils/csrfToken';
 
 export const QUERY_NURSE = gql`
-  query NurseQuery($auth: String!) {
+  query GetNurse($auth: ID!) {
     nurse(auth: $auth) {
       id
       firstName
@@ -24,7 +24,7 @@ export const QUERY_NURSE = gql`
 `;
 
 export const QUERY_EMPLOYER = gql`
-  query GetEmployer($auth: String!) {
+  query GetEmployer($auth: ID!) {
     employer(auth: $auth) {
       id
       companyName
