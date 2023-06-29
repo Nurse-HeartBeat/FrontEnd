@@ -1,15 +1,19 @@
 import Nav from '../components/nav';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../redux/user';
+import { setUser, setEmployer } from '../redux/user';
 import { useEffect } from 'react';
 import Auth from '../auth/firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import Footer from '../components/footer';
 import Image from 'next/image';
 import loginCartoon from '../../public/loginCartoon.png';
 import RadioBut from '../components/radioBut';
 import { Router, useRouter } from 'next/router';
+import {QUERY_EMPLOYER, QUERY_NURSE, client} from '../utils/graphQL'
+import { Dispatch } from 'redux';
+
+
 
 export default function Login() {
   const [password, setPassword] = useState('');
@@ -17,11 +21,10 @@ export default function Login() {
   const [employer, setEmployer] = useState(false);
   const [isForgot, setIsForgot] = useState(false);
 
+  const dispatch : Dispatch <any> = useDispatch()
 
-
-  //to check whether redux is working
-  // const dispatch = useDispatch();
   const reduxState = useSelector((state:any) => state.user);
+
   const router = useRouter();
   useEffect(() => {
     if(reduxState.user) {
@@ -46,9 +49,41 @@ export default function Login() {
     e.preventDefault();
     // Handle form submission logic here
     signInWithEmailAndPassword(Auth, email, password)
-      .then(({ user }) => {
-        // dispatch(setUser({ email, password })); //to check whether the redux is working
-        console.log(user.uid) //obtaining the id
+      .then(async ({ user }) => {
+        if (employer) {
+          //query the employer
+          await client.query({
+            query: QUERY_EMPLOYER,
+            variables: {auth: user.uid},
+            context: {
+              credentials: 'include', // Add this line
+            },
+          })
+          .then((data: any) => {
+            let userProfile = data.data.employer
+            dispatch(setUser(userProfile))
+            dispatch(setEmployer(true))
+          })
+          .catch(err => console.log(err))
+
+        } else {
+          //query the nurse
+          await client.query({
+            query: QUERY_NURSE,
+            variables: {auth: user.uid},
+            context: {
+              credentials: 'include', // Add this line
+            },
+          })
+          .then((data: any) => {
+            console.log(data.data.nurse)
+            let userProfile = data.data.nurse
+            console.log(data, 'success')
+            dispatch(setUser(userProfile))
+            dispatch(setEmployer(false))
+          })
+          .catch(err => console.log(err))
+        }
       })
       .catch((err: any) => console.log(err));
   };

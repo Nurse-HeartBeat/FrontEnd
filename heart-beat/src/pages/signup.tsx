@@ -1,7 +1,7 @@
 import Nav from '../components/nav';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../redux/user';
+import { setUser, setEmployer } from '../redux/user';
 import { useEffect } from 'react';
 import Auth from '../auth/firebase';
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -12,127 +12,11 @@ import RadioBut from '../components/radioBut';
 import ConNurse from '../components/continueNurse';
 import ConEmployer from '../components/continueEmployer';
 import { Router, useRouter } from 'next/router';
-import { gql, from, useMutation, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
-import { setContext } from '@apollo/link-context';
-import {getCsrfToken} from '../utils/csrfToken';
+import {CREATE_EMPLOYER, CREATE_NURSE, client} from '../utils/graphQL'
+// import { gql, from, useMutation, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import {formatDate} from '../utils/formatDateYYMMDD'
+// import { EDGE_UNSUPPORTED_NODE_APIS } from 'next/dist/shared/lib/constants';
 
-
-const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_URL });
-
-const authLink = setContext(async (_, { headers }) => {
-  // get the authentication token from local storage if it exists
-let csrftoken = await getCsrfToken(); //remember it is always async
-  // getCookie("csrftoken"); // Assume you have a function that gets the cookie value
-  // return the headers to the context so httpLink can read them
-  console.log('this is csrftoken', csrftoken)
-  return {
-    headers: {
-      ...headers,
-      'X-CSRFToken': csrftoken,
-    }
-  }
-});
-
-const client = new ApolloClient({
-  // link: authLink.concat(httpLink),
-  // uri: process.env.NEXT_PUBLIC_GRAPHQL_CSRF,
-  link: from([authLink, httpLink]),
-  cache: new InMemoryCache(),
-  credentials: 'include', // Add this line
-});
-
-const CREATE_EMPLOYER = gql`
-  mutation CreateEmployer(
-    $companyName: String!,
-    $type: String!,
-    $address1: String!,
-    $address2: String!,
-    $city: String!,
-    $state: String!,
-    $postal: Int!,
-    $email: String!,
-    $phone: String!,
-    $auth: String!
-  ) {
-    createEmployerModel(
-      companyName: $companyName,
-      type: $type,
-      address1: $address1,
-      address2: $address2,
-      city: $city,
-      state: $state,
-      postal: $postal,
-      email: $email,
-      phone: $phone,
-      auth: $auth
-    ) {
-      employerModel {
-        id
-        companyName
-        type
-        address1
-        address2
-        city
-        state
-        postal
-        email
-        phone
-      }
-    }
-  }
-`;
-
-const CREATE_NURSE = gql`
-  mutation CreateNurse(
-    $firstName: String!,
-    $lastName: String!,
-    $address1: String!,
-    $address2: String!,
-    $city: String!,
-    $state: String!,
-    $postal: Int!,
-    $email: String!,
-    $phone: String!,
-    $gender: String!,
-    $yearOfExperience: Int!,
-    $license: String!,
-    $expiration: Date!,
-    $auth: String!
-  ) {
-    createNurseModel(
-      firstName: $firstName,
-      lastName: $lastName,
-      address1: $address1,
-      address2: $address2,
-      city: $city,
-      state: $state,
-      postal: $postal,
-      email: $email,
-      phone: $phone,
-      gender: $gender,
-      yearOfExperience: $yearOfExperience,
-      license: $license,
-      expiration: $expiration,
-      auth: $auth
-    ) {
-      nurseModel {
-        id
-        firstName
-        lastName
-        address1
-        city
-        state
-        postal
-        email
-        phone
-        gender
-        yearOfExperience
-        license
-        expiration
-      }
-    }
-  }
-`;
 
 export default function SignUp() {
   const [continueBut, setContinueBut] = useState(false);
@@ -166,6 +50,8 @@ export default function SignUp() {
   // useEffect(() => {
   //   console.log(user, 'from redux')
   // }, [user])
+  const dispatch = useDispatch()
+
   let router = useRouter();
   const reduxState = useSelector((state:any) => state.user);
   useEffect(() => {
@@ -202,8 +88,8 @@ export default function SignUp() {
 
     createUserWithEmailAndPassword(Auth, email, password)
       .then(async (data1) => {
+        let auth = (data1.user as any).uid
         if (isEmployer) {
-          let auth = (data1.user as any).accessToken
           let companyProfileObj = {
             email, phone, address1, address2, city, state, postal, type: facilityType, companyName:company, auth
           }
@@ -216,16 +102,21 @@ export default function SignUp() {
               credentials: 'include', // Add this line
             },
           })
-          .then(data => console.log(data, 'herre is it'))
+          .then((data: any) => {
+            let userProfile = data.data['createEmployerModel']['employerModel']
+            dispatch(setUser(userProfile))
+            dispatch(setEmployer(true))
+          })
           .catch(err => console.log(err))
           //send to the backend
         } else {
-
+          let formatedExp = formatDate(String(expire))
           let nurseProfileObj = {
-            firstName: nurseFirst, lastName: nurseLast, license, yearOfExperience: yoe, expiration: expire, gender, email, phone,
-            address1, address2, city, state, postal
+            firstName: nurseFirst, lastName: nurseLast, license, yearOfExperience: yoe, expiration: formatedExp, gender, email, phone,
+            address1, address2, city, state, postal, auth
           }
-
+          console.log(auth, 'this is the auth')
+          // console.log(nurseProfileObj, 'nurse po')
           await client.mutate({
             mutation: CREATE_NURSE,
             variables: nurseProfileObj,
@@ -233,7 +124,11 @@ export default function SignUp() {
               credentials: 'include', // Add this line
             },
           })
-          .then(data => console.log(data, 'herre is it'))
+          .then((data: any) => {
+            let userProfile = data.data['createNurseModel']['nurseModel']
+            dispatch(setUser(userProfile))
+            dispatch(setEmployer(false))
+          })
           .catch(err => console.log(err))
           //send to the backend
         }

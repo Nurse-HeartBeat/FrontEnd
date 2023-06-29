@@ -3,10 +3,11 @@ import { FaBars } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
 import Logo from '../../public/logo-transparent-background.png';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Auth from '../auth/firebase';
 import { signOut } from "firebase/auth";
 import { useRouter } from 'next/router';
+import { setUser, setEmployer } from '../redux/user';
 
 export default function Nav() {
   const [showLinks, setShowLinks] = useState(false);
@@ -64,6 +65,8 @@ export default function Nav() {
 const ProfileDropdown = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  const dispatch = useDispatch()
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -92,6 +95,8 @@ const ProfileDropdown = () => {
                 .then(() => {
                   const redirectRoute = '/home';
                   router.push(redirectRoute);
+                  dispatch(setUser(null))
+                  dispatch(setEmployer(null))
                 })
             }}
           >

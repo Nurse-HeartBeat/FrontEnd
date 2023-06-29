@@ -13,20 +13,20 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
           <Component {...pageProps} />
-          <UserStatusHandle />
+          {/* <UserStatusHandle /> */}
     </Provider>
   )
 }
 
-function UserStatusHandle () {
-  const dispatch = useDispatch();
-  const userStatus = Auth.onAuthStateChanged((user) => {
-    if (user) {
-      // console.log(user)
-      dispatch(setUser({hi:1}))
-    } else {
-      dispatch(setUser(null))
-    }
-  })
-  return(<></>)
-}
+// function UserStatusHandle () {
+//   const dispatch = useDispatch();
+//   const userStatus = Auth.onAuthStateChanged((user) => {
+//     if (user) {
+//       console.log(user)
+//       dispatch(setUser({hi:1}))
+//     } else {
+//       dispatch(setUser(null))
+//     }
+//   })
+//   return(<></>)
+// }
