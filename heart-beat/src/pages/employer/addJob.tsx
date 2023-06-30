@@ -7,23 +7,34 @@ import {Job} from '../../utils/types';
 import RadioBut from '../../components/radioBut';
 import LoadingPage from '../../components/loadingPage';
 import { selectionSetMatchesResult } from '@apollo/client/cache/inmemory/helpers';
+import store, {RootState} from '../../redux/store'
+import axios from 'axios';
+import {postal as axiosPostal} from '../../utils/postalLatLon';
+import {CREATE_JOB, client} from '../../utils/graphQL';
 
-export default function AddJobs () {
-  // let router = useRouter();
-  // const reduxState = useSelector((state: any) => state.user);
+export default function AddJobs ({userState}: {userState: any}) {
 
-  // useEffect(() => {
-  //   if(!reduxState.user || !reduxState.user.employer) {
-  //     const redirectRoute = '/jobs';
-  //     router.push(redirectRoute);
-  //   }
-  // }, [reduxState, router])
+  let router = useRouter();
+
+
+  useEffect(() => {
+    if(!userState.employer) {
+      const redirectRoute = '/jobs';
+      router.push(redirectRoute);
+      return
+    }
+    changeState('employer', userState.user.id)
+  }, [])
+
+  let now = new Date();
+  let formattedDate = now.toISOString().slice(0, 10);
+
   const [job, setJob] = useState<Job>({
-    category: '',
-    year_required: 0,
+    category: 'Registered Nurse (RN)',
+    yearRequired: null,
     title: '',
     employer: '',
-    assignTo: undefined,
+    assignTo: null,
     approve: false,
     completed: false,
     address1: '',
@@ -33,8 +44,8 @@ export default function AddJobs () {
     postal: undefined,
     latitude: 0,
     longitude: 0,
-    startDate: String(new Date()),
-    endDate: String(new Date()),
+    startDate: formattedDate,
+    endDate: formattedDate,
     Monday: false,
     Tuesday: false,
     Wednesday: false,
@@ -44,28 +55,17 @@ export default function AddJobs () {
     Sunday: false,
     start: "12:00",
     end: "12:00",
-    shiftHour: 0,
-    patient_population: 'Neonatal',
-    patient_number: 0,
+    shiftHour: null,
+    patientPopulation: 'Neonatal',
+    patientNumber: 0,
     stipend: 0,
-    weekly_pay: 0,
+    weeklyPay: 0,
     bonus: 0,
-    contact_person: '',
-    contact_email: '',
+    contactPerson: '',
+    contactEmail: '',
     parkingFree: false,
     additionalDetails: '',
   });
-
-  let now = new Date();
-  let formattedDate = now.toISOString().slice(0, 10);
-  const [startDate, setStartDate] = useState(formattedDate);
-  const [endDate, setEndDate] = useState(formattedDate);
-  const [startHour, setStartHour] = useState(0);
-  const [startMin, setStartMin] = useState(0);
-  const [startM, setStartM] = useState('AM');
-  const [endHour, setEndHour] = useState(11);
-  const [endMin, setEndMin] = useState(59);
-  const [endM, setEndM] = useState('PM');
 
   const [loading, setLoading] = useState(false);
 
@@ -112,18 +112,21 @@ export default function AddJobs () {
     }))
   }
 
-  let onSubmit = (e: { preventDefault: () => void; }) => {
+  let onSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault()
     setLoading(!loading)
-    console.log(typeof startDate)
-    setJob((prevState) => ({
-      ...prevState,
-      startDate: startDate,
-      endDate: endDate,
-      start: String(startHour) + String(startMin) + String(startM),
-      end: String(endHour) + String(endMin) + String(endM)
-    }))
-    // setTimeout(()=>setLoading(false), 3000)
+    await client.mutate({
+      mutation: CREATE_JOB,
+      variables: job,
+      context: {
+        credentials: 'include', // Add this line
+      },
+    })
+      .then((data:any) => {console.log(data)})
+      .catch((err) => {
+        console.log(err)
+        console.log('GraphQLErrors:', err.object);
+      })
   }
 
   useEffect(() => {
@@ -156,7 +159,12 @@ export default function AddJobs () {
             </div>
             <div className='mt-5 flex mb-2 flex flex-col'>
               <label htmlFor='year_required'>Years Required</label>
-              <input type='number' name='year_required' value={job.year_required} onChange={(e) => changeState('year_required', Number(e.target.value))}
+              <input type='text' name='year_required'
+              value={job.yearRequired || ''}
+              onChange={(e) => {
+                const numericValue = e.target.value.replace(/\D/g, '').slice(0, 2);
+                changeState('yearRequired', Number(numericValue))
+              }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"/>
           </div>
           <div className='mt-5 flex mb-2 flex flex-col'>
@@ -222,10 +230,24 @@ export default function AddJobs () {
                   required={true}
                   type="text"
                   id="postal"
-                  value={job.postal}
-                  onChange={(e) => {
-                    const numericValue = e.target.value.replace(/\D/g, '')
-                    changeState('postal', numericValue)
+                  value={job.postal || ''}
+                  onChange={async (e) => {
+                    const numericValue = e.target.value.replace(/\D/g, '').slice(0, 5);
+                    changeState('postal', Number(numericValue))
+                    if (e.target.value.length === 5) {
+                      let options:{method:string, url:string, headers:any} = axiosPostal(Number(numericValue))
+                      await axios.request(options)
+                        .then((response) => {
+                          console.log(response.data)
+                          changeState('state', response.data.places[0]['state abbreviation'])
+                          changeState('city', response.data.places[0]['place name'])
+                          changeState('latitude', Number(response.data.places[0]['latitude']))
+                          changeState('longitude', Number(response.data.places[0]['longitude']))
+                        })
+                        .catch((err) => {
+                          window.alert('Invalid Postal')
+                        })
+                    }
                   }}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
                   placeholder="Postal Code"
@@ -246,38 +268,55 @@ export default function AddJobs () {
             </div>
             <div className='mt-5 flex mb-5 flex flex-col px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
               <label className='mb-3'>Select Hours</label>
-              <div className='flex flex-col'>
-                <label>Start:</label>
-                <div className='flex flex-row'>
-                <input type='time' value={job.start} onChange={(e) => console.log(e.target.value)}/>
+              <div className='flex flex-row'>
+                <div className='flex flex-col'>
+                  <label>Start:</label>
+                  <div className='flex flex-row'>
+                    <input type='time' value={job.start}
+                    onChange={(e) => {changeState('start', e.target.value)}}
+                    className='px-4 py-2 border border-gray-300 flex'/>
+                  </div>
                 </div>
-              </div>
-              <div className='flex flex-col mt-5 mb-2'>
-                <label>End:</label>
-                <div className='flex flex-row'>
-
+                <div className='flex flex-col ml-5'>
+                  <label>End:</label>
+                  <div className='flex flex-row'>
+                    <input type='time' value={job.end}
+                    onChange={(e) => {changeState('end', e.target.value)}}
+                    className='px-4 py-2 border border-gray-300 flex'/>
+                  </div>
+                </div>
+                <div className='flex flex-col ml-5'>
+                  <label>Shift Hours:</label>
+                  <div className='flex flex-row'>
+                    <input required={true} type='text' value={job.shiftHour || ''}
+                    onChange={(e) => {
+                      const numericValue = e.target.value.replace(/\D/g, '').slice(0, 2);
+                      changeState('shiftHour', Number(numericValue))
+                    }}
+                    className='px-4 py-2 border border-gray-300 flex'/>
+                  </div>
                 </div>
               </div>
             </div>
             <div className='mt-5 flex mb-5 flex flex-row px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
                 <div className='flex my-4 mr-5'>
                   <label htmlFor="date">Start Date:</label>
-                  <input type="date" id="date" name="date" value={startDate} min="2023-01-01" max={String(Number(formattedDate.slice(0, 4)) + 1) + formattedDate.slice(4)} onChange={(e) => setStartDate(e.target.value)} className='bg-slate-200 px-1 mx-2' />
+                  <input type="date" id="date" name="date" value={job.startDate} min="2023-01-01" max={String(Number(formattedDate.slice(0, 4)) + 1) + formattedDate.slice(4)} onChange={(e) => changeState('startDate', e.target.value)} className='bg-slate-200 px-1 mx-2' />
                 </div>
                 <div className='flex my-4'>
                   <label htmlFor="date">End Date:</label>
-                  <input type="date" id="date" name="date" value={endDate} min={startDate} max={String(Number(formattedDate.slice(0, 4)) + 1) + formattedDate.slice(4)} onChange={(e) => setEndDate(e.target.value)} className='bg-slate-200 px-1 mx-2' />
+                  <input type="date" id="date" name="date" value={job.endDate} min={job.startDate} max={String(Number(formattedDate.slice(0, 4)) + 1) + formattedDate.slice(4)} onChange={(e) => changeState('endDate', e.target.value)} className='bg-slate-200 px-1 mx-2' />
                 </div>
               </div>
               <div className='mt-5 flex mb-5 flex flex-col px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
                 <div className='flex my-5'>
                   <label>Patient Number: </label>
-                  <input required={true} type='number' onChange={(e) => changeState('patient_number', Number(e.target.value))}
+                  <input required={true} type='number' onChange={(e) => changeState('patientNumber', Number(e.target.value))}
                   className='flex ml-3 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'/>
                 </div>
                 <div className='flex my-4 flex-row'>
                   <label>Patient Population:</label>
-                  <select id='dropdown' name='patientPopulation' value={job.patient_population} onChange={(e) => changeState('patient_population', e.target.value)}
+                  <select id='dropdown' name='patientPopulation' value={job.patientPopulation} onChange={(e) => changeState('patientPopulation', e.target.value)}
                 className="w-1/2 ml-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black">
                   {patientPopulations.map((patient, index) => {
                     return (
@@ -291,7 +330,7 @@ export default function AddJobs () {
                 {/* for weekly_pay */}
                 <div className='flex flex-row mb-1'>
                   <label>Weekly-pay $</label>
-                  <input required={true} type='number' onChange={(e) => changeState('weekly_pay', Number(e.target.value))}
+                  <input required={true} type='number' onChange={(e) => changeState('weeklyPay', Number(e.target.value))}
                   className='flex border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-1'/>
                 </div >
                 {/* stipend */}
@@ -314,19 +353,19 @@ export default function AddJobs () {
                 </div>
                 <div className='flex flex-row mt-2'>
                   <label>Contact Person: </label>
-                  <input required={true} type='text' value={job.contact_person} onChange={(e) => changeState('contact_person', e.target.value)}
+                  <input required={true} type='text' value={job.contactPerson} onChange={(e) => changeState('contactPerson', e.target.value)}
                   className='flex w-3/4 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-3'/>
                 </div>
                 <div className='flex flex-row mt-2'>
                   <label>Email: </label>
-                    <input required={true} type='email' value={job.contact_email} onChange={(e) => changeState('contact_email', e.target.value)}
+                    <input required={true} type='email' value={job.contactEmail} onChange={(e) => changeState('contactEmail', e.target.value)}
                     className='flex w-3/4 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-3'/>
                 </div>
                 <div className='flex flex-row mt-2'>
                   <label>Additional Details: </label>
                   <textarea
-                    value={job.additional_details}
-                    onChange={(e) => changeState('additional_details', e.target.value)}
+                    value={job.additionalDetails}
+                    onChange={(e) => changeState('additionalDetails', e.target.value)}
                     className='flex w-3/4 l-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-3'
                     rows={4}
                     placeholder='Enter additional details here...'
@@ -347,4 +386,15 @@ export default function AddJobs () {
       )}
   </div>
   )
+}
+
+AddJobs.getInitialProps = async() => {
+  // Fetch data from an API or perform any server-side operations
+  const state: RootState = store.getState()
+  const userState = state.user
+
+  // Pass the fetched data as props to the page component
+  return {
+      userState
+  };
 }

@@ -76,9 +76,7 @@ export default function Login() {
             },
           })
           .then((data: any) => {
-            console.log(data.data.nurse)
             let userProfile = data.data.nurse
-            console.log(data, 'success')
             dispatch(setUser(userProfile))
             dispatch(setEmployer(false))
           })
