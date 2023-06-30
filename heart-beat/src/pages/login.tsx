@@ -18,7 +18,7 @@ import { Dispatch } from 'redux';
 export default function Login() {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [employer, setEmployer] = useState(false);
+  const [isEmployer, setIsEmployer] = useState(false);
   const [isForgot, setIsForgot] = useState(false);
 
   const dispatch : Dispatch <any> = useDispatch()
@@ -42,7 +42,7 @@ export default function Login() {
   };
 
   const employerHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmployer(!employer)
+    setIsEmployer(!isEmployer)
   }
 
   const handleSubmit = (e: FormEvent) => {
@@ -50,7 +50,7 @@ export default function Login() {
     // Handle form submission logic here
     signInWithEmailAndPassword(Auth, email, password)
       .then(async ({ user }) => {
-        if (employer) {
+        if (isEmployer) {
           //query the employer
           await client.query({
             query: QUERY_EMPLOYER,
@@ -76,9 +76,7 @@ export default function Login() {
             },
           })
           .then((data: any) => {
-            console.log(data.data.nurse)
             let userProfile = data.data.nurse
-            console.log(data, 'success')
             dispatch(setUser(userProfile))
             dispatch(setEmployer(false))
           })
@@ -114,7 +112,7 @@ export default function Login() {
               />
             </div>
             <h1 className="flex text-text flex-row">Are you an employer?
-              <RadioBut checked={employer} onChange={employerHandler} label={''}/>
+              <RadioBut checked={isEmployer} onChange={employerHandler} label={''}/>
             </h1>
             <button
               onClick={() => setIsForgot(true)}

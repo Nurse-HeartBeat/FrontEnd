@@ -1,10 +1,10 @@
 export interface Job {
   id?: string;
   category: string;
-  year_required: number;
+  yearRequired: number | null;
   title: string;
   employer: string;
-  assignTo?: number;
+  assignTo?: string | null;
   approve: boolean;
   completed: boolean;
   address1: string;
@@ -25,14 +25,14 @@ export interface Job {
   Sunday: boolean
   start: string;
   end: string;
-  shiftHour: number;
-  patient_population: string;
-  patient_number: number;
+  shiftHour: number|null;
+  patientPopulation: string;
+  patientNumber: number;
   stipend: number;
-  weekly_pay: number;
+  weeklyPay: number;
   bonus: number;
-  contact_person: string;
-  contact_email: string;
+  contactPerson: string;
+  contactEmail: string;
   parkingFree: boolean;
   additionalDetails?: string;
   [key: string]: any;

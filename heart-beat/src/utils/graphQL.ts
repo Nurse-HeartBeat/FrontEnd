@@ -133,6 +133,112 @@ export const CREATE_NURSE = gql`
   }
 `;
 
+export const CREATE_JOB = gql`
+  mutation CreateJob(
+    $category: String!,
+    $yearRequired: Int!,
+    $title: String!,
+    $employer: String!,
+    $address1: String!,
+    $address2: String!,
+    $city: String!,
+    $state: String!,
+    $postal: Int!,
+    $latitude: Float!,
+    $longitude: Float!,
+    $startDate: Date!,
+    $endDate: Date!,
+    $start: String!,
+    $end: String!,
+    $Monday: Boolean!,
+    $Tuesday: Boolean!,
+    $Wednesday: Boolean!,
+    $Thursday: Boolean!,
+    $Friday: Boolean!,
+    $Saturday: Boolean!,
+    $Sunday: Boolean!,
+    $contactEmail: String!,
+    $contactPerson: String!,
+    $shiftHour: Float!,
+    $patientPopulation: String!,
+    $patientNumber: Int!,
+    $stipend: Float!,
+    $weeklyPay: Float!,
+    $bonus: Float!,
+    $parkingFree: Boolean!,
+    $additionalDetails: String!,
+  ) {
+    createJobModel(
+      category: $category,
+      yearRequired: $yearRequired,
+      title: $title,
+      employer: $employer,
+      address1: $address1,
+      address2: $address2,
+      city: $city,
+      state: $state,
+      postal: $postal,
+      latitude: $latitude,
+      longitude: $longitude,
+      startDate: $startDate,
+      endDate: $endDate,
+      startTime: $start,
+      endTime: $end,
+      Monday: $Monday,
+      Tuesday: $Tuesday,
+      Wednesday: $Wednesday,
+      Thursday: $Thursday,
+      Friday: $Friday,
+      Saturday: $Saturday,
+      Sunday: $Sunday,
+      contactEmail: $contactEmail,
+      contactPerson: $contactPerson,
+      shiftHour: $shiftHour,
+      patientPopulation: $patientPopulation,
+      patientNumber: $patientNumber,
+      stipend: $stipend,
+      weeklyPay: $weeklyPay,
+      bonus: $bonus,
+      parkingFree: $parkingFree,
+      additionalDetails: $additionalDetails
+    ) {
+      jobModel {
+        category
+        yearRequired
+        title
+        address1
+        address2
+        city
+        state
+        postal
+        latitude
+        longitude
+        startDate
+        endDate
+        startTime
+        endTime
+        Monday
+        Tuesday
+        Wednesday
+        Thursday
+        Friday
+        Saturday
+        Sunday
+        contactEmail
+        shiftHour
+        patientPopulation
+        patientNumber
+        stipend
+        weeklyPay
+        bonus
+        parkingFree
+        additionalDetails
+      }
+    }
+  }
+`;
+
+
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_URL });
 
 const authLink = setContext(async (_, { headers }) => {
@@ -160,3 +266,38 @@ export const client = new ApolloClient({
 let graphQL = {
   client, CREATE_EMPLOYER, CREATE_NURSE, QUERY_EMPLOYER, QUERY_NURSE
 }
+
+
+// createJobModel(
+//   category: $category
+//   yearRequired: $yearRequired
+//   title: $title
+//   employer: $employer
+//   address1: $address1
+//   address2: $address2
+//   city: $city
+//   state: $state
+//   postal: $postal
+//   latitude: $latitude
+//   longitude: $longitude
+//   startDate: $startDate
+//   endDate: $endDate
+//   startTime: $start
+//   endTime: $end
+//   Monday: $Monday
+//   Tuesday: $Tuesday
+//   Wednesday: $Wednesday
+//   Thursday: $Thursday
+//   Friday: $Friday
+//   Saturday: $Saturday
+//   Sunday: $Sunday
+//   contactEmail: $contactEmail
+//   contactPerson: $contactPerson
+//   shiftHour: $shiftHour
+//   patientPopulation: $patientPopulation
+//   patientNumber: $patientNumber
+//   stipend: $stipend
+//   weeklyPay: $weeklyPay
+//   bonus: $bonus
+//   parkingFree: $parkingFree
+//   additionalDetails: $additionalDetails
