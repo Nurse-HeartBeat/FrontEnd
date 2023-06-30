@@ -117,7 +117,7 @@ export default function AddJobs ({userState}: {userState: any}) {
     setLoading(!loading)
     await client.mutate({
       mutation: CREATE_JOB,
-      variables: job,
+      // variables: job,
       context: {
         credentials: 'include', // Add this line
       },

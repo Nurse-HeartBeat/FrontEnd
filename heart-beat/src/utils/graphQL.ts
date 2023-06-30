@@ -133,110 +133,142 @@ export const CREATE_NURSE = gql`
   }
 `;
 
+//the issue was the id and employer on the jobModel, and the description might be anoither problem
 export const CREATE_JOB = gql`
-  mutation CreateJob(
-    $category: String!,
-    $yearRequired: Int!,
-    $title: String!,
-    $employer: String!,
-    $address1: String!,
-    $address2: String!,
-    $city: String!,
-    $state: String!,
-    $postal: Int!,
-    $latitude: Float!,
-    $longitude: Float!,
-    $startDate: Date!,
-    $endDate: Date!,
-    $start: String!,
-    $end: String!,
-    $Monday: Boolean!,
-    $Tuesday: Boolean!,
-    $Wednesday: Boolean!,
-    $Thursday: Boolean!,
-    $Friday: Boolean!,
-    $Saturday: Boolean!,
-    $Sunday: Boolean!,
-    $contactEmail: String!,
-    $contactPerson: String!,
-    $shiftHour: Float!,
-    $patientPopulation: String!,
-    $patientNumber: Int!,
-    $stipend: Float!,
-    $weeklyPay: Float!,
-    $bonus: Float!,
-    $parkingFree: Boolean!,
-    $additionalDetails: String!,
-  ) {
-    createJobModel(
-      category: $category,
-      yearRequired: $yearRequired,
-      title: $title,
-      employer: $employer,
-      address1: $address1,
-      address2: $address2,
-      city: $city,
-      state: $state,
-      postal: $postal,
-      latitude: $latitude,
-      longitude: $longitude,
-      startDate: $startDate,
-      endDate: $endDate,
-      startTime: $start,
-      endTime: $end,
-      Monday: $Monday,
-      Tuesday: $Tuesday,
-      Wednesday: $Wednesday,
-      Thursday: $Thursday,
-      Friday: $Friday,
-      Saturday: $Saturday,
-      Sunday: $Sunday,
-      contactEmail: $contactEmail,
-      contactPerson: $contactPerson,
-      shiftHour: $shiftHour,
-      patientPopulation: $patientPopulation,
-      patientNumber: $patientNumber,
-      stipend: $stipend,
-      weeklyPay: $weeklyPay,
-      bonus: $bonus,
-      parkingFree: $parkingFree,
-      additionalDetails: $additionalDetails
-    ) {
-      jobModel {
-        category
-        yearRequired
-        title
-        address1
-        address2
-        city
-        state
-        postal
-        latitude
-        longitude
-        startDate
-        endDate
-        startTime
-        endTime
-        Monday
-        Tuesday
-        Wednesday
-        Thursday
-        Friday
-        Saturday
-        Sunday
-        contactEmail
-        shiftHour
-        patientPopulation
-        patientNumber
-        stipend
-        weeklyPay
-        bonus
-        parkingFree
-        additionalDetails
-      }
+mutation CreateJob(
+  $category: String!,
+  $yearRequired: Int!,
+  $title: String!,
+  $employer: ID!,
+  $address1: String!,
+  $address2: String!,
+  $city: String!,
+  $state: String!,
+  $postal: Int!,
+  $latitude: Float!,
+  $longitude: Float!,
+  $startDate: Date!,
+  $endDate: Date!,
+  $start: String!,
+  $end: String!,
+  $Monday: Boolean!,
+  $Tuesday: Boolean!,
+  $Wednesday: Boolean!,
+  $Thursday: Boolean!,
+  $Friday: Boolean!,
+  $Saturday: Boolean!,
+  $Sunday: Boolean!,
+  $contactEmail: String!,
+  $contactPerson: String!,
+  $shiftHour: Float!,
+  $patientPopulation: String!,
+  $patientNumber: Int!,
+  $stipend: Float!,
+  $weeklyPay: Float!,
+  $bonus: Float!,
+  $parkingFree: Boolean!,
+  $additionalDetails: String!,
+) { createJobModel(
+      category: "some category",
+      yearRequired: 3,
+      title: "Job Title",
+      employer: 1,
+      address1: "Address Line 1",
+      address2: "Address Line 2",
+      city: "City Name",
+      state: "State Name",
+      postal: 12345,
+      latitude: 12.345678,
+      longitude: -98.7654321,
+      startDate: "2023-06-21",
+      endDate: "2023-06-30",
+      startTime:"12:00",
+      endTime:"1:00",
+      Monday: true,
+      Tuesday: false,
+      Wednesday: true,
+      Thursday: false,
+      Friday: true,
+      Saturday: false,
+      Sunday: true,
+      contactEmail: "example@example.com",
+      contactPerson:"trt",
+      shiftHour: 8,
+      patientPopulation: "Some patient population",
+      patientNumber: 100,
+      stipend: 500,
+      weeklyPay: 800,
+      bonus: 200,
+      parkingFree: true,
+      additionalDetails: "Some additional details"
+) {
+    jobModel {
+      category
+      yearRequired
+      title
+      address1
+      address2
+      city
+      state
+      postal
+      latitude
+      longitude
+      startDate
+      endDate
+      Monday
+      Tuesday
+      Wednesday
+      Thursday
+      Friday
+      Saturday
+      Sunday
+      contactEmail
+      shiftHour
+      patientPopulation
+      patientNumber
+      stipend
+      weeklyPay
+      bonus
+      parkingFree
+      additionalDetails
     }
   }
+}
 `;
+
+
+// category: $category,
+// yearRequired: $yearRequired,
+// title: $title,
+// employer: $employer,
+// address1: $address1,
+// address2: $address2,
+// city: $city,
+// state: $state,
+// postal: $postal,
+// latitude: $latitude,
+// longitude: $longitude,
+// startDate: $startDate,
+// endDate: $endDate,
+// startTime: $start,
+// endTime: $end,
+// Monday: $Monday,
+// Tuesday: $Tuesday,
+// Wednesday: $Wednesday,
+// Thursday: $Thursday,
+// Friday: $Friday,
+// Saturday: $Saturday,
+// Sunday: $Sunday,
+// contactEmail: $contactEmail,
+// contactPerson: $contactPerson,
+// shiftHour: $shiftHour,
+// patientPopulation: $patientPopulation,
+// patientNumber: $patientNumber,
+// stipend: $stipend,
+// weeklyPay: $weeklyPay,
+// bonus: $bonus,
+// parkingFree: $parkingFree,
+// additionalDetails: $additionalDetails
 
 
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_URL });
