@@ -90,9 +90,16 @@ const ProfileDropdown = () => {
 
       {isDropdownOpen && (
         <div className="absolute left-0 md:right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-lg md:ml-auto">
+          <button
+            className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
+            onClick={() => {
+              const redirectRoute = '/profile';
+              router.push(redirectRoute);
+            }}
+            >Profile</button>
           {reduxEmployer && (
             <button
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+            className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
             onClick={() => {
               const redirectRoute = '/employer/addJob';
               router.push(redirectRoute);
@@ -100,7 +107,7 @@ const ProfileDropdown = () => {
             >Add Jobs</button>
           )}
           <button
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+            className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
             onClick={() => {
               signOut(Auth)
                 .then(() => {

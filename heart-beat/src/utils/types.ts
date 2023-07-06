@@ -1,3 +1,34 @@
+export interface Nurse {
+  id?: string;
+  firstName: string;
+  lastName: string;
+  address1: string;
+  address2?: string;
+  city: string;
+  state: string;
+  postal: number;
+  email: string;
+  phone: string;
+  gender: string;
+  yearOfExperience: number;
+  license: string;
+  expiration: string;
+}
+
+export interface Employer {
+  id?: string;
+  companyName: string;
+  email: string;
+  type?: string;
+  phone: string;
+  address1: string;
+  address2?: string;
+  city: string;
+  state: string;
+  postal: number;
+}
+
+
 export interface Job {
   id?: string;
   category: string;

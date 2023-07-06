@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import ProfileNurse from '../components/profileNurse';
 import ProfileEmployer from '../components/profileEmployer';
+import { useSelector } from 'react-redux';
 
 
 export default function Jobs() {
-  const [employer, setEmployer] = useState(false);
+  const reduxEmployer = useSelector((state: any) => state.user.employer)
 
 
-  return <div>{employer ? <ProfileEmployer /> : <ProfileNurse />}</div>
+
+  return <div>{reduxEmployer ? <ProfileEmployer /> : <ProfileNurse />}</div>
 }

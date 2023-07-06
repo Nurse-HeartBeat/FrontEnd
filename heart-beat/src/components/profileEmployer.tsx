@@ -4,5 +4,5 @@ export default function ProfileEmployer() {
   const [employer, setEmployer] = useState(false);
 
 
-  return <div>nurse</div>
+  return <div>employer</div>
 }
