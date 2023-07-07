@@ -32,9 +32,9 @@ export default function ProfileEmployer() {
   };
 
   return (
-    <div className="flex flex-col items-center pt-5 flex-1">
+    <div className="flex flex-col items-center flex-1">
       <h1 className="text-3xl font-bold m-4">Employer Profile</h1>
-      <form className="w-full w-2/3 lg:w-1/2">
+      <form className="w-2/3 lg:w-1/2">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 gap-x-10">
 
 
