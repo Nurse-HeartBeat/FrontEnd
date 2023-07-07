@@ -24,7 +24,6 @@ export default function AddJobs({ userState }: { userState: any }) {
 
   let router = useRouter();
 
-
   useEffect(() => {
     if (!userState.employer) {
       const redirectRoute = '/jobs';
@@ -196,7 +195,7 @@ export default function AddJobs({ userState }: { userState: any }) {
                 </div>
                 <div className='mt-5 flex mb-2 flex flex-col'>
                   <label htmlFor="address1" className="flex appearance-none block text-gray-700 text-black">Address</label>
-                  <div className='flex'>
+                  <div className='flex flex-col md:flex-row space-y-1 md:space-y-0'>
                     <input
                       required={true}
                       type="text"
@@ -219,8 +218,8 @@ export default function AddJobs({ userState }: { userState: any }) {
                     />
                   </div>
                 </div>
-                <div className='flex justify-between'>
-                  <label htmlFor="city" className="block text-gray-700 text-white mr-2">
+                <div className='flex justify-between flex-col md:flex-row space-y-1 md:space-y-0'>
+                  <label htmlFor="city" className="appearance-none block text-gray-700 text-white">
                     <input
                       required={true}
                       type="text"
@@ -229,11 +228,10 @@ export default function AddJobs({ userState }: { userState: any }) {
                       onChange={(e) => {
                         changeState('city', e.target.value)
                       }}
-                      className="w-full px-4
-                   py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
+                      className="mr-2 flex w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black"
                       placeholder="City" />
                   </label>
-                  <label htmlFor="state" className="block text-gray-700 text-white mr-2">
+                  <label htmlFor="state" className="appearance-none block text-gray-700 text-white">
                     <input
                       required={true}
                       type="text"
@@ -277,9 +275,9 @@ export default function AddJobs({ userState }: { userState: any }) {
                 </div>
                 <div className='mt-5 flex mb-2 flex flex-col px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 hover:cursor-pointer'>
                   <label htmlFor='days'>Select Days</label>
-                  <div className='flex flex-row mt-2'>
+                  <div className='flex flex-col md:flex-row mt-2 '>
                     {days.map((day, index) =>
-                      <div key={index} className='flex size-auto mr-3'>
+                      <div key={index} className='flex size-auto mr-3 my-1'>
                         <input type='checkbox' checked={job[day]} onChange={() => changeState(day, !job[day])}
                           className='mr-0.5 hover:cursor-pointer' />
                         <span onClick={() => changeState(day, !job[day])}>{day}</span>
@@ -289,7 +287,7 @@ export default function AddJobs({ userState }: { userState: any }) {
                 </div>
                 <div className='mt-5 flex mb-5 flex flex-col px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
                   <label className='mb-3'>Select Hours</label>
-                  <div className='flex flex-row'>
+                  <div className='flex flex-col md:flex-row md:justify-between'>
                     <div className='flex flex-col'>
                       <label>Start:</label>
                       <div className='flex flex-row'>
@@ -298,7 +296,7 @@ export default function AddJobs({ userState }: { userState: any }) {
                           className='px-4 py-2 border border-gray-300 flex' />
                       </div>
                     </div>
-                    <div className='flex flex-col ml-5'>
+                    <div className='flex flex-col'>
                       <label>End:</label>
                       <div className='flex flex-row'>
                         <input type='time' value={job.end}
@@ -306,7 +304,7 @@ export default function AddJobs({ userState }: { userState: any }) {
                           className='px-4 py-2 border border-gray-300 flex' />
                       </div>
                     </div>
-                    <div className='flex flex-col ml-5'>
+                    <div className='flex flex-col'>
                       <label>Shift Hours:</label>
                       <div className='flex flex-row'>
                         <input required={true} type='text' value={job.shiftHour || ''}
@@ -319,7 +317,7 @@ export default function AddJobs({ userState }: { userState: any }) {
                     </div>
                   </div>
                 </div>
-                <div className='mt-5 flex mb-5 flex flex-row px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
+                <div className='mt-5 flex mb-5 flex flex-col md:flex-row px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
                   <div className='flex my-4 mr-5'>
                     <label htmlFor="date">Start Date:</label>
                     <input type="date" id="date" name="date" value={job.startDate} min="2023-01-01" max={String(Number(formattedDate.slice(0, 4)) + 1) + formattedDate.slice(4)} onChange={(e) => changeState('startDate', e.target.value)} className='bg-slate-200 px-1 mx-2' />
@@ -329,16 +327,17 @@ export default function AddJobs({ userState }: { userState: any }) {
                     <input type="date" id="date" name="date" value={job.endDate} min={job.startDate} max={String(Number(formattedDate.slice(0, 4)) + 1) + formattedDate.slice(4)} onChange={(e) => changeState('endDate', e.target.value)} className='bg-slate-200 px-1 mx-2' />
                   </div>
                 </div>
-                <div className='mt-5 flex mb-5 flex flex-col px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
-                  <div className='flex my-5'>
-                    <label>Patient Number: </label>
+
+                <div className='my-5 flex flex-col md:flex-row px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
+                  <div className='flex my-3'>
+                    <label className='w-26'>Patient Number: </label>
                     <input required={true} type='number' onChange={(e) => changeState('patientNumber', Number(e.target.value))}
-                      className='flex ml-3 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500' />
+                      className='flex ml-2 mr-5  border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500' />
                   </div>
-                  <div className='flex my-4 flex-row'>
-                    <label>Patient Population:</label>
+                  <div className='flex flex-row my-3'>
+                  <label className='w-36'>Patient Population:</label>
                     <select id='dropdown' name='patientPopulation' value={job.patientPopulation} onChange={(e) => changeState('patientPopulation', e.target.value)}
-                      className="w-1/2 ml-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black">
+                      className="py-1 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black">
                       {patientPopulations.map((patient, index) => {
                         return (
                           <option value={patient} key={index}>{patient}</option>
@@ -347,52 +346,55 @@ export default function AddJobs({ userState }: { userState: any }) {
                     </select>
                   </div>
                 </div>
-                <div className='mt-5 flex mb-5 flex flex-col px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
+
+                <div className='mt-5 mb-5 grid grid-cols-2 md:grid-cols-3 gap-5'>
                   {/* for weekly_pay */}
-                  <div className='flex flex-row mb-1'>
+                  <div className='flex flex-col'>
                     <label>Weekly-pay $</label>
                     <input required={true} type='number' onChange={(e) => changeState('weeklyPay', Number(e.target.value))}
-                      className='flex border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-1' />
-                  </div >
+                      className='p-1 border border-gray-300 w-36 rounded-md focus:outline-none focus:ring focus:ring-blue-500' />
+                  </div>
                   {/* stipend */}
-                  <div className='flex flex-row mb-1'>
+                  <div className='flex flex-col'>
                     <label>Stipend $</label>
                     <input type='number' onChange={(e) => changeState('stipend', Number(e.target.value))}
-                      className='flex border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-1' />
+                      className='p-1 border border-gray-300 w-36 rounded-md focus:outline-none focus:ring focus:ring-blue-500' />
                   </div>
                   {/* bonus */}
-                  <div className='flex flex-row mb-1'>
+                  <div className='flex flex-col'>
                     <label>Bonus $</label>
                     <input type='number' onChange={(e) => changeState('bonus', Number(e.target.value))}
-                      className='flex border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-1' />
+                      className='p-1 border border-gray-300 w-36 rounded-md focus:outline-none focus:ring focus:ring-blue-500' />
                   </div>
                 </div>
+
                 <div className='mt-5 flex mb-5 flex flex-col px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
                   <div className='flex flex-row'>
                     <h1 className="flex text-text flex-row">Free Parking?</h1>
                     <RadioBut checked={job.parkingFree} onChange={() => changeState('parkingFree', !job.parkingFree)} label={''} />
                   </div>
                   <div className='flex flex-row mt-2'>
-                    <label>Contact Person: </label>
+                    <label className="flex-shrink-0 w-24">Contact Person:</label>
                     <input required={true} type='text' value={job.contactPerson} onChange={(e) => changeState('contactPerson', e.target.value)}
-                      className='flex w-3/4 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-3' />
+                      className='flex-grow border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-3' />
                   </div>
                   <div className='flex flex-row mt-2'>
-                    <label>Email: </label>
+                    <label className="flex-shrink-0 w-24">Email:</label>
                     <input required={true} type='email' value={job.contactEmail} onChange={(e) => changeState('contactEmail', e.target.value)}
-                      className='flex w-3/4 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-3' />
+                      className='flex-grow border p-2 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-3' />
                   </div>
                   <div className='flex flex-row mt-2'>
-                    <label>Additional Details: </label>
+                    <label className="flex-shrink-0 w-24">Additional Details:</label>
                     <textarea
                       value={job.additionalDetails}
                       onChange={(e) => changeState('additionalDetails', e.target.value)}
-                      className='flex w-3/4 l-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-3'
+                      className='flex-grow border p-2 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 ml-3'
                       rows={4}
                       placeholder='Enter additional details here...'
                     />
                   </div>
                 </div>
+
                 <button
                   type="submit"
                   className="flex px-4 py-2 text-white rounded-md  bg-primary-light hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5 justify-center"
