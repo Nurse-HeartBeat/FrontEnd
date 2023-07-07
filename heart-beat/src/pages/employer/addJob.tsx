@@ -319,12 +319,12 @@ export default function AddJobs({ userState }: { userState: any }) {
                 </div>
                 <div className='mt-5 flex mb-5 flex flex-col md:flex-row px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
                   <div className='flex my-4 mr-5'>
-                    <label htmlFor="date" className='py-1'>Start Date:</label>
-                    <input type="date" id="date" name="date" value={job.startDate} min="2023-01-01" max={String(Number(formattedDate.slice(0, 4)) + 1) + formattedDate.slice(4)} onChange={(e) => changeState('startDate', e.target.value)} className='bg-slate-200 px-1 mx-2 rounded-md py-1' />
+                    <label htmlFor="date" className='py-2'>Start Date:</label>
+                    <input type="date" id="date" name="date" value={job.startDate} min="2023-01-01" max={String(Number(formattedDate.slice(0, 4)) + 1) + formattedDate.slice(4)} onChange={(e) => changeState('startDate', e.target.value)} className='bg-slate-200 px-4 mx-2 rounded-md py-2' />
                   </div>
                   <div className='flex my-4'>
-                    <label htmlFor="date" className='py-1'>End Date:</label>
-                    <input type="date" id="date" name="date" value={job.endDate} min={job.startDate} max={String(Number(formattedDate.slice(0, 4)) + 1) + formattedDate.slice(4)} onChange={(e) => changeState('endDate', e.target.value)} className='bg-slate-200 px-1 mx-2 rounded-md py-1' />
+                    <label htmlFor="date" className='py-2'>End Date:</label>
+                    <input type="date" id="date" name="date" value={job.endDate} min={job.startDate} max={String(Number(formattedDate.slice(0, 4)) + 1) + formattedDate.slice(4)} onChange={(e) => changeState('endDate', e.target.value)} className='bg-slate-200 px-4 mx-2 rounded-md py-2' />
                   </div>
                 </div>
 
@@ -332,12 +332,12 @@ export default function AddJobs({ userState }: { userState: any }) {
                   <div className='flex my-3'>
                     <label className='w-26 py-1'>Patient Number: </label>
                     <input required={true} type='number' onChange={(e) => changeState('patientNumber', Number(e.target.value))}
-                      className='flex ml-2 mr-5 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500' />
+                      className='flex ml-2 mr-5 py-1 w-24 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500' />
                   </div>
                   <div className='flex flex-row my-3'>
                   <label className='w-36 py-1'>Patient Population:</label>
                     <select id='dropdown' name='patientPopulation' value={job.patientPopulation} onChange={(e) => changeState('patientPopulation', e.target.value)}
-                      className="py-1 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black">
+                      className="py-1 w-36 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black">
                       {patientPopulations.map((patient, index) => {
                         return (
                           <option value={patient} key={index}>{patient}</option>
