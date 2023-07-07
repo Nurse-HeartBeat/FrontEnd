@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Employer } from '../utils/types.js';
-import Nav from './nav';
 
 export default function ProfileEmployer() {
   const [employer, setEmployer] = useState<Employer>({
@@ -62,115 +61,116 @@ export default function ProfileEmployer() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-white">
-      <Nav />
-      <div className="flex flex-col items-center justify-center flex-1">
-        <h1 className="text-3xl font-bold my-4">Employer Profile</h1>
-        <form className="w-64">
-          <label className="flex flex-col mb-4">
-            <span className="text-lg font-medium">Company Name:</span>
-            <input
-              type="text"
-              name="companyName"
-              value={employer.companyName}
-              onChange={handleInputChange}
-              disabled={!isEditable}
-              className="rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
-            />
-          </label>
-          <label className="flex flex-col mb-4">
-            <span className="text-lg font-medium">Email:</span>
-            <input
-              type="email"
-              name="email"
-              value={employer.email}
-              onChange={handleInputChange}
-              disabled={!isEditable}
-              className="rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
-            />
-          </label>
-          <label className="flex flex-col mb-4">
-            <span className="text-lg font-medium">Phone:</span>
-            <input
-              type="tel"
-              name="phone"
-              value={employer.phone}
-              onChange={handleInputChange}
-              disabled={!isEditable}
-              className="rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
-            />
-          </label>
-          <label className="flex flex-col mb-4">
-            <span className="text-lg font-medium">Address:</span>
-            <input
-              type="text"
-              name="address1"
-              value={employer.address1}
-              onChange={handleInputChange}
-              disabled={!isEditable}
-              className="rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
-            />
-            <input
-              type="text"
-              name="address1"
-              value={employer.address2}
-              onChange={handleInputChange}
-              disabled={!isEditable}
-              className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
-            />
-          </label>
-          <label className="flex flex-col mb-4">
-            <span className="text-lg font-medium">City:</span>
-            <input
-              type="text"
-              name="city"
-              value={employer.city}
-              onChange={handleInputChange}
-              disabled={!isEditable}
-              className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
-            />
-          </label>
-          <label className="flex flex-col mb-4">
-            <span className="text-lg font-medium">State:</span>
-            <input
-              type="text"
-              name="state"
-              value={employer.state}
-              onChange={handleInputChange}
-              disabled={!isEditable}
-              className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
-            />
-          </label>
-          <label className="flex flex-col mb-4">
-            <span className="text-lg font-medium">Postal Code:</span>
-            <input
-              type="text"
-              name="postal"
-              value={employer.postal}
-              onChange={handleInputChange}
-              disabled={!isEditable}
-              className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
-            />
-          </label>
-        </form>
-        <div className='mb-10'>
-          {isEditable ? (
-            <div className="flex space-x-5">
-              <button
-                className="flex px-4 py-2 text-white rounded-md  bg-primary-light hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5" onClick={handleCancelClick}>Cancel
-              </button>
-              <button
-                className="flex px-4 py-2 text-white rounded-md  bg-primary-light hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5"
-                onClick={handleSaveClick}>Save
-              </button>
-            </div>
-          ) : (
+    <div className="flex flex-col items-center justify-center flex-1">
+      <h1 className="text-3xl font-bold m-4">Employer Profile</h1>
+      <form className="w-full w-2/3 lg:w-1/2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 gap-x-10">
+
+
+        <label className="flex flex-col mb-4">
+          <span className="text-lg font-medium">Company Name:</span>
+          <input
+            type="text"
+            name="companyName"
+            value={employer.companyName}
+            onChange={handleInputChange}
+            disabled={!isEditable}
+            className="rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+          />
+        </label>
+        <label className="flex flex-col mb-4">
+          <span className="text-lg font-medium">Email:</span>
+          <input
+            type="email"
+            name="email"
+            value={employer.email}
+            onChange={handleInputChange}
+            disabled={!isEditable}
+            className="rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+          />
+        </label>
+        <label className="flex flex-col mb-4">
+          <span className="text-lg font-medium">Address:</span>
+          <input
+            type="text"
+            name="address1"
+            value={employer.address1}
+            onChange={handleInputChange}
+            disabled={!isEditable}
+            className="rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+          />
+          <input
+            type="text"
+            name="address1"
+            value={employer.address2}
+            onChange={handleInputChange}
+            disabled={!isEditable}
+            className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+          />
+        </label>
+        <label className="flex flex-col mb-4">
+          <span className="text-lg font-medium">Phone:</span>
+          <input
+            type="tel"
+            name="phone"
+            value={employer.phone}
+            onChange={handleInputChange}
+            disabled={!isEditable}
+            className="rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+          />
+        </label>
+        <label className="flex flex-col mb-4">
+          <span className="text-lg font-medium">City:</span>
+          <input
+            type="text"
+            name="city"
+            value={employer.city}
+            onChange={handleInputChange}
+            disabled={!isEditable}
+            className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+          />
+        </label>
+        <label className="flex flex-col mb-4">
+          <span className="text-lg font-medium">State:</span>
+          <input
+            type="text"
+            name="state"
+            value={employer.state}
+            onChange={handleInputChange}
+            disabled={!isEditable}
+            className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+          />
+        </label>
+        <label className="flex flex-col mb-4">
+          <span className="text-lg font-medium">Postal Code:</span>
+          <input
+            type="text"
+            name="postal"
+            value={employer.postal}
+            onChange={handleInputChange}
+            disabled={!isEditable}
+            className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
+          />
+        </label>
+        </div>
+      </form>
+      <div className='mb-10'>
+        {isEditable ? (
+          <div className="flex space-x-5">
+            <button
+              className="flex px-4 py-2 text-white rounded-md  bg-primary-light hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5" onClick={handleCancelClick}>Cancel
+            </button>
             <button
               className="flex px-4 py-2 text-white rounded-md  bg-primary-light hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5"
-              onClick={handleModifyClick}>Modify
+              onClick={handleSaveClick}>Save
             </button>
-          )}
-        </div>
+          </div>
+        ) : (
+          <button
+            className="flex px-4 py-2 text-white rounded-md  bg-primary-light hover:bg-primary focus:outline-none focus:ring focus:ring-blue-500 mt-5"
+            onClick={handleModifyClick}>Modify
+          </button>
+        )}
       </div>
     </div>
   );
