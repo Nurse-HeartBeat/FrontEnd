@@ -26,11 +26,11 @@ export default function ProfileNurse() {
 
   const handleCancelClick = () => {
     setIsEditable(false);
-    // Add cancel logic here, such as making a GET request to fetch the user info again
+    setNurse(reduxUser.user);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center flex-1">
+    <div className="flex flex-col items-center pt-5 flex-1">
       <h1 className="text-3xl font-bold m-4">Nurse Profile</h1>
       <form className="w-full w-2/3 lg:w-1/2">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 gap-x-10">
@@ -38,7 +38,7 @@ export default function ProfileNurse() {
           <span className="text-lg font-medium">First name:</span>
           <input
             type="text"
-            name="companyName"
+            name="firstName"
             value={nurse.firstName}
             onChange={handleInputChange}
             disabled={!isEditable}
@@ -49,7 +49,7 @@ export default function ProfileNurse() {
           <span className="text-lg font-medium">Last name:</span>
           <input
             type="text"
-            name="companyName"
+            name="lastName"
             value={nurse.lastName}
             onChange={handleInputChange}
             disabled={!isEditable}

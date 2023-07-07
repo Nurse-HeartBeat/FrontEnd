@@ -164,7 +164,7 @@ export default function AddJobs({ userState }: { userState: any }) {
       {loading ? (<LoadingPage />) : (
         <>
           <Nav />
-          <div className="flex lg:flex-row flex-col flex-grow items-center justify-items-center bg-white text-black">
+          <div className="flex lg:flex-row flex-col flex-grow items-center justify-items-center justify-center bg-white text-black mb-10">
             <div className="flex lg:w-1/2">
               <form className="mx-auto lg:my-0 my-20 flex flex-col" onSubmit={onSubmit}>
                 <div className='mt-5 flex mb-2 flex flex-col'>
