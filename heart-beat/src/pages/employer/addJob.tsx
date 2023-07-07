@@ -23,6 +23,8 @@ type GraphQLErrorType = {
 export default function AddJobs({ userState }: { userState: any }) {
 
   let router = useRouter();
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
 
   useEffect(() => {
     if (!userState.employer) {
@@ -132,7 +134,10 @@ export default function AddJobs({ userState }: { userState: any }) {
         credentials: 'include', // Add this line
       },
     })
-      .then((data: any) => { console.log(data) })
+      .then((data: any) => {
+        console.log(data);
+        setSubmitSuccess(true);
+      })
       .catch((err) => {
         console.error(err);
         if (err.graphQLErrors) {
@@ -163,7 +168,9 @@ export default function AddJobs({ userState }: { userState: any }) {
       {loading ? (<LoadingPage />) : (
         <>
           <Nav />
-          <div className="flex lg:flex-row flex-col flex-grow items-center justify-items-center justify-center bg-white text-black pb-10">
+
+          <div className="flex flex-col flex-grow items-center justify-items-center justify-center bg-white text-black pb-10 min-h-screen">
+            {submitSuccess ? <p className='mt-20 bg-white text-black'>Job submitted successfully!</p> :
             <div className="flex lg:w-1/2">
               <form className="mx-auto lg:my-0 my-20 flex flex-col" onSubmit={onSubmit}>
                 <div className='mt-5 flex mb-2 flex flex-col'>
@@ -335,7 +342,7 @@ export default function AddJobs({ userState }: { userState: any }) {
                       className='flex ml-2 mr-5 py-1 w-24 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500' />
                   </div>
                   <div className='flex flex-row my-3'>
-                  <label className='w-36 py-1'>Patient Population:</label>
+                    <label className='w-36 py-1'>Patient Population:</label>
                     <select id='dropdown' name='patientPopulation' value={job.patientPopulation} onChange={(e) => changeState('patientPopulation', e.target.value)}
                       className="py-1 w-36 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-black">
                       {patientPopulations.map((patient, index) => {
@@ -402,7 +409,9 @@ export default function AddJobs({ userState }: { userState: any }) {
                   Submit
                 </button>
               </form>
-            </div>
+            </div>}
+
+
           </div>
           <Footer />
         </>
