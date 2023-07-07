@@ -1,53 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Nurse } from '../utils/types.js';
+import { useSelector } from 'react-redux';
 
 export default function ProfileNurse() {
-  const [Nurse, setNurse] = useState<Nurse>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    postal: 0,
-    gender: "",
-    yearOfExperience: 0,
-    license: "",
-    expiration: ""
-  });
+  const reduxUser = useSelector((state:any) => state.user);
+  const [nurse, setNurse] = useState<Nurse>(reduxUser.user);
   const [isEditable, setIsEditable] = useState(false);
-
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
-
-  const fetchUserInfo = async () => {
-    try {
-      // const response = await fetch('/api/user'); // Replace with your actual API endpoint
-      // const data = await response.json();
-      const data = {
-        "id": "8",
-        "firstName": "Quanjing3",
-        "lastName": "Chen",
-        "address1": "HERE Waiting",
-        "address2": "HERE Waiting",
-        "city": "LA",
-        "state": "CA",
-        "postal": 12345,
-        "email": "nathanaeltjen@gmail.com",
-        "phone": "8186002213",
-        "gender": "male",
-        "yearOfExperience": 2,
-        "license": "thisismylicense",
-        "expiration": "2023-06-30"
-      }
-      setNurse(data);
-    } catch (error) {
-      console.log('Error fetching user info:', error);
-    }
-  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -81,7 +39,7 @@ export default function ProfileNurse() {
           <input
             type="text"
             name="companyName"
-            value={Nurse.firstName}
+            value={nurse.firstName}
             onChange={handleInputChange}
             disabled={!isEditable}
             className="rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
@@ -92,7 +50,7 @@ export default function ProfileNurse() {
           <input
             type="text"
             name="companyName"
-            value={Nurse.lastName}
+            value={nurse.lastName}
             onChange={handleInputChange}
             disabled={!isEditable}
             className="rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
@@ -103,7 +61,7 @@ export default function ProfileNurse() {
           <input
             type="email"
             name="email"
-            value={Nurse.email}
+            value={nurse.email}
             onChange={handleInputChange}
             disabled={!isEditable}
             className="rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
@@ -114,7 +72,7 @@ export default function ProfileNurse() {
           <input
             type="tel"
             name="phone"
-            value={Nurse.phone}
+            value={nurse.phone}
             onChange={handleInputChange}
             disabled={!isEditable}
             className="rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
@@ -125,7 +83,7 @@ export default function ProfileNurse() {
           <input
             type="text"
             name="address1"
-            value={Nurse.address1}
+            value={nurse.address1}
             onChange={handleInputChange}
             disabled={!isEditable}
             className="rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
@@ -133,7 +91,7 @@ export default function ProfileNurse() {
           <input
             type="text"
             name="address1"
-            value={Nurse.address2}
+            value={nurse.address2}
             onChange={handleInputChange}
             disabled={!isEditable}
             className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
@@ -144,7 +102,7 @@ export default function ProfileNurse() {
           <input
             type="text"
             name="city"
-            value={Nurse.city}
+            value={nurse.city}
             onChange={handleInputChange}
             disabled={!isEditable}
             className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
@@ -155,7 +113,7 @@ export default function ProfileNurse() {
           <input
             type="text"
             name="state"
-            value={Nurse.state}
+            value={nurse.state}
             onChange={handleInputChange}
             disabled={!isEditable}
             className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
@@ -166,7 +124,7 @@ export default function ProfileNurse() {
           <input
             type="text"
             name="postal"
-            value={Nurse.postal}
+            value={nurse.postal}
             onChange={handleInputChange}
             disabled={!isEditable}
             className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
@@ -177,7 +135,7 @@ export default function ProfileNurse() {
           <input
             type="text"
             name="postal"
-            value={Nurse.gender}
+            value={nurse.gender}
             onChange={handleInputChange}
             disabled={!isEditable}
             className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
@@ -188,7 +146,7 @@ export default function ProfileNurse() {
           <input
             type="text"
             name="postal"
-            value={Nurse.yearOfExperience}
+            value={nurse.yearOfExperience}
             onChange={handleInputChange}
             disabled={!isEditable}
             className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
@@ -199,7 +157,7 @@ export default function ProfileNurse() {
           <input
             type="text"
             name="postal"
-            value={Nurse.license}
+            value={nurse.license}
             onChange={handleInputChange}
             disabled={!isEditable}
             className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"
@@ -210,7 +168,7 @@ export default function ProfileNurse() {
           <input
             type="text"
             name="postal"
-            value={Nurse.expiration}
+            value={nurse.expiration}
             onChange={handleInputChange}
             disabled={!isEditable}
             className="mt-2 rounded-md p-2 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-400"

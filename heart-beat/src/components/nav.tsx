@@ -106,6 +106,16 @@ const ProfileDropdown = () => {
             }}
             >Add Jobs</button>
           )}
+          {!reduxEmployer && (
+            <button
+            className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
+            onClick={() => {
+              const redirectRoute = '/employer/myJobs';
+              router.push(redirectRoute);
+            }}
+            >My jobs</button>
+          )}
+
           <button
             className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
             onClick={() => {

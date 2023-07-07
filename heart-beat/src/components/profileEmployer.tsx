@@ -1,42 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Employer } from '../utils/types.js';
+import { useSelector } from 'react-redux';
 
 export default function ProfileEmployer() {
-  const [employer, setEmployer] = useState<Employer>({
-    companyName: "",
-    email: "",
-    phone: "",
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    postal: 0,
-  });
+  const reduxUser = useSelector((state:any) => state.user);
+
+  const [employer, setEmployer] = useState<Employer>(reduxUser.user);
   const [isEditable, setIsEditable] = useState(false);
 
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
-
-  const fetchUserInfo = async () => {
-    try {
-      // const response = await fetch('/api/user'); // Replace with your actual API endpoint
-      // const data = await response.json();
-      const data = {
-        companyName: "ABC Company",
-        email: "employer@example.com",
-        phone: "1234567890",
-        address1: "123 Main St",
-        address2: "Apt 3",
-        city: "Los Angeles",
-        state: "CA",
-        postal: 12345,
-      }
-      setEmployer(data);
-    } catch (error) {
-      console.log('Error fetching user info:', error);
-    }
-  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
