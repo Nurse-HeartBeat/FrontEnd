@@ -21,7 +21,7 @@ const FilterDistance: React.FC<{ filterPass: FilterPassTypes }> = ({ filterPass 
             const numericInput = inputValue.replace(/[^0-9]/g, '');
             filterPass.setPostal(Number(numericInput))
             console.log(inputValue.length, e.target.value, inputValue)
-            if ((e.target.value.length === 5) && (Number(e.target.value) !== NaN)) {
+            if ((e.target.value.length === 5)) {
               let options: { method: string, url: string, headers: any } = axiosPostal(Number(numericInput))
               await axios.request(options)
                 .then((res) => {
