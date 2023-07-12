@@ -4,9 +4,11 @@ import Footer from '../components/footer';
 import React, { use, useState, useEffect } from 'react';
 import JobDetail from '../components/jobDetail';
 import JobList from '../components/jobList';
-import { Job as JobType } from '../utils/types.js';
+import { FilterPassTypes, Job as JobType } from '../utils/types.js';
 import { generateJobs } from '../utils/seedJobs';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import axios from 'axios';
+import { postal as axiosPostal } from '../utils/postalLatLon';
 // Set up Apollo Client
 const client = new ApolloClient({
   uri: `${process.env.NEXT_PUBLIC_API_URL}/api/jobs_test`, // replace with your API endpoint
@@ -101,13 +103,26 @@ export default function Jobs() {
     'Hospice Nurse': true,
     'Public Health Nurse': true
   });
+  const [patientPop, setPatientPop] = useState({
+      "Neonatal": true, // 0 - 28 days
+      "Infant": true, // 1 month - 1 year
+      "Toddler": true, // 1 - 3 years
+      "Preschool": true, // 3 - 5 years
+      "Pediatric": true, // 6 - 12 years
+      "Adolescent": true, // 13 - 18 years
+      "Young Adult": true, // 19 - 24 years
+      "Adult": true, // 25 - 64 years
+      "Geriatric": true, // 65 years and above
+  })
   const [patientNum, setPatientNum] = useState(100);
   const [weeklyPay, setWeeklyPay] = useState(1000);
   const [days, setDays] = useState(daysObj);
-  const [startHour, setStartHour] = useState(0)
-  const [endHour, setEndHour] = useState(23.59)
-  const [dates, setDates] = useState(new Date('2023-06-15'))
-  const [postal, setPostal] = useState(0) //later default using the nurse profile (redux)
+  const [startHour, setStartHour] = useState(0);
+  const [endHour, setEndHour] = useState(23.59);
+  const [dates, setDates] = useState(new Date('2023-06-15'));
+  const [longitude, setLongitude] = useState<number | null>(null);;
+  const [latitude, setLatitude] = useState<number | null>(null);;
+  const [postal, setPostal] = useState<number | null>(null); //later default using the nurse profile (redux)
   const [filteredJobs, setFilteredJobs] = useState([]); // use dummy data for now. should fetch data from the server
 
 
@@ -120,16 +135,23 @@ export default function Jobs() {
     setSelectedJob(job); //update selectedJob state when job entry is clicked
   }
 
-  let filterPass = {
+  const applyFilter = async () => {
+    console.log(latitude, distance, 'here it is')
+  }
+
+  let filterPass: FilterPassTypes = {
     distance, setDistance,
     category, setCategory,
     patientNum, setPatientNum,
+    patientPop, setPatientPop,
     weeklyPay, setWeeklyPay,
     days, setDays,
     startHour, setStartHour,
     endHour, setEndHour,
     dates, setDates,
-    postal, setPostal
+    postal, setPostal,
+    applyFilter,
+    setLatitude, setLongitude
   }
 
 

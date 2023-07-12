@@ -74,6 +74,8 @@ export interface FilterPassTypes {
   setDistance: (value: number) => void;
   category: { [key: string]: boolean };
   setCategory: (value: (prevState: CategoryTypes) => CategoryTypes) => void;
+  patientPop: { [key: string]: boolean };
+  setPatientPop: (value: (prevState: PatientTypes) => PatientTypes) => void;
   patientNum: number;
   setPatientNum: (value: number) => void;
   weeklyPay: number;
@@ -86,8 +88,13 @@ export interface FilterPassTypes {
   setEndHour: (value: number) => void;
   dates: Date;
   setDates: (value: Date) => void;
-  postal?: number;
-  setPostal: (value: number) => void;
+  postal: number | null;
+  setPostal: (value: number | null) => void;
+  applyFilter:() => void;
+  // longitude: number | null;
+  setLongitude: (value: number | null) => void;
+  // latitude: number | null;
+  setLatitude: (value: number | null) => void;
 }
 
 export interface CategoryTypes {
@@ -111,6 +118,18 @@ export interface CategoryTypes {
   'Cardiac Nurse': boolean;
   'Hospice Nurse': boolean;
   'Public Health Nurse': boolean;
+}
+
+export interface PatientTypes {
+  "Neonatal": boolean, // 0 - 28 days
+  "Infant": boolean; // 1 month - 1 year
+  "Toddler": boolean; // 1 - 3 years
+  "Preschool": boolean; // 3 - 5 years
+  "Pediatric": boolean; // 6 - 12 years
+  "Adolescent": boolean; // 13 - 18 years
+  "Young Adult": boolean; // 19 - 24 years
+  "Adult": boolean; // 25 - 64 years
+  "Geriatric": boolean; // 65 years and above
 }
 
 export interface DaysTypes {
