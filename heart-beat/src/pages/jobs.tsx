@@ -125,13 +125,7 @@ export default function Jobs() {
   const [longitude, setLongitude] = useState<number | null>(null);;
   const [latitude, setLatitude] = useState<number | null>(null);;
   const [postal, setPostal] = useState<number | null>(null); //later default using the nurse profile (redux)
-  // const [filteredJobs, setFilteredJobs] = useState([]); // use dummy data for now. should fetch data from the server
-
-
-  // const [jobs, setJobs] = useState<JobType[]>([]);
-
   const [selectedJob, setSelectedJob] = useState<JobType>(); //default job selected
-
 
   const handleJobClick = (job: JobType) => {
     setSelectedJob(job); //update selectedJob state when job entry is clicked

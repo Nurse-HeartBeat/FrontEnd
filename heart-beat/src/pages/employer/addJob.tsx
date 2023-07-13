@@ -38,7 +38,7 @@ export default function AddJobs({ userState }: { userState: any }) {
   let now = new Date();
   let formattedDate = now.toISOString().slice(0, 10);
 
-  const [job, setJob] = useState<Job>({
+  const [job, setJob] = useState<Partial<Job>>({
     category: 'Registered Nurse (RN)',
     yearRequired: null,
     title: '',
@@ -390,7 +390,7 @@ export default function AddJobs({ userState }: { userState: any }) {
                   <div className='mt-5 flex mb-5 flex flex-col px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'>
                     <div className='flex flex-row'>
                       <h1 className="flex text-text flex-row">Free Parking?</h1>
-                      <RadioBut checked={job.parkingFree} onChange={() => changeState('parkingFree', !job.parkingFree)} label={''} />
+                      <RadioBut checked={job.parkingFree || false} onChange={() => changeState('parkingFree', !job.parkingFree)} label={''} />
                     </div>
                     <div className='flex flex-row mt-2'>
                       <label className="flex-shrink-0 w-24">Contact Person:</label>

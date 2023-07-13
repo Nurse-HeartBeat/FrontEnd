@@ -66,7 +66,7 @@ export interface Job {
   contactEmail: string;
   parkingFree: boolean;
   additionalDetails?: string;
-  createdBy: string;
+  createdBy: string | null;
   [key: string]: any;
 }
 
