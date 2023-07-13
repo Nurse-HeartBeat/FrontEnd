@@ -21,7 +21,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
           <h2 className="text-2xl font-bold">{job.title}</h2>
         </div>
         <h2 className="text-lg mb-2">
-          <span className="mr-2 font-bold ">{job.employer.companyName}</span>|<span className="ml-2">{job.category}</span>
+          <span className="mr-2 font-bold ">{job.employer?.companyName}</span>|<span className="ml-2">{job.category}</span>
         </h2>
         <div className="flex items-center">
           <FaMapMarkerAlt className="mr-2 mb-2" />

@@ -42,7 +42,7 @@ export default function AddJobs({ userState }: { userState: any }) {
     category: 'Registered Nurse (RN)',
     yearRequired: null,
     title: '',
-    employer: '',
+    employer: null,
     assignTo: null,
     approve: false,
     completed: false,

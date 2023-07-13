@@ -18,7 +18,7 @@ const JobEntry: React.FC<JobEntryProps> = ({ job, onJobClick, selectedJob }) => 
         <h2 className="text-lg font-bold">${job.weeklyPay}</h2>
       </div>
 
-      <span className="mr-2 font-bold">{job.employer.companyName}</span>|<span className="ml-2">{job.category}</span>
+      <span className="mr-2 font-bold">{job.employer?.companyName}</span>|<span className="ml-2">{job.category}</span>
 
       <div className="flex items-center">
         <p className="text-gray-600 ">{job.city}, {job.state}</p>

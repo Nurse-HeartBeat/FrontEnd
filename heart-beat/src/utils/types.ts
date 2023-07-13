@@ -38,7 +38,7 @@ export interface Job {
   category: string;
   yearRequired: number | null;
   title: string;
-  employer: PartialEmployer;
+  employer: PartialEmployer | null;
   assignTo?: Nurse | null;
   approve: boolean;
   completed: boolean;
