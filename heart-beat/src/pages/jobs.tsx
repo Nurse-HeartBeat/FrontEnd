@@ -7,59 +7,18 @@ import JobList from '../components/jobList';
 import { FilterPassTypes, Job as JobType, SetCategoryType, SetPatientPopType } from '../utils/types.js';
 import { generateJobs } from '../utils/seedJobs';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
-import {QUERY_JOB} from '../utils/graphQL'
+import {QUERY_AllJOB, QUERY_JOB} from '../utils/graphQL'
 // Set up Apollo Client
-const client = new ApolloClient({
-  uri: `${process.env.NEXT_PUBLIC_API_URL}/api/jobs_test`, // replace with your API endpoint
-  cache: new InMemoryCache(),
-});
+// const client = new ApolloClient({
+//   uri: `${process.env.NEXT_PUBLIC_API_URL}/api/jobs_test`, // replace with your API endpoint
+//   cache: new InMemoryCache(),
+// });
 
 const clientGraphQL = new ApolloClient({
   uri: `${process.env.NEXT_PUBLIC_GRAPHQL_URL}`, // replace with your API endpoint
   cache: new InMemoryCache(),
 });
 
-const JobQuery = gql`
-query GetJobs {
-  jobs {
-    id
-    category
-    year_required
-    title
-    employer
-    assignTo
-    approve
-    completed
-    address1
-    address2
-    city
-    state
-    postal
-    latitude
-    longitude
-    startDate
-    endDate
-    Monday
-    Tuesday
-    Wednesday
-    Thursday
-    Friday
-    Saturday
-    Sunday
-    start
-    end
-    shiftHour
-    patient_population
-    patient_number
-    stipend
-    weekly_pay
-    bonus
-    contact_person
-    contact_email
-    parkingFree
-    additionalDetails
-  }
-}`
 // { jobs }: { jobs: JobType[] }
 export default function Jobs() {
   const [jobs, setJobs] = useState<JobType[]>([])
@@ -67,9 +26,11 @@ export default function Jobs() {
   //making client side rendering
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await client.query<{ jobs: JobType[]}>({query: JobQuery})
-      setJobs(data.jobs)
-      setSelectedJob(data.jobs[0])
+      const response = await clientGraphQL.query({ query: QUERY_AllJOB });
+      const jobs = response.data.allJobs.edges.map((edge: { node: JobType }) => edge.node);
+      console.log('get all jobs when first rendered: ', jobs)
+      setJobs(jobs);
+      setSelectedJob(jobs[0]);
     }
     fetchData()
   }, [])

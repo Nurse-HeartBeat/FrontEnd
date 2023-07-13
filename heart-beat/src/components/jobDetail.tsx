@@ -18,7 +18,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
       <div className='px-5 mb-6 border-b border-gray-300 my-4 shadow-lg'>
         <div className="flex justify-start items-center mb-2 space-x-4">
           <h2 className="text-2xl font-bold">{job.title}</h2>
-          <h2 className="text-2xl font-bold">${job.weekly_pay}</h2>
+          <h2 className="text-2xl font-bold">${job.weeklyPay}</h2>
         </div>
         <p className="text-lg text-gray-600 mb-2">{job.category}</p>
         <div className="flex items-center">
@@ -68,16 +68,16 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
           </div>
           <div className="flex items-center">
             <FaRegClock className="mr-2" />
-            <p>Shift: {job.start} - {job.end} ({job.shiftHour} hours)</p>
+            <p>Shift: {job.startTime} - {job.endTime} ({job.shiftHour} hours)</p>
           </div>
           <div className="flex items-center">
             <FaUsers className="mr-2" />
-            <p>Patient Number: {job.patient_number}</p>
+            <p>Patient Number: {job.patientNumber}</p>
           </div>
 
           <div className="flex items-center">
             <FaPersonBooth className="mr-2" />
-            <p>Population: {job.patient_population}</p>
+            <p>Population: {job.patientPopulation}</p>
           </div>
         </div>
 
@@ -88,7 +88,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
           <p>Stipend: {job.stipend}</p>
         </div>
         <div className="flex items-center  mb-4">
-          <p>Weekly Pay: {job.weekly_pay}</p>
+          <p>Weekly Pay: {job.weeklyPay}</p>
         </div>
         <div className="flex items-center  mb-4">
           <p>Bonus: {job.bonus}</p>
@@ -98,12 +98,12 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
 
         <div className="flex items-center mb-4">
           <FaUser className="mr-2" />
-          <p>{job.contact_person}</p>
+          <p>{job.contactPerson}</p>
         </div>
 
         <div className="flex items-center mb-4">
           <FaEnvelope className="mr-2" />
-          <p>{job.contact_email}</p>
+          <p>{job.contactEmail}</p>
         </div>
         <hr className="border-t border-gray-300 my-6" />
         <h2 className="text-xl font-bold mb-4">Additonal Information</h2>

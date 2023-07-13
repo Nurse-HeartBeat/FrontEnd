@@ -17,7 +17,7 @@ const JobEntry: React.FC<JobEntryProps> = ({ job, onJobClick, selectedJob }) => 
         |
         <span className="ml-2">{job.category}</span>
       </h2>
-      <h2 className="text-lg font-bold">${job.weekly_pay}</h2>
+      <h2 className="text-lg font-bold">${job.weeklyPay}</h2>
 
       <div className="flex items-center">
         <p className="text-gray-600 ">{job.city}, {job.state}</p>
@@ -26,7 +26,7 @@ const JobEntry: React.FC<JobEntryProps> = ({ job, onJobClick, selectedJob }) => 
         <p>{new Intl.DateTimeFormat('en-US').format(new Date(job.startDate))} - {new Intl.DateTimeFormat('en-US').format(new Date(job.endDate))}</p>
       </div>
       <div className="flex items-center">
-        <p>{job.start} - {job.end} ({job.shiftHour} hours)</p>
+        <p>{job.startTime} - {job.endTime} ({job.shiftHour} hours)</p>
       </div>
     </div>
 

@@ -303,7 +303,62 @@ export const QUERY_JOB = gql`
   }
 `;
 
-
+export const QUERY_AllJOB = gql`
+  query {
+    allJobs {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          id
+          category
+          yearRequired
+          title
+          employer {
+            id
+          }
+          assignTo {
+            id
+          }
+          approve
+          completed
+          address1
+          address2
+          city
+          state
+          postal
+          latitude
+          longitude
+          startDate
+          endDate
+          Monday
+          Tuesday
+          Wednesday
+          Thursday
+          Friday
+          Saturday
+          Sunday
+          startTime
+          endTime
+          shiftHour
+          patientPopulation
+          patientNumber
+          stipend
+          weeklyPay
+          bonus
+          contactPerson
+          contactEmail
+          parkingFree
+          additionalDetails
+          latitude
+          longitude
+        }
+      }
+    }
+  }
+`;
 
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_URL });
 
