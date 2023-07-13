@@ -28,7 +28,7 @@ export default function Jobs() {
     const fetchData = async () => {
       const response = await clientGraphQL.query({ query: QUERY_AllJOB });
       const jobs = response.data.allJobs.edges.map((edge: { node: JobType }) => edge.node);
-      console.log('get all jobs when first rendered: ', jobs)
+      console.log('get all jobs without filters when first rendered: ', jobs)
       setJobs(jobs);
       setSelectedJob(jobs[0]);
     }
