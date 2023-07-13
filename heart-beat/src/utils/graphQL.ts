@@ -248,13 +248,13 @@ export const QUERY_JOB = gql`
   query GetJob(
     $category: CategoriesInput!,
     $days: DaysInput!,
-    $patientPop: PatientPopulationInput!,
+    $patientPop: PopulationsInput!,
     $patientNum: Int!,
     $weeklyPay: Int!,
-    $startDate: String!,
-    $endDate: String!,
-    $startTime: String!,
-    $endTime: String!,
+    $startDate: Date!,
+    $endDate: Date!,
+    $startTime: Time!,
+    $endTime: Time!,
     $latitude: Float,
     $longitude: Float,
     $distance: Int

@@ -5,23 +5,18 @@ import React, { use, useState, useEffect } from 'react';
 import JobDetail from '../components/jobDetail';
 import JobList from '../components/jobList';
 import { FilterPassTypes, Job as JobType, SetCategoryType, SetPatientPopType } from '../utils/types.js';
-import { generateJobs } from '../utils/seedJobs';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import {QUERY_AllJOB, QUERY_JOB} from '../utils/graphQL'
-// Set up Apollo Client
-// const client = new ApolloClient({
-//   uri: `${process.env.NEXT_PUBLIC_API_URL}/api/jobs_test`, // replace with your API endpoint
-//   cache: new InMemoryCache(),
-// });
+
 
 const clientGraphQL = new ApolloClient({
   uri: `${process.env.NEXT_PUBLIC_GRAPHQL_URL}`, // replace with your API endpoint
   cache: new InMemoryCache(),
 });
 
-// { jobs }: { jobs: JobType[] }
 export default function Jobs() {
   const [jobs, setJobs] = useState<JobType[]>([])
+  const [useFilter, setUseFilter] = useState<boolean>(false)
 
   //making client side rendering
   useEffect(() => {
@@ -108,7 +103,7 @@ export default function Jobs() {
     'Preschool':'preschool',
     'Pediatric':'pediatric',
     'Adolescent':'adolescent',
-    'Young Adult':'young_adult',
+    'Young Adult':'youngAdult',
     'Adult':'adult',
     'Geriatric':'geriatric'
   }
@@ -121,13 +116,16 @@ export default function Jobs() {
 
   let now = new Date();
   let formattedDate = now.toISOString().slice(0, 10);
-  const [startDate, setStartDate] = useState(formattedDate);
-  const [endDate, setEndDate] = useState(formattedDate);
+  let oneYearFromNow = new Date();
+  oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+  let formattedDateOneYearFromNow = oneYearFromNow.toISOString().slice(0, 10);
 
+  const [startDate, setStartDate] = useState(formattedDate);
+  const [endDate, setEndDate] = useState(formattedDateOneYearFromNow);
   const [longitude, setLongitude] = useState<number | null>(null);;
   const [latitude, setLatitude] = useState<number | null>(null);;
   const [postal, setPostal] = useState<number | null>(null); //later default using the nurse profile (redux)
-  const [filteredJobs, setFilteredJobs] = useState([]); // use dummy data for now. should fetch data from the server
+  // const [filteredJobs, setFilteredJobs] = useState([]); // use dummy data for now. should fetch data from the server
 
 
   // const [jobs, setJobs] = useState<JobType[]>([]);
@@ -158,6 +156,7 @@ export default function Jobs() {
         patientPop: patientPopInput,
         days, patientNum, weeklyPay, startDate, endDate, startTime, endTime, latitude, longitude, distance
       }
+      console.log('variables: ', variables);
       const { data } = await clientGraphQL.query<{ jobs: JobType[]}>({query: QUERY_JOB, variables})
       try {
         console.log(data)
@@ -179,7 +178,6 @@ export default function Jobs() {
     days, setDays,
     startTime, setStartTime,
     endTime, setEndTime,
-    // dates, setDates,
     startDate, setStartDate,
     endDate, setEndDate,
     postal, setPostal,
