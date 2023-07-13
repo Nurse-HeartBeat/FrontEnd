@@ -37,7 +37,7 @@ const FilterCategory: React.FC<{ filterPass: FilterPassTypes }> = ({ filterPass 
           }}
           className='filter-dropdown-btn mt-5 mr-3'>Unselect All
         </button>
-        <button className='filter-dropdown-btn mt-5 ml-3 '>Apply
+        <button className='filter-dropdown-btn mt-5 ml-3' onClick={filterPass.applyFilter}>Apply
         </button>
       </div>
     </div>

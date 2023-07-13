@@ -6,10 +6,12 @@ const FilterPatient: React.FC<{ filterPass: FilterPassTypes }> = ({ filterPass }
   const handleApply = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (filterPass.patientNum === 0) {
       setWarning(true)
+    } else {
+      filterPass.applyFilter()
     }
   }
   const [warning, setWarning] = useState(false)
-  const [selectPop, setSelectPop] = useState(false);
+  const [selectPop, setSelectPop] = useState(false)
   const [selectBut, setSelectBut] = useState('Select Population')
   return (
     <div className="filter-dropdown-container  md:w-[300px] md:max-h-[800px] md:-translate-x-10">

@@ -28,14 +28,18 @@ export interface Employer {
   postal: number;
 }
 
+export interface PartialEmployer {
+  companyName: string;
+}
+
 
 export interface Job {
   id?: string;
   category: string;
   yearRequired: number | null;
   title: string;
-  employer: string;
-  assignTo?: string | null;
+  employer: PartialEmployer;
+  assignTo?: Nurse | null;
   approve: boolean;
   completed: boolean;
   address1: string;

@@ -189,11 +189,11 @@ export default function Jobs() {
     <div className='bg-white flex-col min-h-screen'>
       <Nav />
       <Filter FilterPass={filterPass} />
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-0 md:mx-5'>
-        <div className='max-h-[800px] overflow-auto'>
+      <div className='grid grid-cols-1 md:grid-cols-5 gap-0 md:mx-5'>
+        <div className='max-h-[800px] overflow-auto md:col-span-2'>
           <JobList jobs={jobs} onJobClick={handleJobClick} selectedJob={selectedJob} />
         </div>
-        <div className='hidden md:block '>
+        <div className='hidden md:block md:col-span-3'>
           {selectedJob && <JobDetail job={selectedJob} />}
         </div>
       </div>

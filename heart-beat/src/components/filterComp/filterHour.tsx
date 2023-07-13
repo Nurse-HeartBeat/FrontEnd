@@ -24,7 +24,7 @@ const FilterHour: React.FC<{ filterPass: FilterPassTypes }> = ({ filterPass }) =
         </form>
       </div>
 
-      <button className='filter-dropdown-btn mt-5 ml-3 mb-2'>Apply
+      <button className='filter-dropdown-btn mt-5 ml-3 mb-2' onClick={filterPass.applyFilter}>Apply
       </button>
     </div>
   )

@@ -33,7 +33,6 @@ const FilterCategory: React.FC<{ filterPass: FilterPassTypes }> = ({ filterPass 
               ) as unknown as CategoryTypes;
               return updatedCategory;
             });
-
           }}
           className='filter-dropdown-btn mt-5 mr-3'>Unselect All
         </button>

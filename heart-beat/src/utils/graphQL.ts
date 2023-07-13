@@ -284,7 +284,7 @@ export const QUERY_JOB = gql`
           yearRequired
           title
           employer {
-            id
+            companyName
           }
           assignTo {
             id
@@ -344,6 +344,7 @@ export const QUERY_AllJOB = gql`
           title
           employer {
             id
+            companyName
           }
           assignTo {
             id

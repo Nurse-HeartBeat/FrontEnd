@@ -17,10 +17,12 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
     <div className='my-10 mr-5 border border-gray-300 text-black rounded-2xl'>
       <div className='px-5 mb-6 border-b border-gray-300 my-4 shadow-lg'>
         <div className="flex justify-start items-center mb-2 space-x-4">
-          <h2 className="text-2xl font-bold">{job.title}</h2>
           <h2 className="text-2xl font-bold">${job.weeklyPay}</h2>
+          <h2 className="text-2xl font-bold">{job.title}</h2>
         </div>
-        <p className="text-lg text-gray-600 mb-2">{job.category}</p>
+        <h2 className="text-lg mb-2">
+          <span className="mr-2 font-bold ">{job.employer.companyName}</span>|<span className="ml-2">{job.category}</span>
+        </h2>
         <div className="flex items-center">
           <FaMapMarkerAlt className="mr-2 mb-2" />
           <p className="text-gray-600 mb-2">{job.city}, {job.state}</p>

@@ -4,8 +4,7 @@ import { FilterPassTypes } from '../../utils/types';
 const FilterWeeklyPay: React.FC<{ filterPass: FilterPassTypes }> = ({ filterPass }) => {
   let weeklyPay = [1000, 2000, 3000, 4000, 5000];
   const handleApply = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (filterPass.patientNum === 0) {
-    }
+    filterPass.applyFilter()
   }
   return (
     <div className="filter-dropdown-container md:w-[200px] md:-translate-x-10">
