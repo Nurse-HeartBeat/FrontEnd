@@ -1,5 +1,5 @@
 import { Job } from '../utils/types.js';
-import { formatDate } from '../utils/formatDate';
+import moment from 'moment';
 
 interface JobEntryProps {
   job: Job;
@@ -10,7 +10,7 @@ interface JobEntryProps {
 const JobEntry: React.FC<JobEntryProps> = ({ job, onJobClick, selectedJob }) => {
 
   return (
-    <div onClick={() => onJobClick(job)} className={`mb-5 px-5 py-5 border border-gray-300 text-black hover:border-primary-light  ${selectedJob?.id === job.id ? 'border-2 border-primary shadow-lg' : 'border-gray-300'} rounded-xl`}
+    <div onClick={() => onJobClick(job)} className={`mb-5 px-5 py-4 border border-gray-300 text-black hover:border-primary-light  ${selectedJob?.id === job.id ? 'border-2 border-primary shadow-lg' : 'border-gray-300'} rounded-xl`}
     >
       <h2 className="text-lg font-bold">
         <span className="mr-2">{job.title}</span>
@@ -23,11 +23,16 @@ const JobEntry: React.FC<JobEntryProps> = ({ job, onJobClick, selectedJob }) => 
         <p className="text-gray-600 ">{job.city}, {job.state}</p>
       </div>
       <div className="flex items-center">
-        <p>{new Intl.DateTimeFormat('en-US').format(new Date(job.startDate))} - {new Intl.DateTimeFormat('en-US').format(new Date(job.endDate))}</p>
+        <p>
+          {job.startDate.split('T')[0].split('-').reverse().join('/')} -
+          {job.endDate.split('T')[0].split('-').reverse().join('/')}
+        </p>
       </div>
       <div className="flex items-center">
         <p>{job.startTime} - {job.endTime} ({job.shiftHour} hours)</p>
       </div>
+      <p className='text-xs mt-2'>Created {moment(job.createdBy).fromNow()}</p>
+
     </div>
 
   );

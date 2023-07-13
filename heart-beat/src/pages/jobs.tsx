@@ -157,9 +157,13 @@ export default function Jobs() {
         days, patientNum, weeklyPay, startDate, endDate, startTime, endTime, latitude, longitude, distance
       }
       console.log('variables: ', variables);
-      const { data } = await clientGraphQL.query<{ jobs: JobType[]}>({query: QUERY_JOB, variables})
+      const response = await clientGraphQL.query({query: QUERY_JOB, variables});
+      const jobs = response.data.job.edges.map((edge: { node: JobType }) => edge.node);
+      console.log('get all jobs with filters: ', jobs)
+      setJobs(jobs);
+      setSelectedJob(jobs[0]);
       try {
-        console.log(data)
+        console.log(jobs)
       }
       catch (err) {
         console.log(err)

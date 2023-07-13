@@ -27,6 +27,7 @@
     "firebase": "^9.22.1",
     "graphql-scalars": "^1.22.2",
     "graphql-tag": "^2.12.6",
+    "moment": "^2.29.4",
     "next": "13.4.4",
     "next-redux-wrapper": "^8.1.0",
     "postcss": "^8.4.24",

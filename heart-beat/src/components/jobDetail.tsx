@@ -26,20 +26,20 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
           <p className="text-gray-600 mb-2">{job.city}, {job.state}</p>
         </div>
 
-        <div className='flex flex-col md:flex-row md:space-x-4 pb-5 relative'>
+        <div className='flex flex-col lg:flex-row gap-2 pb-5 relative'>
           <Tooltip text="Coming soon">
-            <button className="flex justify-center items-center w-60 h-10 px-4 py-2 text-white rounded-md bg-primary-light hover:bg-primary mt-2">
+            <button className="w-40 h-10 py-2 text-white rounded-md bg-primary-light hover:bg-primary">
               Book
             </button>
           </Tooltip>
           <Tooltip text="Coming soon">
-            <button className="flex justify-center items-center w-12 h-10 px-1 py-1 text-white rounded-md bg-accent hover:bg-primary mt-2">
-              <FaComments />
+          <button className="w-36 h-10 py-2 text-white rounded-md bg-green-500 hover:bg-green-600">
+              Mock with AI
             </button>
           </Tooltip>
           <Tooltip text="Coming soon">
-          <button className="flex justify-center items-center h-10 px-4 py-2 text-white rounded-md bg-green-500 hover:bg-green-600  mt-2">
-              Mock with AI
+            <button className="flex justify-center items-center w-12 h-10 py-1 text-white rounded-md bg-accent hover:bg-primary">
+              <FaComments />
             </button>
           </Tooltip>
         </div>
