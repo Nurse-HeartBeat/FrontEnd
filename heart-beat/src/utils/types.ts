@@ -82,12 +82,12 @@ export interface FilterPassTypes {
   setWeeklyPay: (value: number) => void;
   days: { [key: string]: boolean };
   setDays: (value: (prevState: DaysTypes) => DaysTypes) => void;
-  startHour: number;
-  setStartHour: (value: number) => void;
-  endHour: number;
-  setEndHour: (value: number) => void;
-  dates: Date;
-  setDates: (value: Date) => void;
+  startTime: string;
+  setStartTime: (value: string) => void;
+  endTime: string;
+  setEndTime: (value: string) => void;
+  // dates: Date;
+  // setDates: (value: Date) => void;
   postal: number | null;
   setPostal: (value: number | null) => void;
   applyFilter:() => void;
@@ -95,6 +95,10 @@ export interface FilterPassTypes {
   setLongitude: (value: number | null) => void;
   // latitude: number | null;
   setLatitude: (value: number | null) => void;
+  startDate: string;
+  setStartDate: (value: string) => void;
+  endDate: string;
+  setEndDate: (value: string) => void;
 }
 
 export interface CategoryTypes {
@@ -120,6 +124,18 @@ export interface CategoryTypes {
   'Public Health Nurse': boolean;
 }
 
+export interface PatientPopTypes {
+  "Neonatal": boolean;
+  "Infant": boolean;
+  "Toddler": boolean;
+  "Preschool": boolean;
+  "Pediatric": boolean;
+  "Adolescent": boolean;
+  "Young Adult": boolean;
+  "Adult": boolean;
+  "Geriatric": boolean;
+}
+
 export interface PatientTypes {
   "Neonatal": boolean, // 0 - 28 days
   "Infant": boolean; // 1 month - 1 year
@@ -141,3 +157,6 @@ export interface DaysTypes {
   'Saturday': boolean;
   'Sunday': boolean
 }
+
+export type SetCategoryType = React.Dispatch<React.SetStateAction<CategoryTypes>>;
+export type SetPatientPopType = React.Dispatch<React.SetStateAction<PatientPopTypes>>;

@@ -12,7 +12,7 @@ const FilterCategory: React.FC<{ filterPass: FilterPassTypes }> = ({ filterPass 
           return (
             <div className='mt-5 ml-5' key={index}>
               <input name={`checkbox ${category}`} type='checkbox' checked={filterPass.category[category]}
-                onClick={() => {
+                onChange={() => {
                   filterPass.setCategory((prevState: any) => ({
                     ...prevState,
                     [category]: !prevState[category],
@@ -37,7 +37,7 @@ const FilterCategory: React.FC<{ filterPass: FilterPassTypes }> = ({ filterPass 
           }}
           className='filter-dropdown-btn mt-5 mr-3'>Unselect All
         </button>
-        <button className='filter-dropdown-btn mt-5 ml-3'>Apply
+        <button className='filter-dropdown-btn mt-5 ml-3' onClick={filterPass.applyFilter}>Apply
         </button>
       </div>
     </div>

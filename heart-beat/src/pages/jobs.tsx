@@ -4,14 +4,18 @@ import Footer from '../components/footer';
 import React, { use, useState, useEffect } from 'react';
 import JobDetail from '../components/jobDetail';
 import JobList from '../components/jobList';
-import { FilterPassTypes, Job as JobType } from '../utils/types.js';
+import { FilterPassTypes, Job as JobType, SetCategoryType, SetPatientPopType } from '../utils/types.js';
 import { generateJobs } from '../utils/seedJobs';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
-import axios from 'axios';
-import { postal as axiosPostal } from '../utils/postalLatLon';
+import {QUERY_JOB} from '../utils/graphQL'
 // Set up Apollo Client
 const client = new ApolloClient({
   uri: `${process.env.NEXT_PUBLIC_API_URL}/api/jobs_test`, // replace with your API endpoint
+  cache: new InMemoryCache(),
+});
+
+const clientGraphQL = new ApolloClient({
+  uri: `${process.env.NEXT_PUBLIC_GRAPHQL_URL}`, // replace with your API endpoint
   cache: new InMemoryCache(),
 });
 
@@ -81,7 +85,7 @@ export default function Jobs() {
     Sunday: true
   }
   const [distance, setDistance] = useState(25);
-  const [category, setCategory] = useState({
+  const [category, setCategory] = useState<{ [key: string]: boolean }>({
     'Registered Nurse (RN)': true,
     'Licensed Practical Nurse (LPN)': true,
     'Certified Nursing Assistant (CNA)': true,
@@ -103,7 +107,29 @@ export default function Jobs() {
     'Hospice Nurse': true,
     'Public Health Nurse': true
   });
-  const [patientPop, setPatientPop] = useState({
+  const categoryMapping: { [key: string]: string }  = {
+    'Registered Nurse (RN)': 'registeredNurseRn',
+    'Licensed Practical Nurse (LPN)': 'licensedPracticalNurseLpn',
+    'Certified Nursing Assistant (CNA)': 'certifiedNursingAssistantCna',
+    'Nurse Practitioner (NP)': 'nursePractitionerNp',
+    'Pediatric Nurse': 'pediatricNurse',
+    'Geriatric Nurse': 'geriatricNurse',
+    'Critical Care Nurse': 'criticalCareNurse',
+    'Emergency Room Nurse': 'emergencyRoomNurse',
+    'Operating Room Nurse': 'operatingRoomNurse',
+    'Neonatal Intensive Care Unit (NICU) Nurse': 'neonatalIntensiveCareUnitNicuNurse',
+    'Obstetric Nurse': 'obstetricNurse',
+    'Psychiatric Nurse': 'psychiatricNurse',
+    'Oncology Nurse': 'oncologyNurse',
+    'Rehabilitation Nurse': 'rehabilitationNurse',
+    'Home Health Nurse': 'homeHealthNurse',
+    'Intensive Care Unit (ICU) Nurse': 'intensiveCareUnitIcuNurse',
+    'Surgical Nurse': 'surgicalNurse',
+    'Cardiac Nurse': 'cardiacNurse',
+    'Hospice Nurse': 'hospiceNurse',
+    'Public Health Nurse': 'publicHealthNurse',
+  };
+  const [patientPop, setPatientPop] = useState<{ [key: string]: boolean }>({
       "Neonatal": true, // 0 - 28 days
       "Infant": true, // 1 month - 1 year
       "Toddler": true, // 1 - 3 years
@@ -114,12 +140,29 @@ export default function Jobs() {
       "Adult": true, // 25 - 64 years
       "Geriatric": true, // 65 years and above
   })
+  const patientPopMapping: { [key: string]: string } ={
+    "Neonatal": 'neonatal',
+    'Infant':'infant',
+    'Toddler':'toddler',
+    'Preschool':'preschool',
+    'Pediatric':'pediatric',
+    'Adolescent':'adolescent',
+    'Young Adult':'young_adult',
+    'Adult':'adult',
+    'Geriatric':'geriatric'
+  }
   const [patientNum, setPatientNum] = useState(100);
   const [weeklyPay, setWeeklyPay] = useState(1000);
   const [days, setDays] = useState(daysObj);
-  const [startHour, setStartHour] = useState(0);
-  const [endHour, setEndHour] = useState(23.59);
-  const [dates, setDates] = useState(new Date('2023-06-15'));
+  const [startTime, setStartTime] = useState("00:00");
+  const [endTime, setEndTime] = useState("23:59");
+  // const [dates, setDates] = useState(new Date());
+
+  let now = new Date();
+  let formattedDate = now.toISOString().slice(0, 10);
+  const [startDate, setStartDate] = useState(formattedDate);
+  const [endDate, setEndDate] = useState(formattedDate);
+
   const [longitude, setLongitude] = useState<number | null>(null);;
   const [latitude, setLatitude] = useState<number | null>(null);;
   const [postal, setPostal] = useState<number | null>(null); //later default using the nurse profile (redux)
@@ -136,19 +179,48 @@ export default function Jobs() {
   }
 
   const applyFilter = async () => {
-    console.log(latitude, distance, 'here it is')
+    const categoryInput: { [key: string]: boolean } = Object.keys(categoryMapping).reduce((input: { [key: string]: boolean }, categoryName) => {
+      const categoryKey = categoryMapping[categoryName];
+      input[categoryKey] = category[categoryName];
+      return input;
+    }, {});
+
+    const patientPopInput: { [key: string]: boolean } = Object.keys(patientPopMapping).reduce((input: { [key: string]: boolean }, patientPopName) => {
+      const patientPopKey = patientPopMapping[patientPopName];
+      input[patientPopKey] = patientPop[patientPopName];
+      return input;
+    }, {});
+
+    const fetchData = async () => {
+      let variables = {
+        category: categoryInput,
+        patientPop: patientPopInput,
+        days, patientNum, weeklyPay, startDate, endDate, startTime, endTime, latitude, longitude, distance
+      }
+      const { data } = await clientGraphQL.query<{ jobs: JobType[]}>({query: QUERY_JOB, variables})
+      try {
+        console.log(data)
+      }
+      catch (err) {
+        console.log(err)
+      }
+    }
+    fetchData()
   }
+
 
   let filterPass: FilterPassTypes = {
     distance, setDistance,
-    category, setCategory,
+    category, setCategory: setCategory as unknown as SetCategoryType,
     patientNum, setPatientNum,
-    patientPop, setPatientPop,
+    patientPop, setPatientPop: setPatientPop as unknown as SetPatientPopType,
     weeklyPay, setWeeklyPay,
     days, setDays,
-    startHour, setStartHour,
-    endHour, setEndHour,
-    dates, setDates,
+    startTime, setStartTime,
+    endTime, setEndTime,
+    // dates, setDates,
+    startDate, setStartDate,
+    endDate, setEndDate,
     postal, setPostal,
     applyFilter,
     setLatitude, setLongitude

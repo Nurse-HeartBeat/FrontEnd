@@ -244,38 +244,66 @@ export const CREATE_JOB = gql`
 `;
 
 
-// category: "some category",
-// yearRequired: 3,
-// title: "Job Title",
-// employer: 1,
-// address1: "Address Line 1",
-// address2: "Address Line 2",
-// city: "City Name",
-// state: "State Name",
-// postal: 12345,
-// latitude: 12.345678,
-// longitude: -98.7654321,
-// startDate: "2023-06-21",
-// endDate: "2023-06-30",
-// startTime:"12:00",
-// endTime:"1:00",
-// Monday: true,
-// Tuesday: false,
-// Wednesday: true,
-// Thursday: false,
-// Friday: true,
-// Saturday: false,
-// Sunday: true,
-// contactEmail: "example@example.com",
-// contactPerson:"trt",
-// shiftHour: 8,
-// patientPopulation: "Some patient population",
-// patientNumber: 100,
-// stipend: 500,
-// weeklyPay: 800,
-// bonus: 200,
-// parkingFree: true,
-// additionalDetails: "Some additional details"
+export const QUERY_JOB = gql`
+  query GetJob(
+    $category: CategoriesInput!,
+    $days: DaysInput!,
+    $patientPop: PatientPopulationInput!,
+    $patientNum: Int!,
+    $weeklyPay: Int!,
+    $startDate: String!,
+    $endDate: String!,
+    $startTime: String!,
+    $endTime: String!,
+    $latitude: Float,
+    $longitude: Float,
+    $distance: Int
+  ) {
+    job(
+      categories: $category,
+      days: $days,
+      patientPopulation: $patientPop,
+      patientNumber: $patientNum,
+      weeklyPay: $weeklyPay,
+      startDate: $startDate,
+      endDate: $endDate,
+      startTime: $startTime,
+      endTime: $endTime,
+      latitude: $latitude,
+      longitude: $longitude,
+      distance: $distance
+    ) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          id
+          category
+          yearRequired
+          patientNumber
+          Monday
+          Tuesday
+          Wednesday
+          Thursday
+          Friday
+          Saturday
+          Sunday
+          latitude
+          longitude
+          startDate
+          endDate
+          startTime
+          endTime
+        }
+        cursor
+      }
+    }
+  }
+`;
+
+
 
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_URL });
 
@@ -302,5 +330,5 @@ export const client = new ApolloClient({
 });
 
 let graphQL = {
-  client, CREATE_EMPLOYER, CREATE_NURSE, QUERY_EMPLOYER, QUERY_NURSE
+  client, CREATE_EMPLOYER, CREATE_NURSE, QUERY_EMPLOYER, QUERY_NURSE, QUERY_JOB
 }

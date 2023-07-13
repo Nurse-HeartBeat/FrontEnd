@@ -12,7 +12,7 @@ const FilterCategory: React.FC<{ filterPass: FilterPassTypes }> = ({ filterPass 
           return (
             <div className='mt-5 ml-5' key={index}>
               <input name={`checkbox ${day}`} type='checkbox' checked={filterPass.days[day]}
-                onClick={() => {
+                onChange={() => {
                   filterPass.setDays((prevState: any) => ({
                     ...prevState,
                     [day]: !prevState[day],

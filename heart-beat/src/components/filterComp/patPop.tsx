@@ -13,7 +13,7 @@ const PatPop: React.FC<{ populationData: FilterPassTypes["patientPop"], setPopul
           return (
             <div className='mt-5 ml-5' key={index}>
               <input name={`checkbox ${pop}`} type='checkbox' checked={populationData[pop]}
-                onClick={() => {
+                onChange={() => {
                   setPopulationData((prevState: any) => ({
                     ...prevState,
                     [pop]: !prevState[pop],

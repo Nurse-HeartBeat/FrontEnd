@@ -14,7 +14,7 @@ const FilterDates: React.FC<{ filterPass: FilterPassTypes }> = ({ filterPass }) 
         <label htmlFor="dates"></label>
         <div className='flex my-4'>
           <label htmlFor="date">Start date after:</label>
-          <input type="date" id="date" name="date" value={startDate} min="2023-01-01" max={String(Number(formattedDate.slice(0, 4)) + 1) + formattedDate.slice(4)} onChange={(e) => setStartDate(e.target.value)} className='bg-slate-200 px-1 mx-2' />
+          <input type="date" id="date" name="date" value={startDate} min={formattedDate} max={String(Number(formattedDate.slice(0, 4)) + 1) + formattedDate.slice(4)} onChange={(e) => setStartDate(e.target.value)} className='bg-slate-200 px-1 mx-2' />
         </div>
         <div>
           <label htmlFor="date">End date before:</label>
