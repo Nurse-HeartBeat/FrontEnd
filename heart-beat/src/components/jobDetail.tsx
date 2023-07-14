@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import { Job } from '../utils/types.js';
 import { FaComments, FaMapMarkerAlt, FaRegCalendarAlt, FaRegClock, FaUsers, FaDollarSign, FaCircle } from 'react-icons/fa';
 import { FaUser, FaPersonBooth, FaEnvelope, FaParking, FaInfoCircle } from 'react-icons/fa';
@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Tooltip from "./tooltip";
 import { useSelector } from 'react-redux';
 import { UPDATE_BOOKJOB, client } from '../utils/graphQL'
+import {GoogleMap, useLoadScript, MarkerF} from '@react-google-maps/api';
 
 // Define the type
 type GraphQLErrorType = {
@@ -26,6 +27,11 @@ interface DayCircleProps {
 
 const JobDetail: React.FC<JobDetailProps> = ({ job, update, setUpdate }) => {
   const reduxUser = useSelector((state: any) => state.user);
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey:`${process.env.NEXT_PUBLIC_GOOGLE_MAP}`
+  })
+  const center = useMemo(() => ({lat:job.latitude, lng:job.longitude}), [job]);
+
 
   const handleBook = async () => {
     console.log('reduxUser: ', reduxUser.user)
@@ -105,7 +111,16 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, update, setUpdate }) => {
       </div>
 
       <div className='px-5 max-h-[500px] overflow-auto'>
-        <Image src='/mapPicHolder.png' alt="Map" className="" width={600} height={400} />
+        {/* <Image src='/mapPicHolder.png' alt="Map" className="" width={600} height={400} /> */}
+        {/* HERE */}
+        {!isLoaded ? (<div>Loading...</div>) :
+        (<GoogleMap
+        zoom={10}
+        center={center}
+        mapContainerClassName="w-full h-64"
+        >
+          <MarkerF position={center}/>
+        </GoogleMap>)}
         <hr className="border-t border-gray-300 my-6" />
         <div className="flex space-x-2">
           <DayCircle day='M' active={job.Monday} />
