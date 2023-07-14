@@ -13,7 +13,7 @@ const JobEntry: React.FC<JobEntryProps> = ({ job, onJobClick, selectedJob }) => 
   return (
     <div onClick={() => onJobClick(job)} className={`mb-5 px-5 py-4 border border-gray-300 text-black hover:border-primary-light  ${selectedJob?.id === job.id ? 'border-2 border-primary shadow-lg' : 'border-gray-300'} rounded-xl`}
     >
-      <div className="flex justify-between items-center mb-1">
+      <div className="flex justify-between items-start mb-1">
         <h2 className="text-lg font-bold">{job.title}</h2>
         <h2 className="text-lg font-bold">${job.weeklyPay}</h2>
       </div>
