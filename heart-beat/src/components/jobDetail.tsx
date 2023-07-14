@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import { Job } from '../utils/types.js';
 import { FaComments, FaMapMarkerAlt, FaRegCalendarAlt, FaRegClock, FaUsers, FaDollarSign, FaCircle } from 'react-icons/fa';
 import { FaUser, FaPersonBooth, FaEnvelope, FaParking, FaInfoCircle } from 'react-icons/fa';
@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Tooltip from "./tooltip";
 import { useSelector } from 'react-redux';
 import { UPDATE_BOOKJOB, client } from '../utils/graphQL'
-import {GoogleMap, useLoadScript, MarkerF} from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 
 // Define the type
 type GraphQLErrorType = {
@@ -25,12 +25,12 @@ interface DayCircleProps {
   active: boolean;
 }
 
-const JobDetail: React.FC<JobDetailProps> = ({ job, update = false, setUpdate = () => {} }) => {
+const JobDetail: React.FC<JobDetailProps> = ({ job, update = false, setUpdate = () => { } }) => {
   const reduxUser = useSelector((state: any) => state.user);
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey:`${process.env.NEXT_PUBLIC_GOOGLE_MAP}`
+    googleMapsApiKey: `${process.env.NEXT_PUBLIC_GOOGLE_MAP}`
   })
-  const center = useMemo(() => ({lat:job.latitude, lng:job.longitude}), [job]);
+  const center = useMemo(() => ({ lat: job.latitude, lng: job.longitude }), [job]);
 
 
   const handleBook = async () => {
@@ -71,7 +71,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, update = false, setUpdate = 
   return (
     <div className='my-10 mr-5 border border-gray-300 text-black rounded-2xl'>
       <div className='px-5 mb-6 border-b border-gray-300 my-4 shadow-lg'>
-        <div className="flex justify-start items-center mb-2 space-x-4">
+        <div className="flex flex-col md:flex-row justify-start items-start mb-2  md:space-x-0 md:space-y-0 space-y-4 md:justify-between">
           <h2 className="text-2xl font-bold">{job.title}</h2>
           <h2 className="text-2xl font-bold">${job.weeklyPay}</h2>
         </div>
@@ -114,13 +114,13 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, update = false, setUpdate = 
         {/* <Image src='/mapPicHolder.png' alt="Map" className="" width={600} height={400} /> */}
         {/* HERE */}
         {!isLoaded ? (<div>Loading...</div>) :
-        (<GoogleMap
-        zoom={10}
-        center={center}
-        mapContainerClassName="w-full h-64"
-        >
-          <MarkerF position={center}/>
-        </GoogleMap>)}
+          (<GoogleMap
+            zoom={10}
+            center={center}
+            mapContainerClassName="w-full h-64"
+          >
+            <MarkerF position={center} />
+          </GoogleMap>)}
         <hr className="border-t border-gray-300 my-6" />
         <div className="flex space-x-2">
           <DayCircle day='M' active={job.Monday} />
@@ -194,7 +194,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, update = false, setUpdate = 
               <br />
             </React.Fragment>
           ))}
-          </div>
+        </div>
       </div>
     </div>
 
