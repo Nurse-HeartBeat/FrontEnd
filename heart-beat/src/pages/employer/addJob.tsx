@@ -6,7 +6,6 @@ import { Router, useRouter } from 'next/router';
 import { Job } from '../../utils/types';
 import RadioBut from '../../components/radioBut';
 import LoadingPage from '../../components/loadingPage';
-import { selectionSetMatchesResult } from '@apollo/client/cache/inmemory/helpers';
 import store, { RootState } from '../../redux/store'
 import axios from 'axios';
 import { postal as axiosPostal } from '../../utils/postalLatLon';

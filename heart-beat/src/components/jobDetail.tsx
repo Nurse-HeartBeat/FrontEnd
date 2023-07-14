@@ -8,24 +8,18 @@ import { useSelector } from 'react-redux';
 import { UPDATE_BOOKJOB, client } from '../utils/graphQL'
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 
-// Define the type
-type GraphQLErrorType = {
-  message: string;
-  locations: string;
-  path: string;
-};
+
 
 interface JobDetailProps {
   job: Job;
-  update?: boolean;
-  setUpdate?: (update: boolean) => void;
+  handleBook?: (job: Job) => void;
 }
 interface DayCircleProps {
   day: string;
   active: boolean;
 }
 
-const JobDetail: React.FC<JobDetailProps> = ({ job, update = false, setUpdate = () => { } }) => {
+const JobDetail: React.FC<JobDetailProps> = ({ job, handleBook }) => {
   const reduxUser = useSelector((state: any) => state.user);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: `${process.env.NEXT_PUBLIC_GOOGLE_MAP}`
@@ -33,41 +27,9 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, update = false, setUpdate = 
   const center = useMemo(() => ({ lat: job.latitude, lng: job.longitude }), [job]);
 
 
-  const handleBook = async () => {
-    console.log('reduxUser: ', reduxUser.user)
-    if (!reduxUser.user) {
-      alert('Log in to book')
-    } else {
-      const id = job.id;
-      const assignTo = reduxUser.user.id;
-      await client.mutate({
-        mutation: UPDATE_BOOKJOB,
-        variables: { id, assignTo },
-        context: {
-          credentials: 'include', // Add this line
-        },
-      })
-        .then((data: any) => {
-          console.log('Update assign to: ', data);
-          setUpdate(!update);
-        })
-        .catch((err) => {
-          console.error(err);
-          if (err.graphQLErrors) {
-            err.graphQLErrors.map(({ message, locations, path }: GraphQLErrorType) =>
-              console.log(
-                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-              ),
-            );
-          }
 
-          if (err.networkError) {
-            console.log(`[Network error]: ${err.networkError}`);
-          }
-        })
-    }
 
-  }
+
   return (
     <div className='my-10 sm:mr-5 sm:border sm:border-gray-300 text-black rounded-2xl'>
       <div className='px-4 sm:px-5 mb-6 sm:border-b sm:border-gray-300 my-4 shadow-lg'>
@@ -86,7 +48,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, update = false, setUpdate = 
         <div className='flex flex-col lg:flex-row gap-2 pb-5 relative'>
           <button
             className={`w-52 h-10 py-2 text-white rounded-md ${job.assignTo ? 'bg-gray-500 cursor-not-allowed' : 'bg-primary-light hover:bg-primary'}`}
-            onClick={handleBook}
+            onClick={() => { if (handleBook) handleBook(job) }}
             disabled={!!job.assignTo} // disables the button if job is booked
           >
             {job.assignTo
