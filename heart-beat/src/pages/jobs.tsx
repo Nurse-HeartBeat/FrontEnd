@@ -17,10 +17,11 @@ const clientGraphQL = new ApolloClient({
 export default function Jobs() {
   const [jobs, setJobs] = useState<JobType[]>([])
   const [useFilter, setUseFilter] = useState<boolean>(false)
+  const [update, setUpdate] = useState<boolean>(false)
 
   //making client side rendering
   const fetchDataAll = async () => {
-    const response = await clientGraphQL.query({ query: QUERY_AllJOB });
+    const response = await clientGraphQL.query({ query: QUERY_AllJOB, fetchPolicy: 'network-only'});
     const jobs = response.data.allJobs.edges.map((edge: { node: JobType }) => edge.node);
     console.log('get all jobs without filters when first rendered: ', jobs)
     setJobs(jobs);
@@ -29,7 +30,7 @@ export default function Jobs() {
 
   useEffect(() => {
     fetchDataAll()
-  }, [])
+  }, [update])
 
 
   let daysObj = {
@@ -195,7 +196,7 @@ export default function Jobs() {
           <JobList jobs={jobs} onJobClick={handleJobClick} selectedJob={selectedJob} />
         </div>
         <div className='hidden md:block md:col-span-3'>
-          {selectedJob && <JobDetail job={selectedJob} setJob={setSelectedJob} />}
+          {selectedJob && <JobDetail job={selectedJob} update={update} setUpdate={setUpdate} />}
         </div>
       </div>
       <Footer />

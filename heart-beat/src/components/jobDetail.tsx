@@ -16,14 +16,15 @@ type GraphQLErrorType = {
 
 interface JobDetailProps {
   job: Job;
-  setJob: React.Dispatch<React.SetStateAction<Job | undefined>>;
+  update: boolean;
+  setUpdate: (update: boolean) => void;
 }
 interface DayCircleProps {
   day: string;
   active: boolean;
 }
 
-const JobDetail: React.FC<JobDetailProps> = ({ job, setJob }) => {
+const JobDetail: React.FC<JobDetailProps> = ({ job, update, setUpdate }) => {
   const reduxUser = useSelector((state: any) => state.user);
 
   const handleBook = async () => {
@@ -42,11 +43,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, setJob }) => {
       })
         .then((data: any) => {
           console.log('Update assign to: ', data);
-          // Updating the job state to reflect the booking status
-          setJob({
-            ...job,
-            assignTo: reduxUser.user.id, // or assignTo, depending on your variable naming
-          });
+          setUpdate(!update);
         })
         .catch((err) => {
           console.error(err);
@@ -86,7 +83,13 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, setJob }) => {
             onClick={handleBook}
             disabled={!!job.assignTo} // disables the button if job is booked
           >
-            {job.assignTo ? (job.assignTo.id === reduxUser.user.id ? 'Your booking, pending' : 'Booked by others') : 'Book'}
+            {job.assignTo
+              ? (reduxUser.user
+                ? (job.assignTo.id === reduxUser.user.id
+                  ? 'Your booking, pending'
+                  : 'Booked by others')
+                : 'Booked')
+              : 'Book'}
           </button>
           <Tooltip text="Coming soon">
             <button className="w-36 h-10 py-2 text-white rounded-md bg-green-500 hover:bg-green-600">
