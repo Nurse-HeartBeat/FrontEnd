@@ -388,6 +388,28 @@ export const QUERY_AllJOB = gql`
   }
 `;
 
+export const UPDATE_BOOKJOB = gql`
+  mutation UpdateJobModelAssignTo($id: ID!, $assignTo: ID) {
+    updateJobModelAssignTo(id: $id, assignTo: $assignTo) {
+      jobModel {
+        id
+        title
+        category
+        createdBy
+        approve
+        completed
+        employer {
+          companyName
+        }
+        assignTo {
+          id
+        }
+      }
+    }
+  }
+`;
+
+
 const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_URL });
 
 const authLink = setContext(async (_, { headers }) => {

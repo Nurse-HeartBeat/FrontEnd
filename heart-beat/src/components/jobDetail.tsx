@@ -1,24 +1,76 @@
+import React from 'react';
 import { Job } from '../utils/types.js';
 import { FaComments, FaMapMarkerAlt, FaRegCalendarAlt, FaRegClock, FaUsers, FaDollarSign, FaCircle } from 'react-icons/fa';
 import { FaUser, FaPersonBooth, FaEnvelope, FaParking, FaInfoCircle } from 'react-icons/fa';
 import Image from 'next/image';
 import Tooltip from "./tooltip";
+import { useSelector } from 'react-redux';
+import { UPDATE_BOOKJOB, client } from '../utils/graphQL'
+
+// Define the type
+type GraphQLErrorType = {
+  message: string;
+  locations: string;
+  path: string;
+};
 
 interface JobDetailProps {
   job: Job;
+  setJob: React.Dispatch<React.SetStateAction<Job | undefined>>;
 }
 interface DayCircleProps {
   day: string;
   active: boolean;
 }
 
-const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
+const JobDetail: React.FC<JobDetailProps> = ({ job, setJob }) => {
+  const reduxUser = useSelector((state: any) => state.user);
+
+  const handleBook = async () => {
+    console.log('reduxUser: ', reduxUser.user)
+    if (!reduxUser.user) {
+      alert('Log in to book')
+    } else {
+      const id = job.id;
+      const assignTo = reduxUser.user.id;
+      await client.mutate({
+        mutation: UPDATE_BOOKJOB,
+        variables: { id, assignTo },
+        context: {
+          credentials: 'include', // Add this line
+        },
+      })
+        .then((data: any) => {
+          console.log('Update assign to: ', data);
+          // Updating the job state to reflect the booking status
+          setJob({
+            ...job,
+            assignTo: reduxUser.user.id, // or assignTo, depending on your variable naming
+          });
+        })
+        .catch((err) => {
+          console.error(err);
+          if (err.graphQLErrors) {
+            err.graphQLErrors.map(({ message, locations, path }: GraphQLErrorType) =>
+              console.log(
+                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+              ),
+            );
+          }
+
+          if (err.networkError) {
+            console.log(`[Network error]: ${err.networkError}`);
+          }
+        })
+    }
+
+  }
   return (
     <div className='my-10 mr-5 border border-gray-300 text-black rounded-2xl'>
       <div className='px-5 mb-6 border-b border-gray-300 my-4 shadow-lg'>
         <div className="flex justify-start items-center mb-2 space-x-4">
-          <h2 className="text-2xl font-bold">${job.weeklyPay}</h2>
           <h2 className="text-2xl font-bold">{job.title}</h2>
+          <h2 className="text-2xl font-bold">${job.weeklyPay}</h2>
         </div>
         <h2 className="text-lg mb-2">
           <span className="mr-2 font-bold ">{job.employer?.companyName}</span>|<span className="ml-2">{job.category}</span>
@@ -29,13 +81,15 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
         </div>
 
         <div className='flex flex-col lg:flex-row gap-2 pb-5 relative'>
+          <button
+            className={`w-52 h-10 py-2 text-white rounded-md ${job.assignTo ? 'bg-gray-500 cursor-not-allowed' : 'bg-primary-light hover:bg-primary'}`}
+            onClick={handleBook}
+            disabled={!!job.assignTo} // disables the button if job is booked
+          >
+            {job.assignTo ? (job.assignTo.id === reduxUser.user.id ? 'Your booking, pending' : 'Booked by others') : 'Book'}
+          </button>
           <Tooltip text="Coming soon">
-            <button className="w-40 h-10 py-2 text-white rounded-md bg-primary-light hover:bg-primary">
-              Book
-            </button>
-          </Tooltip>
-          <Tooltip text="Coming soon">
-          <button className="w-36 h-10 py-2 text-white rounded-md bg-green-500 hover:bg-green-600">
+            <button className="w-36 h-10 py-2 text-white rounded-md bg-green-500 hover:bg-green-600">
               Mock with AI
             </button>
           </Tooltip>
@@ -114,10 +168,14 @@ const JobDetail: React.FC<JobDetailProps> = ({ job }) => {
           <FaParking className="mr-2" />
           <p>{job.parkingFree ? 'Free Parking' : 'No Free Parking'}</p>
         </div>
-        <div className="flex items-center mb-4">
-          <FaInfoCircle className="mr-2" />
-          <span>{job.additionalDetails}</span>
-        </div>
+        <div className="flex items-start mb-4 px-5">
+          {/* <FaInfoCircle className="mr-2 w-5" /> */}
+          {job.additionalDetails?.split('\n').map((line, i) => (
+            <React.Fragment key={i}>
+              {line}
+              <br />
+            </React.Fragment>
+          ))}        </div>
       </div>
     </div>
 

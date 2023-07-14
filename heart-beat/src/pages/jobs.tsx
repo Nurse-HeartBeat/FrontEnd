@@ -19,15 +19,16 @@ export default function Jobs() {
   const [useFilter, setUseFilter] = useState<boolean>(false)
 
   //making client side rendering
+  const fetchDataAll = async () => {
+    const response = await clientGraphQL.query({ query: QUERY_AllJOB });
+    const jobs = response.data.allJobs.edges.map((edge: { node: JobType }) => edge.node);
+    console.log('get all jobs without filters when first rendered: ', jobs)
+    setJobs(jobs);
+    setSelectedJob(jobs[0]);
+  }
+
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await clientGraphQL.query({ query: QUERY_AllJOB });
-      const jobs = response.data.allJobs.edges.map((edge: { node: JobType }) => edge.node);
-      console.log('get all jobs without filters when first rendered: ', jobs)
-      setJobs(jobs);
-      setSelectedJob(jobs[0]);
-    }
-    fetchData()
+    fetchDataAll()
   }, [])
 
 
@@ -194,7 +195,7 @@ export default function Jobs() {
           <JobList jobs={jobs} onJobClick={handleJobClick} selectedJob={selectedJob} />
         </div>
         <div className='hidden md:block md:col-span-3'>
-          {selectedJob && <JobDetail job={selectedJob} />}
+          {selectedJob && <JobDetail job={selectedJob} setJob={setSelectedJob} />}
         </div>
       </div>
       <Footer />
