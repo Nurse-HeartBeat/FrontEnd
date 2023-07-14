@@ -1,27 +1,30 @@
 import Nav from '../components/nav';
 import Filter from '../components/filterJobs';
 import Footer from '../components/footer';
-import React, { use, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import JobDetail from '../components/jobDetail';
 import JobList from '../components/jobList';
 import { FilterPassTypes, Job as JobType, SetCategoryType, SetPatientPopType } from '../utils/types.js';
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
-import {QUERY_AllJOB, QUERY_JOB} from '../utils/graphQL'
+import {QUERY_AllJOB, QUERY_JOB, UPDATE_BOOKJOB, QUERY_JOBID, client} from '../utils/graphQL'
+import { useSelector } from 'react-redux';
 
+// Define the type
+type GraphQLErrorType = {
+  message: string;
+  locations: string;
+  path: string;
+};
 
-const clientGraphQL = new ApolloClient({
-  uri: `${process.env.NEXT_PUBLIC_GRAPHQL_URL}`, // replace with your API endpoint
-  cache: new InMemoryCache(),
-});
 
 export default function Jobs() {
   const [jobs, setJobs] = useState<JobType[]>([])
   const [useFilter, setUseFilter] = useState<boolean>(false)
-  const [update, setUpdate] = useState<boolean>(false)
+  const reduxUser = useSelector((state: any) => state.user);
+
 
   //making client side rendering
   const fetchDataAll = async () => {
-    const response = await clientGraphQL.query({ query: QUERY_AllJOB, fetchPolicy: 'network-only'});
+    const response = await client.query({ query: QUERY_AllJOB });
     const jobs = response.data.allJobs.edges.map((edge: { node: JobType }) => edge.node);
     console.log('get all jobs without filters when first rendered: ', jobs)
     setJobs(jobs);
@@ -30,7 +33,7 @@ export default function Jobs() {
 
   useEffect(() => {
     fetchDataAll()
-  }, [update])
+  }, [])
 
 
   let daysObj = {
@@ -121,7 +124,6 @@ export default function Jobs() {
   let oneYearFromNow = new Date();
   oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
   let formattedDateOneYearFromNow = oneYearFromNow.toISOString().slice(0, 10);
-
   const [startDate, setStartDate] = useState(formattedDate);
   const [endDate, setEndDate] = useState(formattedDateOneYearFromNow);
   const [longitude, setLongitude] = useState<number | null>(null);;
@@ -153,7 +155,7 @@ export default function Jobs() {
         days, patientNum, weeklyPay, startDate, endDate, startTime, endTime, latitude, longitude, distance
       }
       console.log('variables: ', variables);
-      const response = await clientGraphQL.query({query: QUERY_JOB, variables});
+      const response = await client.query({query: QUERY_JOB, variables});
       const jobs = response.data.job.edges.map((edge: { node: JobType }) => edge.node);
       console.log('get all jobs with filters: ', jobs)
       setJobs(jobs);
@@ -185,18 +187,61 @@ export default function Jobs() {
     setLatitude, setLongitude
   }
 
+  const handleBook = async (job: JobType) => {
+    console.log('reduxUser: ', reduxUser.user)
+    if (!reduxUser.user) {
+      alert('Log in to book')
+    } else {
+      const id = job.id;
+      const assignTo = reduxUser.user.id;
+      await client.mutate({
+        mutation: UPDATE_BOOKJOB,
+        variables: { id, assignTo },
+        context: {
+          credentials: 'include', // Add this line
+        },
+      })
+        .then(async (data: any) => {
+          console.log('Update assign to: ', data);
+          // Fetch the updated job details
+          const response = await client.query({ query: QUERY_JOBID, variables: { id } });
+          const fetchedJob = response.data.jobId;
+          // Update the selected job
+          setSelectedJob(fetchedJob);
+          // Update the jobs list
+          const updatedJobs = jobs.map((job: JobType) => job.id === fetchedJob.id ? fetchedJob : job);
+          setJobs(updatedJobs);
+        })
+        .catch((err) => {
+          console.error(err);
+          if (err.graphQLErrors) {
+            err.graphQLErrors.map(({ message, locations, path }: GraphQLErrorType) =>
+              console.log(
+                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+              ),
+            );
+          }
+
+          if (err.networkError) {
+            console.log(`[Network error]: ${err.networkError}`);
+          }
+        })
+    }
+  }
+
 
   return (
 
     <div className='bg-white flex-col min-h-screen'>
       <Nav />
       <Filter FilterPass={filterPass} />
+      {jobs.length===0 && <p className='text-center text-xl text-black mt-10 '>Loading...</p>}
       <div className='grid grid-cols-1 md:grid-cols-5 gap-0 md:mx-5'>
         <div className='max-h-[800px] overflow-auto md:col-span-2'>
           <JobList jobs={jobs} onJobClick={handleJobClick} selectedJob={selectedJob} />
         </div>
-        <div className='hidden md:block md:col-span-3'>
-          {selectedJob && <JobDetail job={selectedJob} update={update} setUpdate={setUpdate} />}
+        <div className='hidden sm:block md:col-span-3'>
+          {selectedJob && <JobDetail job={selectedJob} handleBook={handleBook}/>}
         </div>
       </div>
       <Footer />

@@ -1,77 +1,37 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import { Job } from '../utils/types.js';
-import { FaComments, FaMapMarkerAlt, FaRegCalendarAlt, FaRegClock, FaUsers, FaDollarSign, FaCircle } from 'react-icons/fa';
+import { FaComments, FaMapMarkerAlt, FaRegCalendarAlt, FaRegClock, FaUsers} from 'react-icons/fa';
 import { FaUser, FaPersonBooth, FaEnvelope, FaParking, FaInfoCircle } from 'react-icons/fa';
-import Image from 'next/image';
 import Tooltip from "./tooltip";
 import { useSelector } from 'react-redux';
-import { UPDATE_BOOKJOB, client } from '../utils/graphQL'
-import {GoogleMap, useLoadScript, MarkerF} from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 
-// Define the type
-type GraphQLErrorType = {
-  message: string;
-  locations: string;
-  path: string;
-};
+
 
 interface JobDetailProps {
   job: Job;
-  update: boolean;
-  setUpdate: (update: boolean) => void;
+  handleBook?: (job: Job) => void;
 }
 interface DayCircleProps {
   day: string;
   active: boolean;
 }
 
-const JobDetail: React.FC<JobDetailProps> = ({ job, update, setUpdate }) => {
+const JobDetail: React.FC<JobDetailProps> = ({ job, handleBook }) => {
   const reduxUser = useSelector((state: any) => state.user);
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey:`${process.env.NEXT_PUBLIC_GOOGLE_MAP}`
+    googleMapsApiKey: `${process.env.NEXT_PUBLIC_GOOGLE_MAP}`
   })
-  const center = useMemo(() => ({lat:job.latitude, lng:job.longitude}), [job]);
+  const center = useMemo(() => ({ lat: job.latitude, lng: job.longitude }), [job]);
 
 
-  const handleBook = async () => {
-    console.log('reduxUser: ', reduxUser.user)
-    if (!reduxUser.user) {
-      alert('Log in to book')
-    } else {
-      const id = job.id;
-      const assignTo = reduxUser.user.id;
-      await client.mutate({
-        mutation: UPDATE_BOOKJOB,
-        variables: { id, assignTo },
-        context: {
-          credentials: 'include', // Add this line
-        },
-      })
-        .then((data: any) => {
-          console.log('Update assign to: ', data);
-          setUpdate(!update);
-        })
-        .catch((err) => {
-          console.error(err);
-          if (err.graphQLErrors) {
-            err.graphQLErrors.map(({ message, locations, path }: GraphQLErrorType) =>
-              console.log(
-                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-              ),
-            );
-          }
 
-          if (err.networkError) {
-            console.log(`[Network error]: ${err.networkError}`);
-          }
-        })
-    }
 
-  }
+
   return (
-    <div className='my-10 mr-5 border border-gray-300 text-black rounded-2xl'>
-      <div className='px-5 mb-6 border-b border-gray-300 my-4 shadow-lg'>
-        <div className="flex justify-start items-center mb-2 space-x-4">
+    <div className='my-10 sm:mr-5 sm:border sm:border-gray-300 text-black rounded-2xl'>
+      <div className='px-4 sm:px-5 mb-6 sm:border-b sm:border-gray-300 my-4 shadow-lg'>
+        <div className="flex flex-col md:flex-row justify-start items-start mb-2  md:space-x-0 md:space-y-0 space-y-4 md:justify-between">
           <h2 className="text-2xl font-bold">{job.title}</h2>
           <h2 className="text-2xl font-bold">${job.weeklyPay}</h2>
         </div>
@@ -86,7 +46,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, update, setUpdate }) => {
         <div className='flex flex-col lg:flex-row gap-2 pb-5 relative'>
           <button
             className={`w-52 h-10 py-2 text-white rounded-md ${job.assignTo ? 'bg-gray-500 cursor-not-allowed' : 'bg-primary-light hover:bg-primary'}`}
-            onClick={handleBook}
+            onClick={() => { if (handleBook) handleBook(job) }}
             disabled={!!job.assignTo} // disables the button if job is booked
           >
             {job.assignTo
@@ -112,13 +72,13 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, update, setUpdate }) => {
 
       <div className='px-5 max-h-[500px] overflow-auto'>
         {!isLoaded ? (<div>Loading...</div>) :
-        (<GoogleMap
-        zoom={10}
-        center={center}
-        mapContainerClassName="w-full h-64"
-        >
-          <MarkerF position={center}/>
-        </GoogleMap>)}
+          (<GoogleMap
+            zoom={10}
+            center={center}
+            mapContainerClassName="w-full h-64"
+          >
+            <MarkerF position={center} />
+          </GoogleMap>)}
         <hr className="border-t border-gray-300 my-6" />
         <div className="flex space-x-2">
           <DayCircle day='M' active={job.Monday} />
@@ -191,7 +151,8 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, update, setUpdate }) => {
               {line}
               <br />
             </React.Fragment>
-          ))}        </div>
+          ))}
+        </div>
       </div>
     </div>
 
