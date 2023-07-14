@@ -240,7 +240,7 @@ export default function Jobs() {
         <div className='max-h-[800px] overflow-auto md:col-span-2'>
           <JobList jobs={jobs} onJobClick={handleJobClick} selectedJob={selectedJob} />
         </div>
-        <div className='hidden md:block md:col-span-3'>
+        <div className='hidden sm:block md:col-span-3'>
           {selectedJob && <JobDetail job={selectedJob} handleBook={handleBook}/>}
         </div>
       </div>

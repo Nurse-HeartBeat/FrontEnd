@@ -5,6 +5,7 @@ import { Job as JobType } from '../utils/types';
 import Nav from '../components/nav';
 import { QUERY_JOBNURSE, UPDATE_BOOKJOB, client } from '../utils/graphQL';
 import { useRouter } from 'next/router';
+import Footer from '../components/footer';
 
 // Define the type
 type GraphQLErrorType = {
@@ -124,7 +125,7 @@ export default function Jobs() {
           </div>
         </div>
         : <p>you need to log in to see my jobs</p>}
-
+        <Footer />
     </div>
   )
 }

@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer className="bg-background py-3">
+    <footer className="bg-background py-3 mt-auto">
       <div className=" flex flex-col items-center">
         {/* <div className='py-1 ml-5'>
           <Link href="/home" className="text-white text-lg font-bold">

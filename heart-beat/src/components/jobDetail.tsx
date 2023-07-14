@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Job } from '../utils/types.js';
-import { FaComments, FaMapMarkerAlt, FaRegCalendarAlt, FaRegClock, FaUsers, FaDollarSign, FaCircle } from 'react-icons/fa';
+import { FaComments, FaMapMarkerAlt, FaRegCalendarAlt, FaRegClock, FaUsers} from 'react-icons/fa';
 import { FaUser, FaPersonBooth, FaEnvelope, FaParking, FaInfoCircle } from 'react-icons/fa';
 import Tooltip from "./tooltip";
 import { useSelector } from 'react-redux';
