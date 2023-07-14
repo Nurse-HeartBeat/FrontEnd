@@ -191,6 +191,7 @@ export default function Jobs() {
     <div className='bg-white flex-col min-h-screen'>
       <Nav />
       <Filter FilterPass={filterPass} />
+      {jobs.length===0 && <p className='text-center text-xl mt-10 '>Loading...</p>}
       <div className='grid grid-cols-1 md:grid-cols-5 gap-0 md:mx-5'>
         <div className='max-h-[800px] overflow-auto md:col-span-2'>
           <JobList jobs={jobs} onJobClick={handleJobClick} selectedJob={selectedJob} />

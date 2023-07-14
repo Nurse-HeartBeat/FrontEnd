@@ -16,15 +16,15 @@ type GraphQLErrorType = {
 
 interface JobDetailProps {
   job: Job;
-  update: boolean;
-  setUpdate: (update: boolean) => void;
+  update?: boolean;
+  setUpdate?: (update: boolean) => void;
 }
 interface DayCircleProps {
   day: string;
   active: boolean;
 }
 
-const JobDetail: React.FC<JobDetailProps> = ({ job, update, setUpdate }) => {
+const JobDetail: React.FC<JobDetailProps> = ({ job, update = false, setUpdate = () => {} }) => {
   const reduxUser = useSelector((state: any) => state.user);
 
   const handleBook = async () => {
@@ -104,7 +104,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, update, setUpdate }) => {
         </div>
       </div>
 
-      <div className='px-5 max-h-[500px] overflow-auto'>
+      <div className='px-5 max-h-[500px] overflow-scroll'>
         <Image src='/mapPicHolder.png' alt="Map" className="" width={600} height={400} />
         <hr className="border-t border-gray-300 my-6" />
         <div className="flex space-x-2">
@@ -178,7 +178,8 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, update, setUpdate }) => {
               {line}
               <br />
             </React.Fragment>
-          ))}        </div>
+          ))}
+          </div>
       </div>
     </div>
 
