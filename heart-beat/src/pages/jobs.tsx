@@ -22,7 +22,7 @@ export default function Jobs() {
   const [useFilter, setUseFilter] = useState<boolean>(false)
   const reduxUser = useSelector((state: any) => state.user);
   const router = useRouter();
-  const [isJobDetailVisible, setIsJobDetailVisible] = useState(window.innerWidth >= 640); // 640px is the default sm breakpoint in Tailwind CSS
+  const [isJobDetailVisible, setIsJobDetailVisible] = useState(false); // 640px is the default sm breakpoint in Tailwind CSS
 
 
   //making client side rendering
