@@ -96,23 +96,33 @@ const ProfileDropdown = () => {
               const redirectRoute = '/profile';
               router.push(redirectRoute);
             }}
-            >Profile</button>
+          >Profile</button>
           {reduxEmployer && (
-            <button
-            className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
-            onClick={() => {
-              const redirectRoute = '/employer/addJob';
-              router.push(redirectRoute);
-            }}
-            >Add Jobs</button>
+            <>
+              <button
+                className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
+                onClick={() => {
+                  const redirectRoute = '/employer/addJob';
+                  router.push(redirectRoute);
+                }}
+              >Add Jobs</button>
+              <button
+                className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
+                onClick={() => {
+                  const redirectRoute = '/myJobs';
+                  router.push(redirectRoute);
+                }}
+              >Manage Jobs</button>
+            </>
+
           )}
           {!reduxEmployer && (
             <button
-            className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
-            onClick={() => {
-              const redirectRoute = '/myJobs';
-              router.push(redirectRoute);
-            }}
+              className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
+              onClick={() => {
+                const redirectRoute = '/myJobs';
+                router.push(redirectRoute);
+              }}
             >My jobs</button>
           )}
 

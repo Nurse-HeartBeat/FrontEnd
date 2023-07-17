@@ -7,19 +7,6 @@ const Footer = () => {
   return (
     <footer className="bg-background py-3 mt-auto">
       <div className=" flex flex-col items-center">
-        {/* <div className='py-1 ml-5'>
-          <Link href="/home" className="text-white text-lg font-bold">
-            <Image
-              src="/logo-purple-transparent-background.png"
-              alt="Logo"
-              width={200}
-              height={50}
-            />
-          </Link>
-
-
-        </div> */}
-
         <div className="flex flex-col items-center justify-center">
           <div className="flex space-x-4">
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
@@ -41,7 +28,6 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-
   );
 };
 

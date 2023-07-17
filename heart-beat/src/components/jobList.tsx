@@ -7,27 +7,43 @@ interface JobListProps {
   onJobClick: (job: Job) => void;
   selectedJob: Job | undefined;
   unbookJob?: (job: Job) => void; // optional unbooking function
+  toggleApprove?: (job: Job) => void; // optional approve function
+  handleComplete?: (job: Job) => void; // optional complete function
 }
 
-const JobList: React.FC<JobListProps> = ({ jobs, onJobClick, selectedJob, unbookJob }) => {
+const JobList: React.FC<JobListProps> = ({ jobs, onJobClick, selectedJob, unbookJob, toggleApprove, handleComplete }) => {
   return (
     <div className='px-5 my-10'>
       {jobs.map((job, index) => (
-        unbookJob ?
-        (
-          <div key={index} className="grid md:grid-cols-6 md:gap-2 items-center">
-            <div className="md:col-span-1"> </div>
-            <div className="md:col-span-4">
-              <JobEntry job={job} selectedJob={selectedJob} onJobClick={onJobClick} />
+        unbookJob || toggleApprove || handleComplete ?
+          (
+            <div key={index} className="grid md:grid-cols-6 md:gap-2 items-center">
+              <div className="md:col-span-1"> </div>
+              <div className="md:col-span-4">
+                <JobEntry job={job} selectedJob={selectedJob} onJobClick={onJobClick} />
+              </div>
+              <div className="md:col-span-1 mb-6 flex justify-center md:justify-end">
+                {unbookJob &&
+                  <button className='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700' onClick={() => unbookJob(job)}>
+                    Unbook
+                  </button>
+                }
+                {toggleApprove &&
+                  <button className={`bg-${job.approve ? 'red' : 'green'}-500 text-white px-3 py-1 rounded hover:bg-${job.approve ? 'red' : 'green'}-700`} onClick={() => toggleApprove(job)}>
+                    {job.approve ? 'Disapprove' : 'Approve'}
+                  </button>
+                }
+                {handleComplete &&
+                  <button className='bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700' onClick={() => handleComplete(job)}>
+                    Complete
+                  </button>
+                }
+
+              </div>
             </div>
-            <div className="md:col-span-1 mb-6 flex justify-center md:justify-end">
-              <button className='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700' onClick={() => unbookJob(job)}>
-                Cancel
-              </button>
-            </div>
-          </div>
-        )
-        : <JobEntry key={index} job={job} selectedJob={selectedJob} onJobClick={onJobClick} />
+          )
+          :
+          <JobEntry key={index} job={job} selectedJob={selectedJob} onJobClick={onJobClick} />
       ))}
     </div>
   );

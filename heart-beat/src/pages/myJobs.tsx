@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import JobList from '../components/jobList';
 import { Job as JobType } from '../utils/types';
 import Nav from '../components/nav';
-import { QUERY_JOBNURSE, UPDATE_BOOKJOB, client } from '../utils/graphQL';
+import { QUERY_JOBNURSE, QUERY_JOBEMPLOYER, UPDATE_BOOKJOB, UPDATE_APPROVEJOB, client } from '../utils/graphQL';
 import { useRouter } from 'next/router';
 import Footer from '../components/footer';
 
@@ -14,7 +14,7 @@ type GraphQLErrorType = {
   path: string;
 };
 
-export default function Jobs() {
+export default function MyJobs() {
   const router = useRouter();
 
   const reduxUser = useSelector((state: any) => state.user);
@@ -23,30 +23,48 @@ export default function Jobs() {
   const [filteredJobs, setFilteredJobs] = useState<JobType[]>([]); // Filtered jobs
   const [selectedJob, setSelectedJob] = useState<JobType | undefined>(undefined);
 
-  // Separate jobs into pending and approved
-  const pendingJobs = jobs.filter(job => !job.approved);
-  const approvedJobs = jobs.filter(job => job.approved);
+  // Separate jobs into pending, approved, and completed
+  const pendingJobs = jobs.filter(job => !job.completed && !job.approve);
+  const approvedJobs = jobs.filter(job => !job.completed && job.approve);
+  const completedJobs = jobs.filter(job => job.completed && job.approve);
+
 
   // State to track current selection
-  const [showApproved, setShowApproved] = useState(false);
+  enum JobState {
+    PENDING = 'PENDING',
+    APPROVED = 'APPROVED',
+    COMPLETED = 'COMPLETED'
+  }
+  const [currentJobState, setCurrentJobState] = useState(JobState.PENDING);
+
 
   const fetchData = async () => {
     if (!reduxUser.user) return;
-    let variables = {
-      assignTo: reduxUser.user.id,
+
+    if (reduxUser.employer) {
+      console.log('get job by employer: ', reduxUser.user.id)
+      const variables = {
+        employer: reduxUser.user.id,
+      }
+      const response = await client.query({ query: QUERY_JOBEMPLOYER, variables, fetchPolicy: 'network-only' });
+      const fetchedJobs = response.data.jobEmployer;
+      console.log('get job by employer: ', fetchedJobs)
+      setJobs(fetchedJobs);
+
+    } else {
+      console.log('get job by nurse: ', reduxUser.user.id)
+      const variables = {
+        assignTo: reduxUser.user.id,
+      }
+      const response = await client.query({ query: QUERY_JOBNURSE, variables, fetchPolicy: 'network-only' });
+      const fetchedJobs = response.data.jobNurse;
+      console.log('get job by nurse: ', fetchedJobs)
+      setJobs(fetchedJobs);
     }
-    const response = await client.query({ query: QUERY_JOBNURSE, variables, fetchPolicy: 'network-only' });
-    const fetchedJobs = response.data.jobNurse;
-    console.log('get job by nurse: ', fetchedJobs)
-    setJobs(fetchedJobs);
-    // Separate jobs into pending and approved
-    const pendingJobs = fetchedJobs.filter((job: JobType) => !job.approved);
-    const approvedJobs = fetchedJobs.filter((job: JobType) => job.approved);
   }
 
 
   const handelCancelJob = async (job: JobType) => {
-
     console.log('unbook job: ', job.id)
     const id = job.id;
     await client.mutate({
@@ -58,6 +76,36 @@ export default function Jobs() {
     })
       .then((data: any) => {
         console.log('Update assign to: ', data);
+        fetchData();
+      })
+      .catch((err) => {
+        console.error(err);
+        if (err.graphQLErrors) {
+          err.graphQLErrors.map(({ message, locations, path }: GraphQLErrorType) =>
+            console.log(
+              `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+            ),
+          );
+        }
+
+        if (err.networkError) {
+          console.log(`[Network error]: ${err.networkError}`);
+        }
+      })
+  }
+
+  const toggleApproveJob = async (job: JobType) => {
+    console.log('unbook job: ', job.id)
+    const id = job.id;
+    await client.mutate({
+      mutation: UPDATE_APPROVEJOB,
+      variables: { id },
+      context: {
+        credentials: 'include', // Add this line
+      },
+    })
+      .then((data: any) => {
+        console.log('Update appprove: ', data);
         fetchData();
       })
       .catch((err) => {
@@ -89,13 +137,15 @@ export default function Jobs() {
 
   useEffect(() => {
     let updatedJobs: JobType[] = [];
-    if (showApproved) {
+    if (currentJobState === JobState.PENDING) {
+      updatedJobs = pendingJobs;
+    } else if (currentJobState === JobState.APPROVED) {
       updatedJobs = approvedJobs;
     } else {
-      updatedJobs = pendingJobs;
+      updatedJobs = completedJobs;
     }
     setFilteredJobs(updatedJobs);
-  }, [jobs, showApproved]);
+  }, [jobs, currentJobState]);
 
 
   return (
@@ -106,26 +156,48 @@ export default function Jobs() {
           <h1 className="text-3xl text-black font-bold text-center mt-10">My Jobs</h1>
           <div className="flex justify-center mt-5">
             <button
-              className={`px-4 py-2 text-black ${showApproved ? '' : 'font-bold'}`}
-              onClick={() => setShowApproved(false)}
+              className={`px-4 py-2 text-black ${currentJobState === JobState.PENDING ? 'font-bold' : ''}`}
+              onClick={() => setCurrentJobState(JobState.PENDING)}
             >
               Pending
             </button>
 
             <button
-              className={`px-4 py-2 text-black ${showApproved ? 'font-bold' : ''}`}
-              onClick={() => setShowApproved(true)}
+              className={`px-4 py-2 text-black ${currentJobState === JobState.APPROVED ? 'font-bold' : ''}`}
+              onClick={() => setCurrentJobState(JobState.APPROVED)}
             >
               Approved
             </button>
+
+            <button
+              className={`px-4 py-2 text-black ${currentJobState === JobState.COMPLETED ? 'font-bold' : ''}`}
+              onClick={() => setCurrentJobState(JobState.COMPLETED)}
+            >
+              Completed
+            </button>
+
           </div>
-          {filteredJobs.length === 0 && <p className='text-center text-black px-4 text-md mt-10 '>{showApproved ? "No jobs have been approved yet. Check back soon!" : "No jobs have been booked yet. Start booking now!"}</p>}
-          <div className='md:w-3/4 mx-auto sm:px-10'>
-            <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} unbookJob={handelCancelJob}/>
+          {filteredJobs.length === 0 && (
+            <p className='text-center text-black px-4 text-md mt-10 '>
+              {
+                currentJobState === JobState.PENDING
+                  ? reduxUser.employer
+                    ? "No jobs have been posted yet. Start posting now!"
+                    : "No jobs have been booked yet. Start booking now!"
+                  : currentJobState === JobState.APPROVED
+                    ? "No jobs have been approved yet. Check back soon!"
+                    : "No jobs have been completed yet. Start completing now!"
+              }
+            </p>
+          )}
+          <div className='lg:w-3/4 mx-auto sm:px-10'>
+            {currentJobState === JobState.PENDING && (reduxUser.employer ? <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} toggleApprove={toggleApproveJob}/> : <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} unbookJob={handelCancelJob}/>) }
+            {currentJobState === JobState.APPROVED && (reduxUser.employer ? <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} toggleApprove={toggleApproveJob}/> : <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} />) }
+            {currentJobState === JobState.COMPLETED && <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} handleComplete={()=> {}}/>}
           </div>
         </div>
         : <p>you need to log in to see my jobs</p>}
-        <Footer />
+      <Footer />
     </div>
   )
 }
