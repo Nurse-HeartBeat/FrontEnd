@@ -24,10 +24,6 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, handleBook }) => {
   })
   const center = useMemo(() => ({ lat: job.latitude, lng: job.longitude }), [job]);
 
-
-
-
-
   return (
     <div className='my-10 sm:mr-5 sm:border sm:border-gray-300 text-black rounded-2xl'>
       <div className='px-4 sm:px-5 mb-6 sm:border-b sm:border-gray-300 my-4 shadow-lg'>

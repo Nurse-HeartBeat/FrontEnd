@@ -34,7 +34,7 @@ const JobList: React.FC<JobListProps> = ({ jobs, onJobClick, selectedJob, unbook
                   </button>
                 }
                 {handleComplete &&
-                  <button className='bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700' onClick={() => handleComplete(job)}>
+                  <button className='bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700' onClick={() => handleComplete(job)}>
                     Complete
                   </button>
                 }

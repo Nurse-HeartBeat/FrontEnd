@@ -190,10 +190,10 @@ export default function MyJobs() {
               }
             </p>
           )}
-          <div className='lg:w-3/4 mx-auto sm:px-10'>
+          <div className='md:w-5/6 mx-auto sm:px-10'>
             {currentJobState === JobState.PENDING && (reduxUser.employer ? <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} toggleApprove={toggleApproveJob}/> : <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} unbookJob={handelCancelJob}/>) }
             {currentJobState === JobState.APPROVED && (reduxUser.employer ? <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} toggleApprove={toggleApproveJob}/> : <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} />) }
-            {currentJobState === JobState.COMPLETED && <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} handleComplete={()=> {}}/>}
+            {currentJobState === JobState.COMPLETED && <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} handleComplete={()=> {console.log("handle complete")}}/>}
           </div>
         </div>
         : <p>you need to log in to see my jobs</p>}

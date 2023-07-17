@@ -7,6 +7,7 @@ import JobList from '../components/jobList';
 import { FilterPassTypes, Job as JobType, SetCategoryType, SetPatientPopType } from '../utils/types.js';
 import {QUERY_AllJOB, QUERY_JOB, UPDATE_BOOKJOB, QUERY_JOBID, client} from '../utils/graphQL'
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 // Define the type
 type GraphQLErrorType = {
@@ -20,6 +21,8 @@ export default function Jobs() {
   const [jobs, setJobs] = useState<JobType[]>([])
   const [useFilter, setUseFilter] = useState<boolean>(false)
   const reduxUser = useSelector((state: any) => state.user);
+  const router = useRouter();
+  const [isJobDetailVisible, setIsJobDetailVisible] = useState(window.innerWidth >= 640); // 640px is the default sm breakpoint in Tailwind CSS
 
 
   //making client side rendering
@@ -35,6 +38,16 @@ export default function Jobs() {
     fetchDataAll()
   }, [])
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsJobDetailVisible(window.innerWidth >= 768);
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   let daysObj = {
     Monday: true,
@@ -133,6 +146,9 @@ export default function Jobs() {
 
   const handleJobClick = (job: JobType) => {
     setSelectedJob(job); //update selectedJob state when job entry is clicked
+    if (!isJobDetailVisible) {
+      router.push(`/job/${job.id}`);
+    }
   }
 
   const applyFilter = async () => {
@@ -238,9 +254,9 @@ export default function Jobs() {
       {jobs.length===0 && <p className='text-center text-xl text-black mt-10 '>Loading...</p>}
       <div className='grid grid-cols-1 md:grid-cols-5 gap-0 md:mx-5'>
         <div className='max-h-[800px] overflow-auto md:col-span-2'>
-          <JobList jobs={jobs} onJobClick={handleJobClick} selectedJob={selectedJob} />
+          <JobList jobs={jobs} onJobClick={handleJobClick} selectedJob={selectedJob}/>
         </div>
-        <div className='hidden sm:block md:col-span-3'>
+        <div className='hidden md:block md:col-span-3'>
           {selectedJob && <JobDetail job={selectedJob} handleBook={handleBook}/>}
         </div>
       </div>
