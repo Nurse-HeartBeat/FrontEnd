@@ -67,8 +67,6 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, handleBook }) => {
       </div>
 
       <div className='px-5 max-h-[500px] overflow-auto'>
-        {/* <Image src='/mapPicHolder.png' alt="Map" className="" width={600} height={400} /> */}
-        {/* HERE */}
         {!isLoaded ? (<div>Loading...</div>) :
           (<GoogleMap
             zoom={10}
