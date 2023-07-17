@@ -6,16 +6,17 @@ interface JobListProps {
   jobs: Job[];
   onJobClick: (job: Job) => void;
   selectedJob: Job | undefined;
+  isJobManagementPortal?: boolean; // optional boolean to determine if the job list is for the job management portal
   unbookJob?: (job: Job) => void; // optional unbooking function
   toggleApprove?: (job: Job) => void; // optional approve function
   handleComplete?: (job: Job) => void; // optional complete function
 }
 
-const JobList: React.FC<JobListProps> = ({ jobs, onJobClick, selectedJob, unbookJob, toggleApprove, handleComplete }) => {
+const JobList: React.FC<JobListProps> = ({ jobs, onJobClick, selectedJob, isJobManagementPortal, unbookJob, toggleApprove, handleComplete }) => {
   return (
     <div className='px-5 my-10'>
       {jobs.map((job, index) => (
-        unbookJob || toggleApprove || handleComplete ?
+        isJobManagementPortal ?
           (
             <div key={index} className="grid md:grid-cols-6 md:gap-2 items-center">
               <div className="md:col-span-1"> </div>

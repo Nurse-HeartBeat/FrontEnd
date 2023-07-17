@@ -191,9 +191,9 @@ export default function MyJobs() {
             </p>
           )}
           <div className='md:w-5/6 mx-auto sm:px-10'>
-            {currentJobState === JobState.PENDING && (reduxUser.employer ? <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} toggleApprove={toggleApproveJob}/> : <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} unbookJob={handelCancelJob}/>) }
-            {currentJobState === JobState.APPROVED && (reduxUser.employer ? <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} toggleApprove={toggleApproveJob}/> : <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} />) }
-            {currentJobState === JobState.COMPLETED && <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} handleComplete={()=> {console.log("handle complete")}}/>}
+            {currentJobState === JobState.PENDING && (reduxUser.employer ? <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} toggleApprove={toggleApproveJob} isJobManagementPortal={true}/> : <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} unbookJob={handelCancelJob} isJobManagementPortal={true}/>) }
+            {currentJobState === JobState.APPROVED && (reduxUser.employer ? <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} toggleApprove={toggleApproveJob} isJobManagementPortal={true}/> : <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} isJobManagementPortal={true}/>) }
+            {currentJobState === JobState.COMPLETED && <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} handleComplete={()=> {console.log("handle complete")}} isJobManagementPortal={true}/>}
           </div>
         </div>
         : <p>you need to log in to see my jobs</p>}
