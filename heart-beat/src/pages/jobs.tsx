@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import JobDetail from '../components/jobDetail';
 import JobList from '../components/jobList';
 import { FilterPassTypes, Job as JobType, SetCategoryType, SetPatientPopType } from '../utils/types.js';
-import {QUERY_AllJOB, QUERY_JOB, UPDATE_BOOKJOB, QUERY_JOBID, client} from '../utils/graphQL'
+import { QUERY_AllJOB, QUERY_JOB, UPDATE_BOOKJOB, QUERY_JOBID, client } from '../utils/graphQL'
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
@@ -22,7 +22,7 @@ export default function Jobs() {
   const [useFilter, setUseFilter] = useState<boolean>(false)
   const reduxUser = useSelector((state: any) => state.user);
   const router = useRouter();
-  const [isJobDetailVisible, setIsJobDetailVisible] = useState(false); // 640px is the default sm breakpoint in Tailwind CSS
+  const [isJobDetailVisible, setIsJobDetailVisible] = useState(true); // 640px is the default sm breakpoint in Tailwind CSS
 
 
   //making client side rendering
@@ -43,6 +43,8 @@ export default function Jobs() {
       setIsJobDetailVisible(window.innerWidth >= 768);
     }
 
+    // Call the handleResize function when the component first mounts
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     // Cleanup the event listener on component unmount
@@ -81,7 +83,7 @@ export default function Jobs() {
     'Hospice Nurse': true,
     'Public Health Nurse': true
   });
-  const categoryMapping: { [key: string]: string }  = {
+  const categoryMapping: { [key: string]: string } = {
     'Registered Nurse (RN)': 'registeredNurseRn',
     'Licensed Practical Nurse (LPN)': 'licensedPracticalNurseLpn',
     'Certified Nursing Assistant (CNA)': 'certifiedNursingAssistantCna',
@@ -104,26 +106,26 @@ export default function Jobs() {
     'Public Health Nurse': 'publicHealthNurse',
   };
   const [patientPop, setPatientPop] = useState<{ [key: string]: boolean }>({
-      "Neonatal": true, // 0 - 28 days
-      "Infant": true, // 1 month - 1 year
-      "Toddler": true, // 1 - 3 years
-      "Preschool": true, // 3 - 5 years
-      "Pediatric": true, // 6 - 12 years
-      "Adolescent": true, // 13 - 18 years
-      "Young Adult": true, // 19 - 24 years
-      "Adult": true, // 25 - 64 years
-      "Geriatric": true, // 65 years and above
+    "Neonatal": true, // 0 - 28 days
+    "Infant": true, // 1 month - 1 year
+    "Toddler": true, // 1 - 3 years
+    "Preschool": true, // 3 - 5 years
+    "Pediatric": true, // 6 - 12 years
+    "Adolescent": true, // 13 - 18 years
+    "Young Adult": true, // 19 - 24 years
+    "Adult": true, // 25 - 64 years
+    "Geriatric": true, // 65 years and above
   })
-  const patientPopMapping: { [key: string]: string } ={
+  const patientPopMapping: { [key: string]: string } = {
     "Neonatal": 'neonatal',
-    'Infant':'infant',
-    'Toddler':'toddler',
-    'Preschool':'preschool',
-    'Pediatric':'pediatric',
-    'Adolescent':'adolescent',
-    'Young Adult':'youngAdult',
-    'Adult':'adult',
-    'Geriatric':'geriatric'
+    'Infant': 'infant',
+    'Toddler': 'toddler',
+    'Preschool': 'preschool',
+    'Pediatric': 'pediatric',
+    'Adolescent': 'adolescent',
+    'Young Adult': 'youngAdult',
+    'Adult': 'adult',
+    'Geriatric': 'geriatric'
   }
   const [patientNum, setPatientNum] = useState(100);
   const [weeklyPay, setWeeklyPay] = useState(1000);
@@ -171,7 +173,7 @@ export default function Jobs() {
         days, patientNum, weeklyPay, startDate, endDate, startTime, endTime, latitude, longitude, distance
       }
       console.log('variables: ', variables);
-      const response = await client.query({query: QUERY_JOB, variables});
+      const response = await client.query({ query: QUERY_JOB, variables });
       const jobs = response.data.job.edges.map((edge: { node: JobType }) => edge.node);
       console.log('get all jobs with filters: ', jobs)
       setJobs(jobs);
@@ -251,13 +253,13 @@ export default function Jobs() {
     <div className='bg-white flex-col min-h-screen'>
       <Nav />
       <Filter FilterPass={filterPass} />
-      {jobs.length===0 && <p className='text-center text-xl text-black mt-10 '>Loading...</p>}
+      {jobs.length === 0 && <p className='text-center text-xl text-black mt-10 '>Loading...</p>}
       <div className='grid grid-cols-1 md:grid-cols-5 gap-0 md:mx-5'>
         <div className='max-h-[800px] overflow-auto md:col-span-2'>
-          <JobList jobs={jobs} onJobClick={handleJobClick} selectedJob={selectedJob}/>
+          <JobList jobs={jobs} onJobClick={handleJobClick} selectedJob={selectedJob} />
         </div>
         <div className='hidden md:block md:col-span-3'>
-          {selectedJob && <JobDetail job={selectedJob} handleBook={handleBook}/>}
+          {selectedJob && <JobDetail job={selectedJob} handleBook={handleBook} />}
         </div>
       </div>
       <Footer />
