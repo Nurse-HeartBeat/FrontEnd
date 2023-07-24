@@ -28,7 +28,9 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, handleBook }) => {
     <div className='my-10 sm:mr-5 sm:border sm:border-gray-300 text-black rounded-2xl'>
       <div className='px-4 sm:px-5 mb-6 sm:border-b sm:border-gray-300 my-4 shadow-lg'>
         <div className="flex flex-col md:flex-row justify-start items-start mb-2  md:space-x-0 md:space-y-0 space-y-4 md:justify-between">
-          <h2 className="text-2xl font-bold">{job.title}</h2>
+          <a href={`/job/${job.id}`} className="text-blue-600 hover:text-blue-800 no-underline">
+            <h2 className="text-2xl font-bold">{job.title}</h2>
+          </a>
           <h2 className="text-2xl font-bold">${job.weeklyPay}</h2>
         </div>
         <h2 className="text-lg mb-2">

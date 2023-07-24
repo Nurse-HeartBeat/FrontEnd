@@ -36,9 +36,6 @@ export default function Jobs() {
 
   useEffect(() => {
     fetchDataAll()
-  }, [])
-
-  useEffect(() => {
     const handleResize = () => {
       setIsJobDetailVisible(window.innerWidth >= 768);
     }
@@ -48,8 +45,9 @@ export default function Jobs() {
     window.addEventListener("resize", handleResize);
 
     // Cleanup the event listener on component unmount
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
 
   let daysObj = {
     Monday: true,
