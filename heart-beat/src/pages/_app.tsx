@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import store from '../redux/store';
 import 'tailwindcss/tailwind.css';
 import { onAuthStateChanged } from "firebase/auth";
-import Auth from '../auth/firebase';
+import {auth as Auth} from '../auth/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../redux/user';
 

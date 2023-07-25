@@ -1,15 +1,12 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getMessaging, getToken } from "firebase/messaging";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore"; // Import the getFirestore function
 
-
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -22,10 +19,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
 const auth = getAuth(app);
+const firestore = getFirestore(app); // Use getFirestore directly without passing the app instance
 
-export default auth;
-
-
-
+// Export the messaging and auth instances for use in other parts of your application
+export { auth, firestore };

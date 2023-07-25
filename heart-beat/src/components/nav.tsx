@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Logo from '../../public/logo-transparent-background.png';
 import { useSelector, useDispatch } from 'react-redux';
-import Auth from '../auth/firebase';
+import {auth as Auth} from '../auth/firebase';
 import { signOut } from "firebase/auth";
 import { useRouter } from 'next/router';
 import { setUser, setEmployer } from '../redux/user';
