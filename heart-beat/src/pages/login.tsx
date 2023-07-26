@@ -3,7 +3,7 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, setEmployer } from '../redux/user';
 import { useEffect } from 'react';
-import Auth from '../auth/firebase';
+import {auth as Auth} from '../auth/firebase';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Footer from '../components/footer';
 import Image from 'next/image';
@@ -61,6 +61,7 @@ export default function Login() {
           })
           .then((data: any) => {
             let userProfile = data.data.employer
+            console.log(userProfile, 'herree')
             dispatch(setUser(userProfile))
             dispatch(setEmployer(true))
           })

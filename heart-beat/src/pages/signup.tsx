@@ -3,7 +3,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, setEmployer } from '../redux/user';
 import { useEffect } from 'react';
-import Auth from '../auth/firebase';
+import {auth as Auth} from '../auth/firebase';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import Footer from '../components/footer';
 import Image from 'next/image';
