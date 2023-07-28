@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import JobList from '../components/jobList';
 import { Job as JobType } from '../utils/types';
 import Nav from '../components/nav';
-import { QUERY_JOBNURSE, QUERY_JOBEMPLOYER, UPDATE_BOOKJOB, UPDATE_APPROVEJOB, client } from '../utils/graphQL';
+import { QUERY_JOBNURSE, QUERY_JOBEMPLOYER, UPDATE_BOOKJOB, UPDATE_APPROVEJOB, client, DELETE_JOB } from '../utils/graphQL';
 import { useRouter } from 'next/router';
 import Footer from '../components/footer';
 
@@ -24,16 +24,18 @@ export default function MyJobs() {
   const [selectedJob, setSelectedJob] = useState<JobType | undefined>(undefined);
 
   // Separate jobs into pending, approved, and completed
-  const pendingJobs = jobs.filter(job => !job.completed && !job.approve);
+  const pendingJobs = jobs.filter(job => !job.completed && !job.approve && job.assignTo);
   const approvedJobs = jobs.filter(job => !job.completed && job.approve);
   const completedJobs = jobs.filter(job => job.completed && job.approve);
+  const allJobs = jobs
 
 
   // State to track current selection
   enum JobState {
     PENDING = 'PENDING',
     APPROVED = 'APPROVED',
-    COMPLETED = 'COMPLETED'
+    COMPLETED = 'COMPLETED',
+    ALL = 'ALL'
   }
   const [currentJobState, setCurrentJobState] = useState(JobState.PENDING);
 
@@ -95,10 +97,40 @@ export default function MyJobs() {
   }
 
   const toggleApproveJob = async (job: JobType) => {
-    console.log('unbook job: ', job.id)
+    console.log('unbook job: ', job.id, job.approve)
     const id = job.id;
     await client.mutate({
       mutation: UPDATE_APPROVEJOB,
+      variables: { id, approve: !job.approve },
+      context: {
+        credentials: 'include', // Add this line
+      },
+    })
+      .then((data: any) => {
+        console.log('Update appprove: ', data);
+        fetchData();
+      })
+      .catch((err) => {
+        console.error(err);
+        if (err.graphQLErrors) {
+          err.graphQLErrors.map(({ message, locations, path }: GraphQLErrorType) =>
+            console.log(
+              `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+            ),
+          );
+        }
+
+        if (err.networkError) {
+          console.log(`[Network error]: ${err.networkError}`);
+        }
+      })
+  }
+
+  const deleteJob = async (job: JobType) => {
+    console.log('deletejob: ', job.id)
+    const id = job.id
+    await client.mutate({
+      mutation: DELETE_JOB,
       variables: { id },
       context: {
         credentials: 'include', // Add this line
@@ -142,8 +174,12 @@ export default function MyJobs() {
     } else if (currentJobState === JobState.APPROVED) {
       updatedJobs = approvedJobs;
     } else {
-      updatedJobs = completedJobs;
+      if (currentJobState === JobState.COMPLETED) {
+        updatedJobs = completedJobs;
+      } else {
+        updatedJobs = allJobs
     }
+  }
     setFilteredJobs(updatedJobs);
   }, [jobs, currentJobState]);
 
@@ -155,6 +191,14 @@ export default function MyJobs() {
         <div className='flex flex-col justify-center'>
           <h1 className="text-3xl text-black font-bold text-center mt-10">My Jobs</h1>
           <div className="flex justify-center mt-5">
+            {reduxUser.employer && (
+              <button
+              className={`px-4 py-2 text-black ${currentJobState === JobState.ALL ? 'font-bold' : ''}`}
+              onClick={() => setCurrentJobState(JobState.ALL)}
+              >
+              ALL
+            </button>
+            )}
             <button
               className={`px-4 py-2 text-black ${currentJobState === JobState.PENDING ? 'font-bold' : ''}`}
               onClick={() => setCurrentJobState(JobState.PENDING)}
@@ -186,14 +230,28 @@ export default function MyJobs() {
                     : "No jobs have been booked yet. Start booking now!"
                   : currentJobState === JobState.APPROVED
                     ? "No jobs have been approved yet. Check back soon!"
-                    : "No jobs have been completed yet. Start completing now!"
+                    : "No jobs have been completed/posted yet. Start completing/posting now!"
               }
             </p>
           )}
           <div className='md:w-5/6 mx-auto sm:px-10'>
-            {currentJobState === JobState.PENDING && (reduxUser.employer ? <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} toggleApprove={toggleApproveJob} isJobManagementPortal={true}/> : <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} unbookJob={handelCancelJob} isJobManagementPortal={true}/>) }
-            {currentJobState === JobState.APPROVED && (reduxUser.employer ? <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} toggleApprove={toggleApproveJob} isJobManagementPortal={true}/> : <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} isJobManagementPortal={true}/>) }
-            {currentJobState === JobState.COMPLETED && <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} handleComplete={()=> {console.log("handle complete")}} isJobManagementPortal={true}/>}
+            {currentJobState === JobState.ALL &&
+            (reduxUser.employer ?
+            <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} deleteJob={deleteJob} isJobManagementPortal={true} /> :
+            <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} unbookJob={handelCancelJob} isJobManagementPortal={true} chatBut={true}/>) }
+
+            {currentJobState === JobState.PENDING &&
+            (reduxUser.employer ?
+            <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} toggleApprove={toggleApproveJob} unbookJob={handelCancelJob} isJobManagementPortal={true} chatBut={true}/> :
+            <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} unbookJob={handelCancelJob} isJobManagementPortal={true} chatBut={true}/>) }
+
+            {currentJobState === JobState.APPROVED &&
+            (reduxUser.employer ?
+            <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} toggleApprove={toggleApproveJob} isJobManagementPortal={true} chatBut={true}/> :
+            <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} isJobManagementPortal={true} chatBut={true}/>) }
+
+            {currentJobState === JobState.COMPLETED &&
+            <JobList jobs={filteredJobs} onJobClick={handleJobClick} selectedJob={selectedJob} handleComplete={()=> {console.log("handle complete")}} isJobManagementPortal={true} chatBut={true}/>}
           </div>
         </div>
         : <p>you need to log in to see my jobs</p>}

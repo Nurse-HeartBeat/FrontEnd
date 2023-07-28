@@ -30,6 +30,7 @@ export interface Employer {
 
 export interface PartialEmployer {
   companyName: string;
+  id:string;
 }
 
 

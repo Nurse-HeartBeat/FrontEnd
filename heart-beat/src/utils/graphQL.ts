@@ -410,8 +410,8 @@ export const UPDATE_BOOKJOB = gql`
 `;
 
 export const UPDATE_APPROVEJOB = gql`
-  mutation updateJobModelApproval($id: ID!) {
-    updateJobModelApproval(id: $id) {
+  mutation updateJobModelApproval($id: ID!, $approve: Boolean) {
+    updateJobModelApproval(id: $id, approve: $approve) {
       jobModel {
         id
         title
@@ -429,6 +429,15 @@ export const UPDATE_APPROVEJOB = gql`
     }
   }
 `;
+
+export const DELETE_JOB = gql`
+  mutation deleteJobModel($id: ID!) {
+    deleteJobModel(id: $id) {
+      id
+    }
+  }
+`;
+
 
 export const QUERY_JOBNURSE = gql`
 query GetJobNurse($assignTo: ID!) {
@@ -612,5 +621,5 @@ export const client = new ApolloClient({
 });
 
 let graphQL = {
-  client, CREATE_EMPLOYER, CREATE_NURSE, QUERY_EMPLOYER, QUERY_NURSE, QUERY_JOB
+  client, CREATE_EMPLOYER, CREATE_NURSE, QUERY_EMPLOYER, QUERY_NURSE, QUERY_JOB, DELETE_JOB
 }

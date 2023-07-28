@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Job } from '../utils/types.js';
 import { FaComments, FaMapMarkerAlt, FaRegCalendarAlt, FaRegClock, FaUsers} from 'react-icons/fa';
 import { FaUser, FaPersonBooth, FaEnvelope, FaParking, FaInfoCircle } from 'react-icons/fa';
 import Tooltip from "./tooltip";
 import { useSelector } from 'react-redux';
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
+import ChatRoom from '../components/chatRoom';
 
 
 
@@ -19,11 +20,12 @@ interface DayCircleProps {
 
 const JobDetail: React.FC<JobDetailProps> = ({ job, handleBook }) => {
   const reduxUser = useSelector((state: any) => state.user);
+  const [chat, setChat] = useState(false)
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: `${process.env.NEXT_PUBLIC_GOOGLE_MAP}`
   })
   const center = useMemo(() => ({ lat: job.latitude, lng: job.longitude }), [job]);
-
+  // console.log(job)
   return (
     <div className='my-10 sm:mr-5 sm:border sm:border-gray-300 text-black rounded-2xl'>
       <div className='px-4 sm:px-5 mb-6 sm:border-b sm:border-gray-300 my-4 shadow-lg'>
@@ -60,11 +62,24 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, handleBook }) => {
               Mock with AI
             </button>
           </Tooltip>
-          <Tooltip text="Coming soon">
-            <button className="flex justify-center items-center w-12 h-10 py-1 text-white rounded-md bg-accent hover:bg-primary">
-              <FaComments />
+          {reduxUser.employer === false ? (
+            <button className="flex justify-center items-center w-12 h-10 py-1 text-white rounded-md bg-accent hover:bg-primary"
+              onClick={() => {
+                if (reduxUser.employer === false) {
+                  setChat(true)
+                }
+              }}>
+                <FaComments />
             </button>
-          </Tooltip>
+          ): (
+            <Tooltip text="Please log in as a nurse">
+              <button className="flex justify-center items-center w-12 h-10 py-1 text-white rounded-md bg-accent hover:bg-primary">
+                <FaComments />
+              </button>
+            </Tooltip>
+          )
+          }
+
         </div>
       </div>
 
@@ -152,8 +167,17 @@ const JobDetail: React.FC<JobDetailProps> = ({ job, handleBook }) => {
           ))}
         </div>
       </div>
-    </div>
 
+      {chat && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" onClick={(e) => setChat(false)}>
+          <div className="flex bg-white p-8 rounded-lg h-[75%] w-[50%] overflow-y-auto z-100"
+          onClick={(e) => e.stopPropagation()}>
+            <button onClick={(e) => setChat(false)} className='flex top-4 right-4 text-gray-600 hover:text-gray-800'> x </button>
+            <ChatRoom id={job.employer?.id} />
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
