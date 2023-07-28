@@ -129,7 +129,7 @@ function ChatMessage(props: any) {
 
   return (<div className='border'>
   {(messageClass === 'sent') ? (
-    <h1>you :</h1>
+    <h1>me :</h1>
   ): <h1>{!employerState ? 'employer:': 'nurse :'}</h1>}
     <div className={`message ${messageClass}`}>
       <p>{text}</p>
