@@ -122,7 +122,6 @@ export default function Nav() {
                     <div className="absolute top-[-5px] right-[-5px] h-3 w-3 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">!</div>
                     )
                     }
-                    {console.log(status, 'need stattuuuuuss')}
                   </div>
                 </li>
                 <li><ProfileDropdown /></li>
