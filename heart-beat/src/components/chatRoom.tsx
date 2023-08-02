@@ -8,6 +8,7 @@ import store, { RootState } from '../redux/store'
 import { Router, useRouter } from 'next/router';
 import { NextPageContext, GetServerSideProps } from 'next';
 import moment from 'moment';
+import {sendAlert} from '../utils/alert';
 
 // Create a custom type for the Firestore instance
 
@@ -18,10 +19,17 @@ export default function ChatRoom({ id }: { id: string | undefined }) {
   const userState = useSelector((state: any) => state.user);
   const employerState = userState.employer;
 
+  const encodeMessage = (message: string) => {
+    // Replace newlines with a special character (e.g., '|') to avoid Firestore issues
+    return message.replace(/\n/g, '|');
+  };
+
+
   const [formValue, setFormValue] = useState('');
   const dummy = useRef<HTMLSpanElement>(null);
 
   const messagesRef = collection(firestore, 'messages');
+
   let nurseId: any; // Replace with the actual nurse ID
   let employerId: any; // Replace with the actual employer ID
 
@@ -60,44 +68,64 @@ export default function ChatRoom({ id }: { id: string | undefined }) {
     checkAndCreateDocument();
   }, [docRef]);
 
+
   const qT = query(messagesDocRef, orderBy('createdAt'));
   const [chats, loading] = useCollectionData(qT); // Use the useCollectionData hook here
+
+  useEffect(() => {
+    if (dummy.current) {
+      dummy.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [chats]);
 
   const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!employerState) {
+
       await addDoc(messagesDocRef, {
         createdAt: serverTimestamp(),
-        nurse: formValue,
+        nurse: encodeMessage(formValue),
       });
+
+      sendAlert(false, employerId, userState.user.firstName + ' ' + userState.user.lastName +' sent you a message', serverTimestamp())
+
     } else {
       await addDoc(messagesDocRef, {
         createdAt: serverTimestamp(),
-        employer: formValue,
+        employer: encodeMessage(formValue),
       });
+      sendAlert(true, nurseId, userState.user.companyName+' sent you a message', serverTimestamp())
     }
+
 
     setFormValue('');
     dummy.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-<div className="bg-white text-black p-4 rounded-lg">
-      <div className="flex flex-col h-80 overflow-y-auto">
+<div className="flex flex-col bg-white text-black p-4 w-screen h-[100%]">
+      <div className="flex flex-col flex-grow h-80 overflow-y-auto">
         {chats &&
           chats.map((msg) => (
             <ChatMessage key={msg.id} message={msg} employerState={employerState} />
           ))}
         <span ref={dummy}></span>
       </div>
-      <form onSubmit={sendMessage} className="mt-4">
-        <div className="flex">
-          <input
+      <form onSubmit={sendMessage} className="">
+      <div className="flex w-full bottom-0 z-10 border-t-[1px solid lightgray] ml-[-5px] pb-[30px] bg-#fafafa">
+          <textarea
             value={formValue}
             onChange={(e) => setFormValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && e.shiftKey) {
+                e.preventDefault();
+                console.log(formValue)
+                setFormValue((prevValue) => prevValue + '\n');
+              }
+            }}
             placeholder="Type your message..."
-            className="flex-1 px-2 py-1 rounded-l-md border"
+            className="flex-1 px-2 py-1 rounded-l-md border resize-y overflow-y-auto"
           />
           <button
             type="submit"
@@ -115,27 +143,36 @@ export default function ChatRoom({ id }: { id: string | undefined }) {
 }
 
 function ChatMessage(props: any) {
-  const employerState = props.employerState
+  const employerState = props.employerState;
+  const messageClass = (props.message.employer && employerState) || (props.message.nurse && !employerState) ? 'sent' : 'received'; // Use the message data to determine if the message is sent or received
+  const name = messageClass === 'sent' ? 'me' : !employerState ? 'employer' : 'nurse'; // Determine the name based on the sender
 
-  // const messageClass = nurse === 'nurse1' ? 'sent' : 'received';
-  let messageClass:string;
-  let name = 'placeholder'; //this is the recipient
-  let text = props.message['nurse'] ? props.message['nurse'] : props.message['employer']
-   if ((!employerState && props.message['nurse']) || employerState && props.message['employer']) {
-    messageClass = 'sent'
-   } else {
-    messageClass = 'received'
-   }
+  const decodeMessage = (message: string) => {
+    // Decode the special character back to newlines when displaying the message
+    return message.replace(/\|/g, '\n');
+  };
 
-  return (<div className='border'>
-  {(messageClass === 'sent') ? (
-    <h1>me :</h1>
-  ): <h1>{!employerState ? 'employer:': 'nurse :'}</h1>}
-    <div className={`message ${messageClass}`}>
-      <p>{text}</p>
-      <p className='text-xs mt-2 italic'>{moment(props.createdAt).fromNow()}</p>
+  let text = props.message.employer || props.message.nurse;
+  text = decodeMessage(text)
+  let timestamp: any = new Date();
+
+
+  if (props.message.createdAt) {
+    timestamp = props.message.createdAt.seconds * 1000 + props.message.createdAt.nanoseconds / 1000000;
+  }
+
+  return (
+  <div className={``}>
+    <div className="flex-grow flex items-center">
+      <h1 className='float-left items-center'>{name}</h1>
     </div>
-  </div>)
+    <div className={`message ${messageClass} flex p-2 border m-2 rounded-md shadow-md items-center ${messageClass === 'sent' ? 'bg-lightP-light ml-10' : 'mr-10 bg-background'}`}>
+      <pre style={{ wordBreak: 'break-word' }}>{text}</pre>
+      <p className="text-xs mt-2 italic">{moment(timestamp).fromNow()}</p>
+    </div>
+  </div>
+
+  );
 }
 
 

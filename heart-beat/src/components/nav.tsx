@@ -8,6 +8,10 @@ import {auth as Auth} from '../auth/firebase';
 import { signOut } from "firebase/auth";
 import { useRouter } from 'next/router';
 import { setUser, setEmployer } from '../redux/user';
+import { FaBell} from 'react-icons/fa';
+import { firestore, auth } from '../auth/firebase';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { collection, where, addDoc, query, orderBy, limit, serverTimestamp, doc, getDoc, setDoc, updateDoc, onSnapshot } from "firebase/firestore";
 
 export default function Nav() {
   const [showLinks, setShowLinks] = useState(false);
@@ -32,6 +36,59 @@ export default function Nav() {
     }
   }, [showLinks]);
 
+  let userId: any = 'nurseID' //placeholder
+  if (reduxState.employer === null) {
+    // userId = null
+  } else {
+    userId = (reduxState.employer === false ? 'nurse'+reduxState.user['id'] : 'employer'+reduxState.user['id'])
+  }
+  const alertRef = collection(firestore, 'alert')
+  const docRef = doc(alertRef, userId)
+  // let readStatus = collection(docRef, 'status')
+  let infoField = collection(docRef, 'info')
+
+  const qInfo = query(infoField, orderBy('createdAt'))
+  // const qRStatus = query(readStatus)
+
+  const [info] = useCollectionData(qInfo);
+  // const [status] = useCollectionData(qRStatus);
+  const [status, setStatus] = useState(true)
+
+  onSnapshot(docRef, (docSnap) => {
+    if (docSnap.exists()) {
+      setStatus(docSnap.data().status) ; // access the status field
+      console.log(status);
+    } else {
+      console.log("No such document!");
+    }
+  }, (error) => {
+    console.error("Error fetching document: ", error);
+  });
+
+
+  useEffect(() => {
+    const checkAndCreateDocument = async () => {
+      try {
+        // Check if the document exists in Firestore
+        const docSnapshot = await getDoc(docRef);
+        if (!docSnapshot.exists()) {
+          // If the document does not exist, create a new document
+          await setDoc(docRef, {
+            status:true
+           });
+          console.log('New document created successfully!');
+        }
+      } catch (error) {
+        console.error('Error checking/creating document:', error);
+      }
+    };
+    if (reduxState.employer !== null) {
+      checkAndCreateDocument();
+    }
+
+  }, [docRef])
+
+
 
   return (
     <nav>
@@ -52,7 +109,24 @@ export default function Nav() {
                 <li><Link href="/login" className="text-white text-lg mb-2">Login</Link></li>
                 <li><Link href="/signup" className="text-white text-lg mb-2">Signup</Link></li>
               </> :
-              <li><ProfileDropdown /></li>
+              <>
+                <li className='m-5'>
+                  <div className="relative">
+                    <FaBell className='scale-150 transition-colors duration-500 ease-in-out text-white hover:text-purple-500 cursor-pointer'
+                    onClick={async() => {
+                      updateDoc(docRef, {
+                        status:true
+                      })
+                    }}/>
+                    {!status && (
+                    <div className="absolute top-[-5px] right-[-5px] h-3 w-3 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">!</div>
+                    )
+                    }
+                    {console.log(status, 'need stattuuuuuss')}
+                  </div>
+                </li>
+                <li><ProfileDropdown /></li>
+              </>
             }
           </ul>
         </div>

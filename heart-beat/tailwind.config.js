@@ -16,7 +16,8 @@ module.exports = {
           light: '#771fa1', //Light Salmon
         },
         lightP: {
-          DEFAULT: '#d48ef5'
+          DEFAULT: '#d48ef5',
+          light: '#e4bcf7'
         },
         background: {
           DEFAULT: '#F5F5F5', // Vanilla
