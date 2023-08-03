@@ -233,9 +233,14 @@ const AlertDropdown = ({info}:{info?: InfoType[]}) => {
   const listRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
-    if (listRef.current) {
-      listRef.current.scrollTop = listRef.current.scrollHeight;
-    }
+    const scrollToBottom = () => {
+      if (listRef.current) {
+        console.log('Scroll Height:', listRef.current.scrollHeight);
+        listRef.current.scrollTop = listRef.current.scrollHeight;
+      }
+    };
+
+    scrollToBottom();
   }, [info]);
 
   let timestamp = (time:any) => {
@@ -244,7 +249,7 @@ const AlertDropdown = ({info}:{info?: InfoType[]}) => {
   return (
     <div className="fixed right-0 mt-2 w-48 bg-white rounded-md shadow-lg h-[500px] z-10 border border-gray-300 text-black">
       <h3 className="text-xl font-bold text-black mb-4 px-4">Alerts</h3>
-      <ul className='flex flex-col h-[80%] overflow-y-auto'>
+      <ul className='flex flex-col h-[80%] overflow-y-auto' ref={listRef}>
         {/* Your list of alerts */}
         {info?.map((eachAlert,index) => {
           return (
