@@ -12,9 +12,13 @@ import { FaBell} from 'react-icons/fa';
 import { firestore, auth } from '../auth/firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { collection, where, addDoc, query, orderBy, limit, serverTimestamp, doc, getDoc, setDoc, updateDoc, onSnapshot } from "firebase/firestore";
+import { info } from 'console';
+import moment from 'moment';
+import {InfoType} from '../utils/types';
 
 export default function Nav() {
   const [showLinks, setShowLinks] = useState(false);
+  const [alertModal, setAlertModal] = useState(false)
   const linksContainerRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<HTMLUListElement>(null);
   const reduxState = useSelector((state: any) => state.user); //need for photo
@@ -117,9 +121,14 @@ export default function Nav() {
                       updateDoc(docRef, {
                         status:true
                       })
+                      setAlertModal(!alertModal)
                     }}/>
                     {!status && (
                     <div className="absolute top-[-5px] right-[-5px] h-3 w-3 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">!</div>
+                    )
+                    }
+                    {alertModal && (
+                      <AlertDropdown info={info as InfoType[]}/>
                     )
                     }
                   </div>
@@ -218,3 +227,35 @@ const ProfileDropdown = () => {
     </div>
   );
 };
+
+const AlertDropdown = ({info}:{info?: InfoType[]}) => {
+  // console.log(props.info)
+  const listRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTop = listRef.current.scrollHeight;
+    }
+  }, [info]);
+
+  let timestamp = (time:any) => {
+    return time.seconds * 1000 + time.nanoseconds / 1000000
+  }
+  return (
+    <div className="fixed right-0 mt-2 w-48 bg-white rounded-md shadow-lg h-[500px] z-10 border border-gray-300 text-black">
+      <h3 className="text-xl font-bold text-black mb-4 px-4">Alerts</h3>
+      <ul className='flex flex-col h-[80%] overflow-y-auto'>
+        {/* Your list of alerts */}
+        {info?.map((eachAlert,index) => {
+          return (
+            <li key={index} className='flex flex-col border border-gray-300'>
+              <h1 className='flex mt-3 ml-3'>{eachAlert['info']}</h1>
+              <p className="flex text-xs mt-2 italic mb-3 justify-center">{moment(timestamp(eachAlert['createdAt'])).fromNow()}</p>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  )
+}
+

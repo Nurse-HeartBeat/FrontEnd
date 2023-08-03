@@ -166,3 +166,13 @@ export interface DaysTypes {
 
 export type SetCategoryType = React.Dispatch<React.SetStateAction<CategoryTypes>>;
 export type SetPatientPopType = React.Dispatch<React.SetStateAction<PatientPopTypes>>;
+
+export interface InfoType {
+  // Define the properties of each element in the array
+  // For example, if each element has a 'id', 'message', and 'createdAt' property
+  info: string;
+  createdAt: {
+    nanoseconds: number,
+    seconds: number
+  }
+}
